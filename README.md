@@ -39,9 +39,14 @@ npm run build
    - **Framework preset:** Vite
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
+   - **Deploy command:** leave empty
 6. Click **Save and Deploy**
 
 Cloudflare will auto-deploy on every push to `main`.
+
+Do not use `npx wrangler deploy` as a Pages deploy command. If your Cloudflare
+project currently has that deploy command set, clear it. If Cloudflare requires
+a deploy command, use `npx wrangler pages deploy dist --project-name endrare`.
 
 ### Skift presentation subdomain
 
@@ -51,9 +56,9 @@ The Skift item in `src/sections/SelectedSystems.jsx` links to:
 https://skift.endrare.com/
 ```
 
-Do not deploy the Skift presentation as `endrare.com/skift`. Deploy the sibling
-`SkiftPresentation/` folder as its own Cloudflare Pages project, then attach the
-custom domain `skift.endrare.com` to that project.
+Do not deploy the Skift presentation as `endrare.com/skift`. Deploy
+`SkiftPresentation/` from this repo as its own Cloudflare Pages project, then
+attach the custom domain `skift.endrare.com` to that project.
 
 Recommended Cloudflare Pages settings for Skift:
 
@@ -67,6 +72,12 @@ Recommended Cloudflare Pages settings for Skift:
 ```bash
 npm run build
 npx wrangler pages deploy dist --project-name endrare
+```
+
+Or run:
+
+```bash
+npm run deploy
 ```
 
 ### Custom Domain (endrare.com)
@@ -85,6 +96,11 @@ endrare/
 ├── vite.config.js          # Vite config
 ├── wrangler.toml           # Cloudflare Pages config
 ├── package.json
+├── SkiftPresentation/      # Static Skift presentation for skift.endrare.com
+│   ├── index.html
+│   ├── styles.css
+│   ├── script.js
+│   └── README.md
 └── src/
     ├── main.jsx            # React entry
     ├── App.jsx             # Root component + scroll observer
