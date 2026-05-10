@@ -6,7 +6,7 @@ const SYSTEMS = [
     tag: null,
     isActive: true,
     title: 'Skift',
-    href: '/skift',
+    href: '/skiftpresentation.html',
     desc: 'Scheduling platform designed around real restaurant operations and workforce planning. Combining operational thinking, workflow design, and AI-assisted planning to reduce friction — clearer views, fewer clicks, decision-ready interfaces.',
     tech: ['Python', 'React', 'AI/ML', 'PostgreSQL'],
   },

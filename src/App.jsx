@@ -7,23 +7,14 @@ import WhyIBuild from './sections/WhyIBuild'
 import SelectedSystems from './sections/SelectedSystems'
 import BuilderStatement from './sections/BuilderStatement'
 import Archive from './sections/Archive'
-import SkiftPresentationPage from './pages/SkiftPresentationPage'
 
 function Divider() {
   return <div className="divider" />
 }
 
-function isSkiftPath(pathname) {
-  return pathname === '/skift' || pathname === '/skift/' || pathname === '/skift/index.html'
-}
-
 export default function App() {
-  const skiftPage = isSkiftPath(window.location.pathname)
-
   // Global scroll-reveal observer
   useEffect(() => {
-    if (skiftPage) return undefined
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -49,11 +40,7 @@ export default function App() {
       clearTimeout(timer)
       observer.disconnect()
     }
-  }, [skiftPage])
-
-  if (skiftPage) {
-    return <SkiftPresentationPage />
-  }
+  }, [])
 
   return (
     <>
