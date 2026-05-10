@@ -1,0 +1,74 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  margin-top: 4rem;
+  background: var(--rule);
+}
+
+.card {
+  background: var(--white);
+  padding: 2.5rem;
+  cursor: default;
+  transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.card:hover { background: var(--off-white); }
+.card:hover::after { transform: scaleX(1); }
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--ink-4);
+  margin-bottom: 1.5rem;
+}
+.title {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-3);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--ink-4);
+  border: 0.5px solid var(--rule);
+  padding: 3px 8px;
+  letter-spacing: 0.1em;
+}
+.arrow {
+  position: absolute;
+  bottom: 2.5rem; right: 2.5rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-size: 18px;
+  color: var(--ink);
+}
+.card:hover .arrow { opacity: 1; transform: translateX(0); }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
