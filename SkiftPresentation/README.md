@@ -32,29 +32,16 @@ python3 -m http.server 4173
 
 - Then open `http://localhost:4173`
 
-## Deploy to `skift.endrare.com`
+## Deploy with Endrare
 
-Deploy this folder as a separate Cloudflare Pages project. This keeps Skift on
-its own subdomain instead of publishing it under `endrare.com/skift`.
+The main Endrare build copies this folder into `dist/skift`, so it is deployed
+with the main website at:
 
-### Git-connected Pages project
-
-Use these Cloudflare Pages settings:
-
-- **Project root:** `SkiftPresentation`
-- **Build command:** leave empty
-- **Build output directory:** `/`
-- **Custom domain:** `skift.endrare.com`
-
-### Direct upload
-
-From this folder:
-
-```bash
-npx wrangler pages deploy . --project-name skift-endrare
+```txt
+https://endrare.com/skift
 ```
 
-Then add `skift.endrare.com` in Cloudflare Pages → your Skift project → Custom domains.
+The copy step lives in `scripts/copy-skift.mjs` and runs after `vite build`.
 
 ## Notes
 

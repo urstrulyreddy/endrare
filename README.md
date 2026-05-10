@@ -48,24 +48,19 @@ Do not use `npx wrangler deploy` as a Pages deploy command. If your Cloudflare
 project currently has that deploy command set, clear it. If Cloudflare requires
 a deploy command, use `npx wrangler pages deploy dist --project-name endrare`.
 
-### Skift presentation subdomain
+### Skift presentation
 
 The Skift item in `src/sections/SelectedSystems.jsx` links to:
 
 ```txt
-https://skift.endrare.com/
+/skift
 ```
 
-Do not deploy the Skift presentation as `endrare.com/skift`. Deploy
-`SkiftPresentation/` from this repo as its own Cloudflare Pages project, then
-attach the custom domain `skift.endrare.com` to that project.
-
-Recommended Cloudflare Pages settings for Skift:
-
-- **Project root:** `SkiftPresentation`
-- **Build command:** leave empty
-- **Build output directory:** `/`
-- **Custom domain:** `skift.endrare.com`
+The `npm run build` command copies `SkiftPresentation/` into `dist/skift`, so
+Cloudflare deploys it as `https://endrare.com/skift/index.html` with the main
+site. The React app also renders the presentation for `/skift`, `/skift/`, and
+`/skift/index.html`, so Cloudflare SPA fallback still opens Skift instead of the
+Endrare homepage.
 
 ### Option B — Direct Upload (no Git)
 
@@ -96,11 +91,13 @@ endrare/
 ├── vite.config.js          # Vite config
 ├── wrangler.toml           # Cloudflare Pages config
 ├── package.json
-├── SkiftPresentation/      # Static Skift presentation for skift.endrare.com
+├── SkiftPresentation/      # Static Skift presentation copied to /skift/
 │   ├── index.html
 │   ├── styles.css
 │   ├── script.js
 │   └── README.md
+├── scripts/
+│   └── copy-skift.mjs      # Copies SkiftPresentation into dist/skift
 └── src/
     ├── main.jsx            # React entry
     ├── App.jsx             # Root component + scroll observer
@@ -136,7 +133,7 @@ endrare/
 
 - **Contact email** → `src/components/Footer.jsx`
 - **Projects** → `src/sections/SelectedSystems.jsx` (SYSTEMS array)
-- **Skift presentation URL** → `src/sections/SelectedSystems.jsx` (`href: 'https://skift.endrare.com/'`)
+- **Skift presentation URL** → `src/sections/SelectedSystems.jsx` (`href: '/skift'`)
 - **Principles** → `src/sections/WhyIBuild.jsx` (ITEMS array)
 - **Archive entries** → `src/sections/Archive.jsx` (ENTRIES array)
 - **Hero copy** → `src/sections/Hero.jsx`
