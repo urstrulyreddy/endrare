@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skift Presentation</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <header class="topbar">
+      <div class="brand">Skift</div>
+      <nav class="topnav">
+        <a href="#hero">Intro</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#sales">Sales</a>
+        <a href="#ai">AI</a>
+        <a href="#finale">Finale</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="scene hero scene-hero" id="hero" data-scene>
+        <div class="hero-stage">
+          <div class="hero-glow"></div>
+          <div class="hero-orbit orbit-one"></div>
+          <div class="hero-orbit orbit-two"></div>
+        </div>
+        <div class="scene-copy reveal hero-copy">
+          <p class="eyebrow">Workforce Super App</p>
+          <h1><span class="title-shimmer">Skift</span></h1>
+          <p class="subtitle">One app. Complete control.</p>
+          <p class="body-copy">
+            Messaging, scheduling, feed, and performance intelligence presented as one seamless ecosystem.
+          </p>
+        </div>
+      </section>
+
+      <section class="scene scene-ecosystem" id="ecosystem" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Ecosystem</p>
+          <h2>Everything employees need, in one flow.</h2>
+          <p>
+            Glass surfaces, layered depth, and quiet motion carry each feature with the same design language.
+          </p>
+        </div>
+
+        <div class="ecosystem-grid">
+          <article class="glass-card floating-card reveal" data-depth-card>
+            <span class="card-icon">💬</span>
+            <div class="surface-sheen"></div>
+            <h3>Messages</h3>
+            <p>Fast communication with conversational clarity and live team context.</p>
+          </article>
+          <article class="glass-card floating-card reveal delay-1" data-depth-card>
+            <span class="card-icon">🗓️</span>
+            <div class="surface-sheen"></div>
+            <h3>Calendar</h3>
+            <p>Monthly planning, day precision, and workforce visibility without clutter.</p>
+          </article>
+          <article class="glass-card floating-card reveal delay-2" data-depth-card>
+            <span class="card-icon">📰</span>
+            <div class="surface-sheen"></div>
+            <h3>Feed</h3>
+            <p>Company updates, announcements, and social communication in one stream.</p>
+          </article>
+          <article class="glass-card floating-card reveal delay-3" data-depth-card>
+            <span class="card-icon">📈</span>
+            <div class="surface-sheen"></div>
+            <h3>Sales</h3>
+            <p>Operational performance surfaced where managers already work.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene-messages" id="messages" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Messages</p>
+          <h2>iMessage-inspired speed and calm.</h2>
+          <p>
+            Bubble timing, alignment, and typing feedback are tuned to feel natural instead of mechanical.
+          </p>
+        </div>
+
+        <div class="glass-card device-frame reveal">
+          <div class="surface-sheen"></div>
+          <div class="device-header">
+            <div class="avatar">EB</div>
+            <div>
+              <h3>Emma Brooks</h3>
+              <p>Shift Leader</p>
+            </div>
+          </div>
+
+          <div class="chat-stack" data-chat-stack>
+            <div class="message-row left bubble-enter initial">
+              <div class="message-bubble incoming">Can you cover the 18:00 handoff?</div>
+            </div>
+            <div class="message-row right bubble-enter staged" data-chat-bubble="draft">
+              <div class="message-bubble outgoing">
+                <span class="draft-text" data-draft-text></span><span class="cursor"></span>
+              </div>
+            </div>
+            <div class="message-row left bubble-enter staged" data-chat-bubble="reply">
+              <div class="message-bubble incoming">Perfect. Ping me when the floor is reset.</div>
+            </div>
+            <div class="message-row left typing-row" data-chat-typing="other">
+              <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="message-composer" data-composer>
+            <div class="composer-input">
+              <span class="composer-placeholder">Message</span>
+              <span class="composer-draft" data-composer-draft></span>
+              <span class="cursor composer-cursor"></span>
+            </div>
+            <button class="send-button" type="button" data-send-button>
+              <span>↑</span>
+            </button>
+          </div>
+
+          <div class="composer-typing" data-chat-typing="self">
+            <div class="typing-indicator small">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-calendar" id="calendar" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Calendar</p>
+          <h2>Month, week, and day views with workforce precision.</h2>
+          <p>
+            Scroll-driven transitions preview how Skift moves from broad scheduling context into exact shift detail.
+          </p>
+        </div>
+
+        <div class="calendar-stage reveal">
+          <div class="mode-switch">
+            <button class="mode-pill is-active" data-mode="month">Month</button>
+            <button class="mode-pill" data-mode="week">Week</button>
+            <button class="mode-pill" data-mode="day">Day</button>
+          </div>
+
+          <div class="glass-card calendar-shell">
+            <div class="surface-sheen"></div>
+            <div class="calendar-panel panel-month is-visible" data-panel="month">
+              <div class="calendar-grid">
+                <span></span><span></span><span class="active-day"></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span class="shift-day"></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span class="shift-day"></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="calendar-panel panel-week" data-panel="week">
+              <div class="week-bars">
+                <div class="week-bar" style="--h: 58%"><span></span></div>
+                <div class="week-bar" style="--h: 74%"><span></span></div>
+                <div class="week-bar" style="--h: 62%"><span></span></div>
+                <div class="week-bar" style="--h: 84%"><span></span></div>
+                <div class="week-bar accent" style="--h: 95%"><span></span></div>
+                <div class="week-bar" style="--h: 48%"><span></span></div>
+                <div class="week-bar" style="--h: 36%"><span></span></div>
+              </div>
+            </div>
+
+            <div class="calendar-panel panel-day" data-panel="day">
+              <div class="day-list">
+                <div class="day-item reveal-list">
+                  <div>
+                    <h4>Emma Brooks</h4>
+                    <p>Shift Leader</p>
+                  </div>
+                  <span>08:00 - 16:00</span>
+                </div>
+                <div class="day-item reveal-list delay-1">
+                  <div>
+                    <h4>Deependra Reddy</h4>
+                    <p>Team Member</p>
+                  </div>
+                  <span>12:00 - 20:00</span>
+                </div>
+                <div class="day-item reveal-list delay-2">
+                  <div>
+                    <h4>Maya Singh</h4>
+                    <p>Team Member</p>
+                  </div>
+                  <span>16:00 - 23:00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-sales" id="sales" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Sales Dashboard</p>
+          <h2>Performance insight, built into the home experience.</h2>
+          <p>
+            Numbers rise in place, trends draw cleanly, and peak performance stands out without visual noise.
+          </p>
+        </div>
+
+        <div class="glass-card sales-shell reveal">
+          <div class="surface-sheen"></div>
+          <div class="sales-headline">
+            <div>
+              <p class="meta">Mister York Gothenburg</p>
+              <div class="sales-number" data-countup="132300">SEK 0</div>
+            </div>
+            <div class="peak-hour">
+              <span>Peak Hour</span>
+              <strong>18:00</strong>
+              <div class="live-pulse">
+                <span></span>
+                <label>Live</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="sales-graph">
+            <svg viewBox="0 0 720 220" class="trend-svg" aria-hidden="true">
+              <path
+                class="trend-path"
+                d="M40 176 C90 164, 120 154, 160 142 S240 104, 300 100 S390 78, 440 66 S520 92, 580 52 S650 34, 680 28"
+              ></path>
+              <circle class="graph-dot" cx="580" cy="52" r="6"></circle>
+            </svg>
+            <div class="bars">
+              <div class="bar" style="--bar-h: 34%"></div>
+              <div class="bar" style="--bar-h: 42%"></div>
+              <div class="bar" style="--bar-h: 48%"></div>
+              <div class="bar" style="--bar-h: 56%"></div>
+              <div class="bar" style="--bar-h: 68%"></div>
+              <div class="bar highlight" style="--bar-h: 88%"></div>
+              <div class="bar" style="--bar-h: 74%"></div>
+              <div class="bar" style="--bar-h: 94%"></div>
+            </div>
+          </div>
+
+          <div class="sales-detail-preview" data-sales-detail>
+            <div class="detail-column">
+              <span class="mini-label">Today</span>
+              <strong>1,286 orders</strong>
+            </div>
+            <div class="detail-column">
+              <span class="mini-label">Best Window</span>
+              <strong>18:00 - 19:00</strong>
+            </div>
+            <button class="detail-chip" type="button" data-sales-toggle>Detailed Analytics</button>
+          </div>
+
+          <div class="sales-drilldown" data-sales-drilldown>
+            <div class="sales-drilldown-header">
+              <div>
+                <span class="mini-label">Detailed View</span>
+                <strong>Hourly Sales</strong>
+              </div>
+              <button class="detail-chip secondary" type="button" data-sales-close>Close</button>
+            </div>
+            <div class="sales-rows">
+              <div class="sales-row"><span>16:00</span><i style="--row-w: 46%"></i><strong>SEK 12,400</strong></div>
+              <div class="sales-row"><span>17:00</span><i style="--row-w: 58%"></i><strong>SEK 15,900</strong></div>
+              <div class="sales-row"><span>18:00</span><i style="--row-w: 92%"></i><strong>SEK 24,300</strong></div>
+              <div class="sales-row"><span>19:00</span><i style="--row-w: 78%"></i><strong>SEK 19,700</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-ai" id="ai" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Labour Intelligence</p>
+          <h2>Intelligence built into every shift.</h2>
+          <p>
+            Historical demand, live staffing pressure, and schedule guidance move together in one calm operational view.
+          </p>
+        </div>
+
+        <div class="ai-intro reveal">
+          <article class="glass-card ai-hero-card" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-hero-copy">
+              <span class="mini-label">AI Scheduling</span>
+              <h3>Scheduling, guided by live business reality.</h3>
+              <p>
+                Skift reads sales behavior, predicts demand, and recommends labour action before service pressure appears.
+              </p>
+            </div>
+            <div class="ai-hero-dashboard">
+              <div class="hero-dashboard-glow"></div>
+              <div class="hero-dashboard-panel panel-history">
+                <span class="mini-label">Historical Signal</span>
+                <div class="history-ribbon">
+                  <i style="--ribbon-h: 38%"></i>
+                  <i style="--ribbon-h: 46%"></i>
+                  <i style="--ribbon-h: 52%"></i>
+                  <i style="--ribbon-h: 68%"></i>
+                  <i style="--ribbon-h: 74%"></i>
+                  <i style="--ribbon-h: 62%"></i>
+                  <i style="--ribbon-h: 82%"></i>
+                </div>
+              </div>
+              <div class="hero-dashboard-panel panel-forecast">
+                <span class="mini-label">Forecast</span>
+                <svg viewBox="0 0 320 120" class="forecast-mini-svg" aria-hidden="true">
+                  <path class="forecast-base-path" d="M16 86 C48 76, 76 72, 108 58 S166 44, 196 50 S240 44, 268 30"></path>
+                  <path class="forecast-future-path" d="M268 30 C286 26, 296 18, 306 12"></path>
+                </svg>
+              </div>
+              <div class="hero-dashboard-panel panel-recommendation">
+                <span class="mini-label">Action</span>
+                <strong data-ai-recommendation-label>Increase dinner coverage</strong>
+                <p data-ai-recommendation-note>Projected 18:00 demand exceeds current floor staffing.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-analysis-grid">
+          <article class="glass-card ai-analysis-card reveal" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">By Hour</span>
+              <strong>Patterns, minute by minute.</strong>
+            </div>
+            <div class="hour-analysis">
+              <div class="hour-bars">
+                <i style="--analysis-h: 26%"></i>
+                <i style="--analysis-h: 34%"></i>
+                <i style="--analysis-h: 42%"></i>
+                <i style="--analysis-h: 54%"></i>
+                <i style="--analysis-h: 76%"></i>
+                <i class="accent" style="--analysis-h: 92%"></i>
+                <i style="--analysis-h: 74%"></i>
+                <i style="--analysis-h: 58%"></i>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card ai-analysis-card reveal delay-1" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">By Day</span>
+              <strong>Weekly rhythm, clearly surfaced.</strong>
+            </div>
+            <div class="day-analysis">
+              <div class="day-trend">
+                <i style="--day-scale: 0.82"></i>
+                <i style="--day-scale: 0.9"></i>
+                <i style="--day-scale: 0.74"></i>
+                <i style="--day-scale: 0.86"></i>
+                <i class="accent" style="--day-scale: 1"></i>
+                <i style="--day-scale: 0.68"></i>
+                <i style="--day-scale: 0.56"></i>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card ai-analysis-card reveal delay-2" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">By Month</span>
+              <strong>Seasonality, read in one glance.</strong>
+            </div>
+            <div class="month-analysis">
+              <div class="month-pulse">
+                <span class="month-ring ring-one"></span>
+                <span class="month-ring ring-two"></span>
+                <span class="month-ring ring-three"></span>
+                <div class="month-core">Q4</div>
+              </div>
+              <div class="month-summary">
+                <span>Recurring dinner peaks</span>
+                <span>Weekend uplift</span>
+                <span>Campaign sensitivity</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-prediction-stage reveal">
+          <article class="glass-card ai-prediction-shell">
+            <div class="surface-sheen"></div>
+            <div class="prediction-copy">
+              <span class="mini-label">Demand Forecast</span>
+              <h3>AI that sees demand before it arrives.</h3>
+              <p>Historical performance extends into a live projection, with staffing response forming around it.</p>
+            </div>
+            <div class="prediction-visual">
+              <svg viewBox="0 0 760 280" class="prediction-svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="forecastFade" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#4377f5" stop-opacity="0.18"></stop>
+                    <stop offset="100%" stop-color="#34b873" stop-opacity="0.08"></stop>
+                  </linearGradient>
+                </defs>
+                <path class="prediction-area" d="M40 230 C90 214, 128 198, 170 174 S250 140, 308 136 S392 148, 446 130 S534 112, 596 78 S664 62, 710 54 L710 250 L40 250 Z"></path>
+                <path class="prediction-history-path" d="M40 230 C90 214, 128 198, 170 174 S250 140, 308 136 S392 148, 446 130"></path>
+                <path class="prediction-future-path" d="M446 130 C494 116, 534 112, 596 78 S664 62, 710 54"></path>
+                <circle class="prediction-node" cx="446" cy="130" r="7"></circle>
+              </svg>
+              <div class="prediction-metrics">
+                <div class="prediction-chip">
+                  <span class="mini-label">Forecast Window</span>
+                  <strong>17:30 - 20:00</strong>
+                </div>
+                <div class="prediction-chip">
+                  <span class="mini-label">Demand Shift</span>
+                  <strong>+18%</strong>
+                </div>
+                <div class="prediction-chip highlight">
+                  <span class="mini-label">System Reading</span>
+                  <strong>Coverage pressure building</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-response-grid">
+          <article class="glass-card recommendation-card reveal" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Labour Recommendation</span>
+              <strong>When sales rise, staffing responds.</strong>
+            </div>
+            <div class="recommendation-body">
+              <div class="staffing-pressure">
+                <div class="pressure-meter">
+                  <span class="pressure-fill" data-ai-pressure></span>
+                </div>
+                <div class="pressure-labels">
+                  <span>Coverage</span>
+                  <strong data-ai-pressure-label>Elevated</strong>
+                </div>
+              </div>
+              <div class="recommendation-panel" data-ai-recommendation-card>
+                <span class="mini-label">Recommended Action</span>
+                <strong data-ai-action-title>Add one floor lead from 17:30</strong>
+                <p data-ai-action-body>Dining room demand is trending above planned labour capacity.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card schedule-intelligence-card reveal delay-1" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Schedule Generation</span>
+              <strong>Operational logic, aligned automatically.</strong>
+            </div>
+            <div class="decision-flow">
+              <div class="decision-inputs">
+                <div class="decision-token">Sales demand</div>
+                <div class="decision-token">Contract hours</div>
+                <div class="decision-token">Labour law</div>
+                <div class="decision-token">Role coverage</div>
+                <div class="decision-token">Fair allocation</div>
+              </div>
+              <div class="decision-core">
+                <div class="core-halo"></div>
+                <strong>Skift Intelligence</strong>
+              </div>
+              <div class="decision-output">
+                <div class="schedule-row">
+                  <span>Floor Lead</span>
+                  <i style="--schedule-w: 74%"></i>
+                  <strong>17:30 - 22:00</strong>
+                </div>
+                <div class="schedule-row">
+                  <span>Front Counter</span>
+                  <i style="--schedule-w: 62%"></i>
+                  <strong>16:00 - 21:00</strong>
+                </div>
+                <div class="schedule-row">
+                  <span>Runner</span>
+                  <i class="accent" style="--schedule-w: 81%"></i>
+                  <strong>18:00 - 23:00</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-governance-grid">
+          <article class="glass-card compliance-card reveal" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Compliance</span>
+              <strong>Rules checked before a shift moves.</strong>
+            </div>
+            <div class="compliance-list">
+              <div class="compliance-item">
+                <span class="status-dot"></span>
+                <div>
+                  <strong>Country labour rules</strong>
+                  <p>Local break and coverage logic validated.</p>
+                </div>
+              </div>
+              <div class="compliance-item">
+                <span class="status-dot"></span>
+                <div>
+                  <strong>Contract hours</strong>
+                  <p>Hours stay within agreed weekly allocation.</p>
+                </div>
+              </div>
+              <div class="compliance-item">
+                <span class="status-dot"></span>
+                <div>
+                  <strong>Staffing restrictions</strong>
+                  <p>Role mix and operational constraints remain intact.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card visibility-card reveal delay-1" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Traceability</span>
+              <strong>Recommendation, change, notification.</strong>
+            </div>
+            <div class="visibility-flow">
+              <div class="flow-node is-live">
+                <span class="flow-badge">1</span>
+                <div>
+                  <strong>AI recommends</strong>
+                  <p data-ai-flow-copy>Coverage increased for projected dinner demand.</p>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-node">
+                <span class="flow-badge">2</span>
+                <div>
+                  <strong>Schedule updates</strong>
+                  <p>Shift blocks re-balance in real time.</p>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-node manager-node" data-ai-manager-node>
+                <span class="flow-badge">3</span>
+                <div>
+                  <strong>Manager notified</strong>
+                  <p>Every operational change stays visible and reviewable.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene-feed" id="feed" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Feed</p>
+          <h2>Announcements and company updates that feel alive.</h2>
+          <p>
+            Posts rise into view naturally, preserving a clean reading rhythm instead of overwhelming the screen.
+          </p>
+        </div>
+
+        <div class="feed-stack">
+          <article class="glass-card feed-card reveal feed-lift">
+            <div class="surface-sheen"></div>
+            <div class="feed-meta">
+              <div>
+                <h3>Emma Brooks</h3>
+                <p>Manager</p>
+              </div>
+              <span>9m</span>
+            </div>
+            <p>Friday evening coverage is fully staffed across the branch.</p>
+            <div class="feed-actions">
+              <button class="feed-action" type="button" data-like-button>Like</button>
+              <button class="feed-action" type="button" data-comment-toggle>Comment</button>
+            </div>
+            <div class="comment-reveal" data-comment-field>Reply to the team</div>
+          </article>
+          <article class="glass-card feed-card reveal delay-1 feed-lift">
+            <div class="surface-sheen"></div>
+            <div class="feed-meta">
+              <div>
+                <h3>Deependra Reddy</h3>
+                <p>Shift Leader</p>
+              </div>
+              <span>14m</span>
+            </div>
+            <p>Front-of-house reset is complete and ready for the dinner window.</p>
+            <div class="feed-actions">
+              <button class="feed-action" type="button" data-like-button>Like</button>
+              <button class="feed-action" type="button" data-comment-toggle>Comment</button>
+            </div>
+            <div class="comment-reveal" data-comment-field>Reply to the team</div>
+          </article>
+          <article class="glass-card feed-card reveal delay-2 feed-lift">
+            <div class="surface-sheen"></div>
+            <div class="feed-meta">
+              <div>
+                <h3>Lina Park</h3>
+                <p>Manager</p>
+              </div>
+              <span>22m</span>
+            </div>
+            <p>Inventory handoff has been logged with the opening team.</p>
+            <div class="feed-actions">
+              <button class="feed-action" type="button" data-like-button>Like</button>
+              <button class="feed-action" type="button" data-comment-toggle>Comment</button>
+            </div>
+            <div class="comment-reveal" data-comment-field>Reply to the team</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene-roles" id="roles" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Roles</p>
+          <h2>Permission layers made visible.</h2>
+          <p>
+            Spatial depth communicates authority, access, and context without relying on dense explanation.
+          </p>
+        </div>
+
+        <div class="role-stack" data-role-stack>
+          <button class="glass-card role-card is-front" data-role-card>
+            <div class="surface-sheen"></div>
+            <h3>Manager</h3>
+            <p>Branch oversight, analytics, team structure, and operational control.</p>
+          </button>
+          <button class="glass-card role-card" data-role-card>
+            <div class="surface-sheen"></div>
+            <h3>Shift Leader</h3>
+            <p>Scoped management, communication leadership, and daily execution.</p>
+          </button>
+          <button class="glass-card role-card" data-role-card>
+            <div class="surface-sheen"></div>
+            <h3>Team Member</h3>
+            <p>Clear schedule, tasks, messaging, and company context.</p>
+          </button>
+        </div>
+      </section>
+
+      <section class="scene scene-finale" id="finale" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Final Product View</p>
+          <h2>A single ecosystem, presented with quiet confidence.</h2>
+        </div>
+
+        <div class="glass-card final-shell reveal">
+          <div class="final-glow"></div>
+          <div class="reflection"></div>
+          <div class="final-layout">
+            <div class="final-feature side-left final-float">
+              <div class="mini-app-card">
+                <span class="mini-label">Messages</span>
+                <div class="mini-bubble incoming"></div>
+                <div class="mini-bubble outgoing"></div>
+              </div>
+            </div>
+
+            <div class="final-device final-float">
+              <div class="final-ui">
+                <div class="final-top">
+                  <span class="chip chip-primary"></span>
+                  <span class="chip"></span>
+                  <span class="chip"></span>
+                </div>
+                <div class="hero-panel">
+                  <div class="hero-panel-copy">
+                    <span class="mini-label">Home</span>
+                    <strong>Skift</strong>
+                    <p>Messages, shifts, feed, and live sales.</p>
+                  </div>
+                  <div class="hero-panel-sales">
+                    <span>SEK 132,300</span>
+                    <div class="hero-panel-bars">
+                      <i></i><i></i><i></i><i></i><i class="accent"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="split-panels">
+                  <div class="panel-messages">
+                    <span class="mini-label">Messages</span>
+                    <div class="mini-lines">
+                      <i></i><i></i><i></i>
+                    </div>
+                  </div>
+                  <div class="panel-calendar">
+                    <span class="mini-label">Calendar</span>
+                    <div class="mini-grid">
+                      <i></i><i></i><i class="accent"></i><i></i><i></i><i></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom-panel">
+                  <span class="mini-label">Feed</span>
+                  <div class="bottom-posts">
+                    <i></i><i></i><i></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="final-feature side-right final-float">
+              <div class="mini-app-card">
+                <span class="mini-label">AI Labour</span>
+                <div class="mini-chart ai-mini-chart">
+                  <i></i><i></i><i class="accent"></i><i></i>
+                </div>
+                <div class="mini-ai-tag">Coverage adjusted</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="outro reveal">
+          <p>One app. Complete control.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
