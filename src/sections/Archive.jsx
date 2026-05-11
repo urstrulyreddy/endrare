@@ -5,6 +5,7 @@ const ENTRIES = [
   {
     date: '2025 / Essay',
     title: 'Building Skift from real operations',
+    href: '/skiftcasestudy.html',
     sub: 'How working real shifts changed every decision in the product.',
   },
   {
@@ -33,13 +34,20 @@ export default function Archive() {
       </h2>
 
       <div className={styles.grid}>
-        {ENTRIES.map((e) => (
-          <div className={`${styles.item} reveal`} key={e.title}>
-            <div className={styles.date}>{e.date}</div>
-            <div className={styles.title}>{e.title}</div>
-            <div className={styles.sub}>{e.sub}</div>
-          </div>
-        ))}
+        {ENTRIES.map((e) => {
+          const Item = e.href ? 'a' : 'div'
+          const itemProps = e.href
+            ? { href: e.href, 'aria-label': `Open ${e.title}` }
+            : {}
+
+          return (
+            <Item className={`${styles.item} reveal`} key={e.title} {...itemProps}>
+              <div className={styles.date}>{e.date}</div>
+              <div className={styles.title}>{e.title}</div>
+              <div className={styles.sub}>{e.sub}</div>
+            </Item>
+          )
+        })}
       </div>
     </section>
   )
