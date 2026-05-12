@@ -23,7 +23,7 @@ export default function Hero() {
 
         <div className={styles.actions}>
           <a href="#systems" className="btn-primary">Explore Work</a>
-          <a href="#motion" className="btn-ghost">
+          <a href="#archive" className="btn-ghost">
             Inside the Systems
             <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
               <path d="M5 12h14M13 6l6 6-6 6" />

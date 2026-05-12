@@ -5,7 +5,7 @@ const ENTRIES = [
   {
     date: '2025 / Essay',
     title: 'Building Skift from real operations',
-    href: '/skiftcasestudy.html',
+    href: '/casestudy/skiftcasestudy.html',
     sub: 'How working real shifts changed every decision in the product.',
   },
   {
@@ -16,6 +16,7 @@ const ENTRIES = [
   {
     date: '2025 / Essay',
     title: 'Why clarity is a product decision',
+    href: '/casestudy/productclarity.html',
     sub: 'Reducing cognitive load is not a design problem. It is an engineering problem.',
   },
   {

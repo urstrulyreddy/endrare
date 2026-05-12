@@ -53,21 +53,25 @@ a deploy command, use `npx wrangler pages deploy dist --project-name endrare`.
 The Skift item in `src/sections/SelectedSystems.jsx` links to:
 
 ```txt
-/skiftpresentation.html
+/presentations/skiftpresentation.html
 ```
 
-The `npm run build` command copies the single-file `skiftpresentation.html`
-into `dist/skiftpresentation.html`, so Cloudflare serves it as a standalone page.
-The `/skift` and `/skift/` paths redirect to that file.
+The `npm run build` command copies `presentations/skiftpresentation.html`
+into `dist/presentations/skiftpresentation.html`, so Cloudflare serves it as a
+standalone page. It also keeps `dist/skiftpresentation.html` and `dist/skift/index.html`
+available for older links. The `/skift` and `/skift/` paths redirect to the
+presentation file.
 
 The archive entry **Building Skift from real operations** links to:
 
 ```txt
-/skiftcasestudy.html
+/casestudy/skiftcasestudy.html
 ```
 
-The build also copies `skiftcasestudy.html` into `dist/skiftcasestudy.html`.
-The `/skift-case-study` and `/skift-case-study/` paths redirect to that file.
+The build also copies `casestudy/skiftcasestudy.html` into
+`dist/casestudy/skiftcasestudy.html`. It also keeps `dist/skiftcasestudy.html`
+and `dist/skift-case-study/index.html` available for older links. The
+`/skift-case-study` and `/skift-case-study/` paths redirect to the case study file.
 
 ### Option B — Direct Upload (no Git)
 
@@ -98,10 +102,11 @@ endrare/
 ├── vite.config.js          # Vite config
 ├── wrangler.toml           # Cloudflare Pages config
 ├── package.json
-├── skiftpresentation.html  # Single-file Skift presentation
-├── skiftcasestudy.html     # Single-file Skift case study
-├── scripts/
-│   └── copy-skift.mjs      # Copies Skift pages into dist
+├── presentations/
+│   ├── skiftpresentation.html  # Single-file Skift presentation
+│   └── copy-skift.mjs          # Copies Skift pages into dist
+├── casestudy/
+│   └── skiftcasestudy.html     # Single-file Skift case study
 └── src/
     ├── main.jsx            # React entry
     ├── App.jsx             # Root component + scroll observer
@@ -137,8 +142,8 @@ endrare/
 
 - **Contact email** → `src/components/Footer.jsx`
 - **Projects** → `src/sections/SelectedSystems.jsx` (SYSTEMS array)
-- **Skift presentation URL** → `src/sections/SelectedSystems.jsx` (`href: '/skiftpresentation.html'`)
-- **Skift case study URL** → `src/sections/Archive.jsx` (`href: '/skiftcasestudy.html'`)
+- **Skift presentation URL** → `src/sections/SelectedSystems.jsx` (`href: '/presentations/skiftpresentation.html'`)
+- **Skift case study URL** → `src/sections/Archive.jsx` (`href: '/casestudy/skiftcasestudy.html'`)
 - **Principles** → `src/sections/WhyIBuild.jsx` (ITEMS array)
 - **Archive entries** → `src/sections/Archive.jsx` (ENTRIES array)
 - **Hero copy** → `src/sections/Hero.jsx`
