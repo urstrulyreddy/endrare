@@ -73,6 +73,16 @@ The build also copies `casestudy/skiftcasestudy.html` into
 and `dist/skift-case-study/index.html` available for older links. The
 `/skift-case-study` and `/skift-case-study/` paths redirect to the case study file.
 
+The archive entry **What working in Sweden taught me about software** links to:
+
+```txt
+/notes/taughtinsweden.html
+```
+
+The build copies `notes/taughtinsweden.html` into
+`dist/notes/taughtinsweden.html`. The `/taught-in-sweden` and
+`/taught-in-sweden/` paths redirect to the note file.
+
 ### Option B — Direct Upload (no Git)
 
 ```bash
@@ -106,7 +116,10 @@ endrare/
 │   ├── skiftpresentation.html  # Single-file Skift presentation
 │   └── copy-skift.mjs          # Copies Skift pages into dist
 ├── casestudy/
-│   └── skiftcasestudy.html     # Single-file Skift case study
+│   ├── skiftcasestudy.html     # Single-file Skift case study
+│   └── productclarity.html     # Single-file product clarity case study
+├── notes/
+│   └── taughtinsweden.html     # Single-file Sweden/software note
 └── src/
     ├── main.jsx            # React entry
     ├── App.jsx             # Root component + scroll observer
@@ -144,6 +157,7 @@ endrare/
 - **Projects** → `src/sections/SelectedSystems.jsx` (SYSTEMS array)
 - **Skift presentation URL** → `src/sections/SelectedSystems.jsx` (`href: '/presentations/skiftpresentation.html'`)
 - **Skift case study URL** → `src/sections/Archive.jsx` (`href: '/casestudy/skiftcasestudy.html'`)
+- **Sweden note URL** → `src/sections/Archive.jsx` (`href: '/notes/taughtinsweden.html'`)
 - **Principles** → `src/sections/WhyIBuild.jsx` (ITEMS array)
 - **Archive entries** → `src/sections/Archive.jsx` (ENTRIES array)
 - **Hero copy** → `src/sections/Hero.jsx`

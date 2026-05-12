@@ -11,6 +11,7 @@ const ENTRIES = [
   {
     date: '2025 / Note',
     title: 'What working in Sweden taught me about software',
+    href: '/notes/taughtinsweden.html',
     sub: 'Speed, trust, and the cost of unclear systems.',
   },
   {

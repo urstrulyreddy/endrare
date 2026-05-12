@@ -32,6 +32,15 @@ const pages = [
       resolve(dist, 'product-clarity', 'index.html'),
     ],
   },
+  {
+    label: 'Taught in Sweden note',
+    source: resolve(root, 'notes', 'taughtinsweden.html'),
+    targets: [
+      resolve(dist, 'notes', 'taughtinsweden.html'),
+      resolve(dist, 'taughtinsweden.html'),
+      resolve(dist, 'taught-in-sweden', 'index.html'),
+    ],
+  },
 ]
 
 for (const page of pages) {
