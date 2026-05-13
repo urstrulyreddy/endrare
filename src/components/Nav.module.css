@@ -1,15 +1,47 @@
-.nav {
+/* ─── Page backdrop (blurs content behind open panel) ─── */
+.backdrop {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  pointer-events: none;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  background: transparent;
+  transition:
+    backdrop-filter 420ms ease,
+    -webkit-backdrop-filter 420ms ease,
+    background 420ms ease;
+}
+
+.backdropOpen {
+  pointer-events: auto;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background: rgba(17, 17, 16, 0.06);
+}
+
+/* ─── Outer wrapper (fixed, full width) ─── */
+.navWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+}
+
+/* ─── Nav bar strip ─── */
+.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 3rem;
   height: 60px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(250, 250, 249, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 0.5px solid var(--rule);
 }
 
@@ -25,6 +57,7 @@
 
 .links {
   display: flex;
+  align-items: center;
   gap: 2.5rem;
   list-style: none;
 }
@@ -54,7 +87,490 @@
   color: var(--white);
 }
 
+/* ─── Products trigger button ─── */
+.productsBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chevron {
+  color: var(--ink-4);
+  flex-shrink: 0;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.productsBtnOpen .chevron {
+  transform: rotate(180deg);
+  color: var(--ink-3);
+}
+
+/* ─── Mega panel ─── */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  background: var(--off-white);
+  border-bottom: 0.5px solid transparent;
+  transition:
+    grid-template-rows 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 420ms ease;
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+  border-bottom-color: var(--rule);
+}
+
+/* Must have min-height: 0 so grid 0fr actually collapses to 0 */
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ─── Three-column grid ─── */
+.panelGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr 1fr;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.colFeatured {
+  padding: 2rem 2.5rem 2rem 0;
+  border-right: 0.5px solid var(--rule);
+}
+
+.col {
+  padding: 2rem 2.5rem;
+  border-right: 0.5px solid var(--rule);
+}
+
+.col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* ─── Column eyebrow ─── */
+.colEyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 0.5px solid var(--rule);
+  animation: fadeUp 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.colIndex {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+/* ─── Featured card (Skift) ─── */
+.featuredCard {
+  display: block;
+  padding: 1.2rem;
+  border: 0.5px solid var(--rule);
+  background: var(--white);
+  text-decoration: none;
+  color: inherit;
+  transition: background 200ms ease, border-color 200ms ease;
+  animation: fadeUp 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.featuredCard:hover {
+  background: var(--rule-2);
+  border-color: var(--ink-4);
+}
+
+.activeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--ink-3);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.activeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4A7C59;
+  flex-shrink: 0;
+  animation: pulse 2.6s ease-in-out infinite;
+}
+
+.featuredTitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.55rem;
+}
+
+.featuredDesc {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--ink-3);
+  line-height: 1.65;
+  margin: 0 0 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featuredFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.7rem;
+  border-top: 0.5px solid var(--rule);
+}
+
+.featuredCat {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.featuredArrow {
+  font-size: 12px;
+  color: var(--ink-4);
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.featuredCard:hover .featuredArrow {
+  transform: translateX(3px);
+  color: var(--ink-2);
+}
+
+/* ─── List items (products + thinking) ─── */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.7rem 0;
+  border-bottom: 0.5px solid var(--rule-2);
+  text-decoration: none;
+  color: inherit;
+  animation: fadeUp 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.itemIndex {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-4);
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.itemBody {
+  flex: 1;
+  min-width: 0;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.item:hover .itemBody {
+  transform: translateX(3px);
+}
+
+.itemTitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 180ms ease;
+}
+
+.item:hover .itemTitle { color: var(--ink); }
+
+.itemMeta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.itemArrow {
+  font-size: 12px;
+  color: var(--ink-4);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 180ms ease, transform 200ms ease, color 180ms ease;
+}
+
+.item:hover .itemArrow {
+  opacity: 1;
+  transform: translateX(2px);
+  color: var(--ink-3);
+}
+
+/* ─── Panel footer ─── */
+.panelFooter {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0.9rem 3rem;
+  border-top: 0.5px solid var(--rule);
+  animation: fadeUp 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.footerLink {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footerLink:hover { color: var(--ink-2); }
+
+/* ─── Keyframes ─── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ─── Always-visible arrow override (mobile items) ─── */
+.itemArrowVisible {
+  opacity: 1;
+  color: var(--ink-4);
+}
+
+/* ─── Hamburger (mobile only — hidden on desktop) ─── */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.hamLine {
+  display: block;
+  width: 22px;
+  height: 1.3px;
+  background: var(--ink);
+  transform-origin: center;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hamburgerOpen .hamLine:first-child {
+  transform: translateY(3.15px) rotate(45deg);
+}
+
+.hamburgerOpen .hamLine:last-child {
+  transform: translateY(-3.15px) rotate(-45deg);
+}
+
+/* ─── Mobile full-screen menu ─── */
+.mobileMenu {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 200;
+  background: var(--off-white);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 1.5rem 2rem;
+  animation: menuReveal 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes menuReveal {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  border-bottom: 0.5px solid var(--rule);
+  flex-shrink: 0;
+}
+
+.mobileClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: -8px;
+}
+
+/* ─── Mobile nav links ─── */
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0 1rem;
+  border-bottom: 0.5px solid var(--rule);
+  margin-bottom: 0.25rem;
+}
+
+.mobileLink {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink-2);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  padding: 0.75rem 0;
+  border-bottom: 0.5px solid var(--rule-2);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  transition: color 180ms ease;
+  animation: fadeUp 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.mobileLink:last-child { border-bottom: none; }
+.mobileLink:hover { color: var(--ink); }
+
+/* ─── Mobile section eyebrow ─── */
+.mobileEyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 1.25rem 0 0.65rem;
+  border-bottom: 0.5px solid var(--rule);
+  margin-bottom: 0.15rem;
+  animation: fadeUp 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ─── Mobile product / thinking items ─── */
+.mobileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0.8rem 0;
+  border-bottom: 0.5px solid var(--rule-2);
+  text-decoration: none;
+  color: inherit;
+  min-height: 52px;
+  animation: fadeUp 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.mobileItem:last-of-type { border-bottom: none; }
+
+.mobileItemMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobileItem .itemTitle {
+  font-size: 14px;
+  -webkit-line-clamp: 2;
+}
+
+/* ─── Mobile CTA ─── */
+.mobileCta {
+  padding: 2rem 0 1rem;
+  animation: fadeUp 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition: none; }
+  .chevron { transition: none; }
+  .hamLine { transition: none; }
+  .featuredCard,
+  .featuredArrow,
+  .itemBody,
+  .itemTitle,
+  .itemArrow { transition: none; }
+  .colEyebrow,
+  .featuredCard,
+  .item,
+  .panelFooter { animation: none; opacity: 1; transform: none; }
+  .activeDot { animation: none; }
+  .backdrop { transition: none; }
+  .mobileMenu,
+  .mobileLink,
+  .mobileEyebrow,
+  .mobileItem,
+  .mobileCta { animation: none; opacity: 1; transform: none; }
+}
+
+/* ─── Mobile breakpoint ─── */
 @media (max-width: 900px) {
   .nav { padding: 0 1.5rem; }
   .links { display: none; }
+  .cta  { display: none; }
+  .panel { display: none; }
+  .hamburger { display: flex; }
+  .backdrop  { display: none; }
 }

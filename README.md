@@ -25,6 +25,16 @@ npm run build
 # Output goes to /dist
 ```
 
+The build also runs `scripts/build-seo.mjs`, which generates:
+
+- `sitemap.xml`
+- `robots.txt`
+- clean article/product routes
+- page-level SEO metadata
+- JSON-LD structured data
+- Open Graph and Twitter/X metadata
+- copied standalone HTML pages from `casestudy/`, `notes/`, and `presentations/`
+
 ---
 
 ## Deploy to Cloudflare Pages
@@ -48,6 +58,38 @@ Do not use `npx wrangler deploy` as a Pages deploy command. If your Cloudflare
 project currently has that deploy command set, clear it. If Cloudflare requires
 a deploy command, use `npx wrangler pages deploy dist --project-name endrare`.
 
+### SEO and Public Pages
+
+All public SEO metadata lives in:
+
+```txt
+src/data/seo.js
+```
+
+When adding a new public case study, essay, note, build log, presentation, or
+product page, add one metadata object there. The build script uses that object
+for canonical URLs, sitemap inclusion, Open Graph metadata, JSON-LD, redirects,
+archive links, and generated product/archive pages.
+
+Current clean article URLs:
+
+```txt
+/case-studies/building-skift-from-real-operations/
+/case-studies/why-clarity-is-a-product-decision/
+/notes/what-working-in-sweden-taught-me-about-software/
+```
+
+Current generated index pages:
+
+```txt
+/archive/
+/archive/thinking/
+/products/
+/start/
+/about/
+/contact/
+```
+
 ### Skift presentation
 
 The Skift item in `src/sections/SelectedSystems.jsx` links to:
@@ -58,30 +100,28 @@ The Skift item in `src/sections/SelectedSystems.jsx` links to:
 
 The `npm run build` command copies `presentations/skiftpresentation.html`
 into `dist/presentations/skiftpresentation.html`, so Cloudflare serves it as a
-standalone page. It also keeps `dist/skiftpresentation.html` and `dist/skift/index.html`
-available for older links. The `/skift` and `/skift/` paths redirect to the
-presentation file.
+standalone page. Older `/skift`, `/skift/`, and `/skiftpresentation.html` URLs
+redirect to the presentation file.
 
-The archive entry **Building Skift from real operations** links to:
+The archive entry **Building Skift from real operations** uses this canonical URL:
 
 ```txt
-/casestudy/skiftcasestudy.html
+/case-studies/building-skift-from-real-operations/
 ```
 
 The build also copies `casestudy/skiftcasestudy.html` into
-`dist/casestudy/skiftcasestudy.html`. It also keeps `dist/skiftcasestudy.html`
-and `dist/skift-case-study/index.html` available for older links. The
-`/skift-case-study` and `/skift-case-study/` paths redirect to the case study file.
+`dist/case-studies/building-skift-from-real-operations/index.html`. Older
+`.html` and `/skift-case-study` URLs redirect to the canonical URL.
 
-The archive entry **What working in Sweden taught me about software** links to:
+The archive entry **What working in Sweden taught me about software** uses this canonical URL:
 
 ```txt
-/notes/taughtinsweden.html
+/notes/what-working-in-sweden-taught-me-about-software/
 ```
 
 The build copies `notes/taughtinsweden.html` into
-`dist/notes/taughtinsweden.html`. The `/taught-in-sweden` and
-`/taught-in-sweden/` paths redirect to the note file.
+`dist/notes/what-working-in-sweden-taught-me-about-software/index.html`. Older
+note URLs redirect to the canonical URL.
 
 ### Option B — Direct Upload (no Git)
 
@@ -114,12 +154,20 @@ endrare/
 ├── package.json
 ├── presentations/
 │   ├── skiftpresentation.html  # Single-file Skift presentation
-│   └── copy-skift.mjs          # Copies Skift pages into dist
+│   └── copy-skift.mjs          # Compatibility shim for older build commands
 ├── casestudy/
 │   ├── skiftcasestudy.html     # Single-file Skift case study
 │   └── productclarity.html     # Single-file product clarity case study
 ├── notes/
 │   └── taughtinsweden.html     # Single-file Sweden/software note
+├── scripts/
+│   └── build-seo.mjs           # Generates SEO, sitemap, robots, clean routes
+├── public/
+│   ├── robots.txt
+│   ├── favicon.svg
+│   ├── manifest.webmanifest
+│   └── og/
+│       └── endrare-og.svg
 └── src/
     ├── main.jsx            # React entry
     ├── App.jsx             # Root component + scroll observer
@@ -156,10 +204,10 @@ endrare/
 - **Contact email** → `src/components/Footer.jsx`
 - **Projects** → `src/sections/SelectedSystems.jsx` (SYSTEMS array)
 - **Skift presentation URL** → `src/sections/SelectedSystems.jsx` (`href: '/presentations/skiftpresentation.html'`)
-- **Skift case study URL** → `src/sections/Archive.jsx` (`href: '/casestudy/skiftcasestudy.html'`)
-- **Sweden note URL** → `src/sections/Archive.jsx` (`href: '/notes/taughtinsweden.html'`)
+- **Public SEO/content metadata** → `src/data/seo.js`
+- **Archive entries** → `src/data/seo.js` (`CONTENT_ITEMS`)
+- **Product pages** → `src/data/seo.js` (`PRODUCT_ITEMS`)
 - **Principles** → `src/sections/WhyIBuild.jsx` (ITEMS array)
-- **Archive entries** → `src/sections/Archive.jsx` (ENTRIES array)
 - **Hero copy** → `src/sections/Hero.jsx`
 - **Design tokens** → `src/styles/global.css` (`:root` variables)
 - **Fonts** → `index.html` Google Fonts link + `global.css` font variables

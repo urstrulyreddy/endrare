@@ -1,25 +1,9 @@
 import React from 'react'
+import { getArchiveEntries } from '../data/seo'
 import styles from './Archive.module.css'
 
 const ENTRIES = [
-  {
-    date: '2025 / Essay',
-    title: 'Building Skift from real operations',
-    href: '/casestudy/skiftcasestudy.html',
-    sub: 'How working real shifts changed every decision in the product.',
-  },
-  {
-    date: '2025 / Note',
-    title: 'What working in Sweden taught me about software',
-    href: '/notes/taughtinsweden.html',
-    sub: 'Speed, trust, and the cost of unclear systems.',
-  },
-  {
-    date: '2025 / Essay',
-    title: 'Why clarity is a product decision',
-    href: '/casestudy/productclarity.html',
-    sub: 'Reducing cognitive load is not a design problem. It is an engineering problem.',
-  },
+  ...getArchiveEntries(),
   {
     date: '2025 / Note',
     title: 'Backend systems should feel invisible',

@@ -30,7 +30,7 @@ export default function BuilderStatement() {
           hand in hand.
         </p>
         <div className={styles.cta}>
-          <a href="#contact" className="btn-primary">Start a conversation</a>
+          <a href="/conversation.html" className="btn-primary">Start a conversation</a>
         </div>
       </div>
     </section>

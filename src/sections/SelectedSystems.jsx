@@ -13,6 +13,7 @@ const SYSTEMS = [
   {
     tag: 'NLP · Automation',
     title: 'Outliner',
+    href: '/products/outliner/',
     desc: 'AI-driven system for generating context-aware responses using prompt-based logic and interaction history. Focused on improving relevance, reducing repetitive manual input, and creating a more adaptive response workflow.',
     tech: ['Python', 'NLP', 'Prompt Eng.'],
   },
@@ -31,6 +32,7 @@ const SYSTEMS = [
   {
     tag: 'Computer Vision · AI',
     title: 'Pose Estimation / Motion Analysis',
+    href: '/products/pose-estimation/',
     desc: 'Computer-vision pipeline to analyse cycling motion from video data using pose estimation. Focused on extracting movement patterns and improving interpretability of motion data for sports biomechanical insight.',
     tech: ['Python', 'OpenCV', 'MediaPipe', 'CV'],
   },
@@ -48,7 +50,7 @@ export default function SelectedSystems() {
         {SYSTEMS.map((s) => {
           const Item = s.href ? 'a' : 'div'
           const itemProps = s.href
-            ? { href: s.href, 'aria-label': `Open ${s.title} presentation` }
+            ? { href: s.href, 'aria-label': `Open ${s.title}` }
             : {}
 
           return (

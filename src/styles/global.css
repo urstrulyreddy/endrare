@@ -43,6 +43,29 @@ a {
   color: inherit;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--white);
+  padding: 10px 14px;
+  font-size: 13px;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 /* ─── Utility ─── */
 .container {
   max-width: var(--max-w);
@@ -131,6 +154,21 @@ a {
 .btn-ghost:hover { color: var(--ink); }
 .btn-ghost svg { transition: transform 0.2s ease; }
 .btn-ghost:hover svg { transform: translateX(3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal.visible {
+    transform: none;
+  }
+}
 
 /* ─── Mobile ─── */
 @media (max-width: 900px) {
