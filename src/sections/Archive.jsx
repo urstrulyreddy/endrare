@@ -2,14 +2,7 @@ import React from 'react'
 import { getArchiveEntries } from '../data/seo'
 import styles from './Archive.module.css'
 
-const ENTRIES = [
-  ...getArchiveEntries(),
-  {
-    date: '2025 / Note',
-    title: 'Backend systems should feel invisible',
-    sub: 'The best infrastructure is the kind nobody notices is there.',
-  },
-]
+const ENTRIES = getArchiveEntries()
 
 export default function Archive() {
   return (

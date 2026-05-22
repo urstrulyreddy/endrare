@@ -285,6 +285,11 @@ h1 em { font-family: var(--font-serif); font-weight: 400; }
 .row { background: var(--surface-canvas); padding: 26px 0; display: grid; grid-template-columns: 180px 1fr; gap: 28px; }
 .row p { margin: 0; color: var(--text-secondary); line-height: 1.7; }
 .quiet-link { color: var(--text-primary); border-bottom: 1px solid var(--border-subtle); }
+.highlights { margin-top: 48px; }
+.highlights-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
+.highlights-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--border-subtle); }
+.highlights-list li { background: var(--surface-canvas); padding: 14px 0; font-size: 0.97rem; color: var(--text-secondary); line-height: 1.6; display: flex; align-items: baseline; gap: 14px; }
+.highlights-list li::before { content: '→'; font-size: 12px; color: var(--text-tertiary); flex-shrink: 0; }
 .actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 40px; }
 .button { display: inline-block; border: 1px solid var(--text-primary); padding: 11px 18px; font-size: 13px; }
 .button.primary { background: var(--text-primary); color: var(--surface-canvas); }
@@ -459,17 +464,27 @@ function renderContactPage(page) {
 function renderProductPage(product) {
   const jsonLd = [webPageJsonLd(product), productJsonLd(product)]
   const related = product.relatedPages || []
+  const lede = product.longDescription || product.description
+  const highlightsHtml = product.highlights
+    ? `<div class="highlights">
+  <div class="highlights-label">What it does</div>
+  <ul class="highlights-list">
+    ${product.highlights.map((h) => `<li>${escapeHtml(h)}</li>`).join('\n    ')}
+  </ul>
+</div>`
+    : ''
+
   const body = `<div class="eyebrow">${escapeHtml(product.category)}</div>
 <h1>${escapeHtml(product.title)}</h1>
-<p class="lede">${escapeHtml(product.description)}</p>
+<p class="lede">${escapeHtml(lede)}</p>
+${highlightsHtml}
 <div class="stack">
   <div class="row"><div class="card-meta">Status</div><p>${escapeHtml(product.status)}</p></div>
-  <div class="row"><div class="card-meta">Keywords</div><p>${escapeHtml(product.keywords.join(', '))}</p></div>
   <div class="row"><div class="card-meta">Related</div><p>${related.map((path) => `<a class="quiet-link" href="${escapeAttr(publicPath(path))}">${escapeHtml(labelForPath(path))}</a>`).join('<br>')}</p></div>
 </div>
 <div class="actions">
-  <a class="button primary" href="/products/">Back to products</a>
-  <a class="button" href="/contact/">Contact Deependra</a>
+  <a class="button primary" href="/conversation.html">Start a conversation</a>
+  <a class="button" href="/products/">All products</a>
 </div>`
 
   return generatedLayout(product, body, jsonLd)

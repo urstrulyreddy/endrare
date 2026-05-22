@@ -8,9 +8,9 @@ export const SITE = {
   themeColor: '#fafaf8',
   defaultImage: '/og/endrare-og.svg',
   defaultImageAlt: 'Endrare wordmark on a warm off-white background',
-  defaultTitle: 'Endrare — Deependra’s Product, Software and AI Archive',
+  defaultTitle: 'Endrare — Deependra\'s Product, Software and AI Archive',
   defaultDescription:
-    'Endrare is Deependra’s archive of software products, AI projects, product thinking, case studies, field notes, and systems built from real-world problems.',
+    'Endrare is Deependra\'s archive of software products, AI projects, product thinking, case studies, field notes, and systems built from real-world problems.',
 }
 
 export const AUTHOR = {
@@ -54,7 +54,7 @@ export const PAGE_SEO = [
     title: 'Archive',
     seoTitle: 'Archive — Endrare',
     description:
-      'Explore Endrare’s archive of case studies, essays, field notes, product ideas, AI projects, software systems, and build reflections.',
+      'Explore Endrare\'s archive of case studies, essays, field notes, product ideas, AI projects, software systems, and build reflections.',
     type: 'website',
     changefreq: 'weekly',
     priority: '0.8',
@@ -78,11 +78,11 @@ export const PAGE_SEO = [
     title: 'Products',
     seoTitle: 'Products — Software, AI and Systems Built by Deependra',
     description:
-      'Explore software products, AI systems, personal tools, and research projects built by Deependra, including Expense Hive, Pose Estimation, Food Tracker, Outliner, Skift, and Endrare.',
+      'Explore software products, AI systems, personal tools, and research projects built by Deependra, including Expense Hive, Pose Estimation, Food Tracker, Outlier, Skift, and Endrare.',
     type: 'website',
     changefreq: 'weekly',
     priority: '0.85',
-    keywords: ['software products', 'AI systems', 'Expense Hive', 'Pose Estimation', 'Food Tracker', 'Outliner', 'Skift'],
+    keywords: ['software products', 'AI systems', 'Expense Hive', 'Pose Estimation', 'Food Tracker', 'Outlier', 'Skift'],
   },
   {
     id: 'start',
@@ -90,7 +90,7 @@ export const PAGE_SEO = [
     title: 'Start Here',
     seoTitle: 'Start Here — Endrare',
     description:
-      'A guided path through Deependra’s work, products, case studies, field notes, and product thinking.',
+      'A guided path through Deependra\'s work, products, case studies, field notes, and product thinking.',
     type: 'website',
     changefreq: 'monthly',
     priority: '0.75',
@@ -172,7 +172,7 @@ export const CONTENT_ITEMS = [
     title: 'What working in Sweden taught me about software',
     seoTitle: 'What Working in Sweden Taught Me About Software — Endrare',
     description:
-      'A field note on how working in Sweden shaped Deependra’s thinking about software, trust, timing, documentation, boundaries, social friction, and systems that reduce human effort.',
+      'A field note on how working in Sweden shaped Deependra\'s thinking about software, trust, timing, documentation, boundaries, social friction, and systems that reduce human effort.',
     category: 'Work / Culture / Systems / Product Thinking',
     datePublished: '2026-05-13',
     dateModified: '2026-05-13',
@@ -229,6 +229,39 @@ export const CONTENT_ITEMS = [
     changefreq: 'monthly',
     priority: '0.85',
   },
+  {
+    id: 'backend-systems-should-feel-invisible',
+    sourceFile: 'notes/backendinvisible.html',
+    path: '/notes/backend-systems-should-feel-invisible',
+    legacyPaths: ['/notes/backendinvisible.html', '/backendinvisible.html', '/backend-invisible'],
+    type: 'Note',
+    articleType: 'Article',
+    archiveLabel: '2025 / Note',
+    title: 'Backend systems should feel invisible',
+    seoTitle: 'Backend Systems Should Feel Invisible — Endrare',
+    description:
+      'A field note on backend systems that feel invisible: infrastructure, APIs, reliability, naming, error handling, and product experiences that work without adding burden.',
+    category: 'Backend / Infrastructure / Engineering',
+    datePublished: '2026-05-22',
+    dateModified: '2026-05-22',
+    readTime: '4-5 min',
+    image: SITE.defaultImage,
+    imageAlt: 'Endrare note cover for Backend Systems Should Feel Invisible',
+    keywords: [
+      'backend systems',
+      'infrastructure',
+      'software engineering',
+      'reliable systems',
+      'API design',
+      'product experience',
+      'Endrare',
+      'Deependra',
+    ],
+    relatedPages: ['/archive/thinking', '/products/endrare', '/case-studies/why-clarity-is-a-product-decision'],
+    archiveDescription: 'The best infrastructure is the kind nobody notices is there.',
+    changefreq: 'monthly',
+    priority: '0.75',
+  },
 ]
 
 export const PRESENTATION_PAGES = [
@@ -283,7 +316,16 @@ export const PRODUCT_ITEMS = [
     title: 'Expense Hive',
     seoTitle: 'Expense Hive — Group Expense Splitting App by Deependra',
     description:
-      'Expense Hive is a mobile app built during bachelor’s to instantly log expenses, split bills between groups, add reminders, use group chat, and track weekly or monthly spending.',
+      'Expense Hive is a mobile app built during bachelor\'s to instantly log expenses, split bills between groups, add reminders, use group chat, and track weekly or monthly spending.',
+    longDescription:
+      'A mobile app built during the bachelor\'s to solve the real friction of shared group expenses. Instead of informal IOUs or shared spreadsheets, Expense Hive gives groups a single place to log costs, split bills automatically, chase reminders, and keep the conversation attached to the money.',
+    highlights: [
+      'Instant expense logging with group attribution',
+      'Automatic bill splitting with configurable ratios',
+      'Payment reminders and in-app notifications',
+      'Built-in group chat tied to shared expenses',
+      'Weekly and monthly spending summaries per member',
+    ],
     category: 'Mobile / Finance / Social Utility',
     status: 'Bachelor project',
     schemaType: 'SoftwareApplication',
@@ -299,6 +341,15 @@ export const PRODUCT_ITEMS = [
     seoTitle: 'Pose Estimation for Sports Movement Analysis — Endrare',
     description:
       'A thesis project using pose-estimation machine learning to analyze athlete movement and provide coaches with real-time body, leg, ankle, and movement attributes for injury-risk awareness.',
+    longDescription:
+      'A thesis project applying computer vision and machine learning to analyse athlete movement from standard video input. The system extracts joint positions frame-by-frame using pose estimation, producing interpretable movement data for coaches and analysts — surfacing patterns the human eye misses under pressure or speed.',
+    highlights: [
+      'Real-time joint tracking using MediaPipe pose estimation',
+      'Movement pattern analysis from standard video input',
+      'Body, leg, ankle, and movement attribute extraction per frame',
+      'Injury-risk signal identification and flagging for coaches',
+      'Readable output designed for non-ML sports professionals',
+    ],
     category: 'AI / Computer Vision / Sports Technology',
     status: 'Thesis / Research',
     schemaType: 'CreativeWork',
@@ -313,6 +364,15 @@ export const PRODUCT_ITEMS = [
     seoTitle: 'Automated Food, Gym and Daily Activity Tracker — Endrare',
     description:
       'A personal automation tool for logging food, gym, and daily activity using natural language input, then breaking food entries into nutritional values automatically.',
+    longDescription:
+      'A personal automation tool designed to remove the interface friction that kills most tracking habits. Users log food, gym sessions, and daily activity in plain language — the system parses the input, breaks it into structured nutritional and activity data, and maintains the running record automatically.',
+    highlights: [
+      'Natural language food and activity logging — no forms, no dropdowns',
+      'Automatic nutritional breakdown from free-text input',
+      'Gym and workout session tracking with activity categorisation',
+      'Daily and weekly summaries without any manual entry',
+      'Low enough friction to sustain as a real daily habit',
+    ],
     category: 'Health / Automation / Tracking',
     status: 'Personal automation',
     schemaType: 'SoftwareApplication',
@@ -324,17 +384,73 @@ export const PRODUCT_ITEMS = [
   {
     id: 'outliner',
     path: '/products/outliner',
-    title: 'Outliner',
-    seoTitle: 'Outliner — AI Response Generation System by Deependra',
+    title: 'Outlier',
+    seoTitle: 'Outlier — AI Response Generation System by Deependra',
     description:
-      'Outliner is an AI-powered response-generation system built around context, prompt patterns, interaction history, and adaptive responses.',
+      'Outlier is an AI system built around context — it learns prompt patterns and interaction history to generate responses that actually fit, cutting the repetitive effort of writing from scratch.',
+    longDescription:
+      'An AI system built on the observation that generic outputs fail because they ignore context. Outlier builds a structured understanding of prompt patterns, interaction history, and communication style — then uses that context to generate responses that fit the situation, reducing the manual effort of drafting from nothing each time.',
+    highlights: [
+      'Context-aware response generation from interaction history',
+      'Prompt pattern library built and refined from real usage',
+      'Adaptive output that matches established communication style',
+      'Significant reduction in repetitive drafting work',
+      'Configurable response depth and tone settings',
+    ],
     category: 'AI / NLP / Response Generation',
     status: 'AI system',
     schemaType: 'SoftwareApplication',
     applicationCategory: 'ProductivityApplication',
-    keywords: ['AI response generation', 'context-aware AI', 'NLP response system', 'prompt-based response generation'],
+    keywords: ['AI response generation', 'context-aware AI', 'NLP response system', 'prompt-based response generation', 'Outlier AI'],
     relatedPages: ['/products', '/archive/thinking'],
     dateModified: '2026-05-13',
+  },
+  {
+    id: 'flask-docker-aws',
+    path: '/products/flask-docker-aws',
+    title: 'Flask App — Docker on AWS',
+    seoTitle: 'Flask Web App Deployed with Docker on AWS — Endrare',
+    description:
+      'A containerised Flask web application with full end-to-end ownership — from backend development to cloud deployment on AWS.',
+    longDescription:
+      'A containerised web application built with complete end-to-end ownership — from writing the Flask backend to running it reliably on AWS. The project covers backend API development, Docker containerisation for environment consistency, and cloud deployment with production-style configuration on Linux. Built to close the gap between knowing how deployment works in theory and actually owning it in practice.',
+    highlights: [
+      'Flask backend with clean, modular API structure',
+      'Docker containerisation for reproducible environments',
+      'AWS deployment with production-ready configuration',
+      'Linux server setup and process management',
+      'Full ownership from local development to live cloud environment',
+    ],
+    category: 'Backend / Cloud / DevOps',
+    status: 'Deployed system',
+    schemaType: 'SoftwareApplication',
+    applicationCategory: 'DeveloperApplication',
+    keywords: ['Flask web app', 'Docker deployment', 'AWS cloud', 'containerised application', 'backend development', 'DevOps'],
+    relatedPages: ['/products/cloud-infrastructure', '/products'],
+    dateModified: '2026-05-22',
+  },
+  {
+    id: 'cloud-infrastructure',
+    path: '/products/cloud-infrastructure',
+    title: 'Cloud Infrastructure & Monitoring',
+    seoTitle: 'AWS Cloud Infrastructure and Monitoring — Endrare',
+    description:
+      'AWS infrastructure designed with VPC network isolation, EC2 compute, and CloudWatch observability — built and load tested under realistic production conditions.',
+    longDescription:
+      'AWS infrastructure designed from the ground up with reliability and observability as primary constraints. The system uses a VPC with public and private subnet separation, EC2 compute instances, and CloudWatch for monitoring and alerting. Load testing was run under realistic traffic conditions — not just a deployed system, but infrastructure that holds up under pressure and surfaces the right signals when it doesn\'t.',
+    highlights: [
+      'VPC design with public/private subnet isolation',
+      'EC2 instance provisioning, configuration, and management',
+      'CloudWatch monitoring, logging, and alerting setup',
+      'Load testing under production-style traffic conditions',
+      'Observability-first thinking built into every infrastructure decision',
+    ],
+    category: 'Infrastructure / AWS / Observability',
+    status: 'Systems design',
+    schemaType: 'CreativeWork',
+    keywords: ['AWS infrastructure', 'VPC design', 'EC2', 'CloudWatch monitoring', 'cloud observability', 'load testing', 'AWS'],
+    relatedPages: ['/products/flask-docker-aws', '/products'],
+    dateModified: '2026-05-22',
   },
   {
     id: 'skift',
