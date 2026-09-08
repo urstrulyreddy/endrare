@@ -1,0 +1,91 @@
+.list {
+  margin-top: 4rem;
+  display: grid;
+  gap: 1.5px;
+  background: var(--rule);
+}
+
+.item {
+  background: var(--white);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  padding: 2.2rem 2.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.item:hover { background: var(--off-white); }
+
+.left {}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.activeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: #4a9960;
+  margin-bottom: 0.75rem;
+}
+.activeDot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #4a9960;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-3);
+  line-height: 1.65;
+  max-width: 600px;
+}
+
+.tech {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+.tech span {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--ink-4);
+  border: 0.5px solid var(--rule);
+  padding: 2px 7px;
+}
+
+.arrow {
+  padding-top: 2px;
+  opacity: 0.3;
+  font-size: 20px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  align-self: start;
+}
+.item:hover .arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+@media (max-width: 700px) {
+  .item { padding: 1.8rem 1.5rem; }
+}
