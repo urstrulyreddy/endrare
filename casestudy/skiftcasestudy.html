@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Building Skift from real operations — a workforce system shaped by what happens before the rush begins." />
+<title>Building Skift from real operations — Endrare</title>
+
+<!-- ============================================================
+     FONTS
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   TOKENS & RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #f8f5ef;
+  --bg-header:   rgba(248, 245, 239, 0.94);
+  --ink:         #111111;
+  --ink-2:       #3a3a37;
+  --ink-3:       #6e6e6a;
+  --ink-4:       #9e9e99;
+  --rule:        #e2ddd5;
+  --rule-light:  #ede9e1;
+  --toc-active:  #111111;
+  --toc-rest:    #9e9e99;
+  --sans:        'DM Sans',    -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --serif:       'Instrument Serif', Georgia, serif;
+  --mono:        'Fira Code',  'SFMono-Regular', Consolas, monospace;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --header-h:    60px;
+}
+
+html {
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.8;
+}
+
+a { color: inherit; text-decoration: none; }
+strong { font-weight: 500; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  background: var(--bg-header);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.header-logo {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.13em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+.header-nav a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-3);
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+.header-nav a:hover { color: var(--ink); }
+
+.header-cta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  border: 0.5px solid var(--ink);
+  padding: 6px 15px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.header-cta:hover { background: var(--ink); color: var(--bg); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 7rem) 3rem 5.5rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 2.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 0.5px;
+  background: var(--ink-4);
+  flex-shrink: 0;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 1.4rem;
+}
+.hero-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--ink-3);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 3rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.8rem;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 0.5px solid var(--rule-light);
+}
+.meta-item {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.meta-item + .meta-item {
+  position: relative;
+}
+.meta-item + .meta-item::before {
+  content: '/';
+  position: absolute;
+  left: -1rem;
+  color: var(--rule);
+  font-family: var(--sans);
+}
+
+/* ============================================================
+   LAYOUT: TOC + CONTENT
+   ============================================================ */
+.page-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  gap: 0;
+  align-items: start;
+}
+
+/* ============================================================
+   TABLE OF CONTENTS (left sidebar)
+   ============================================================ */
+.toc-aside {
+  position: sticky;
+  top: calc(var(--header-h) + 3rem);
+  padding: 3.5rem 0 3rem;
+  padding-right: 3.5rem;
+  max-height: calc(100vh - var(--header-h) - 4rem);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.toc-aside::-webkit-scrollbar { display: none; }
+
+.toc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  transition: color 0.2s ease;
+}
+.toc-back:hover { color: var(--ink-3); }
+.toc-back svg { flex-shrink: 0; }
+
+.toc-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+
+.toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.toc-item {
+  display: block;
+  position: relative;
+  padding: 7px 0 7px 16px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--toc-rest);
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+  transition: color 0.25s ease;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--sans);
+}
+.toc-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 0;
+  background: var(--ink);
+  transition: height 0.3s var(--ease-out), opacity 0.3s ease;
+  opacity: 0;
+}
+.toc-item:hover { color: var(--ink-2); }
+.toc-item[aria-current="true"] {
+  color: var(--toc-active);
+  font-weight: 500;
+}
+.toc-item[aria-current="true"]::before {
+  height: 1.1em;
+  opacity: 1;
+}
+
+.toc-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-4);
+  margin-right: 7px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   ARTICLE
+   ============================================================ */
+.article-wrap {
+  border-left: 0.5px solid var(--rule-light);
+  padding: 4.5rem 0 8rem 5rem;
+  min-width: 0;
+}
+
+/* Section separator */
+.article-section {
+  padding-top: 5rem;
+  padding-bottom: 1rem;
+}
+.article-section + .article-section {
+  border-top: 0.5px solid var(--rule-light);
+  margin-top: 1rem;
+}
+
+/* Headings */
+.article-section-num {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+  display: block;
+}
+
+.article-h2 {
+  font-size: clamp(1.55rem, 2vw, 1.95rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 2rem;
+}
+.article-h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.article-h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.article-h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 2.2rem;
+  margin-bottom: 0.9rem;
+}
+
+/* Body text */
+.article-p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.82;
+  margin-bottom: 1.2rem;
+  max-width: 660px;
+}
+.article-p + .article-p { margin-top: 0; }
+
+/* Short staccato lines: grouped in a prose-beat block */
+.beat-block {
+  margin: 1.6rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-width: 660px;
+}
+.beat-block .article-p {
+  margin-bottom: 0;
+}
+
+/* Blockquote */
+.article-quote {
+  margin: 2.8rem 0;
+  padding-left: 1.6rem;
+  border-left: 1.5px solid var(--ink);
+  max-width: 620px;
+}
+.article-quote p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+/* Lists */
+.article-list {
+  margin: 1.2rem 0 1.5rem 0;
+  padding-left: 0;
+  list-style: none;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.article-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.96rem;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.65;
+}
+.article-list li::before {
+  content: '—';
+  font-size: 0.75rem;
+  color: var(--ink-4);
+  flex-shrink: 0;
+  font-weight: 300;
+}
+
+/* Paired list (before/after, old/new) */
+.paired-lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.6rem 0 2rem;
+  max-width: 660px;
+}
+.paired-list-col h4 {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 0.9rem;
+}
+
+/* Sub-heading (h3 level within section) */
+.article-sub {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 2.2rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+/* Scenario callout */
+.scenario {
+  margin: 2.2rem 0;
+  padding: 1.6rem 1.8rem;
+  background: rgba(255,255,255,0.48);
+  border: 0.5px solid var(--rule);
+  max-width: 660px;
+}
+.scenario-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 1rem;
+}
+.scenario .article-p { color: var(--ink-2); }
+.scenario .article-p:last-child { margin-bottom: 0; }
+
+/* Page closing statement */
+.article-closing {
+  margin-top: 5.5rem;
+  padding-top: 3rem;
+  border-top: 0.5px solid var(--rule-light);
+  max-width: 600px;
+}
+.closing-line {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+/* Footer strip at base of article */
+.article-footer {
+  margin-top: 5rem;
+  padding-top: 2.5rem;
+  border-top: 0.5px solid var(--rule-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   MOBILE — collapsible TOC
+   ============================================================ */
+.mobile-toc {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .site-header { padding: 0 1.5rem; }
+  .header-nav  { display: none; }
+
+  .hero {
+    padding: calc(var(--header-h) + 4rem) 1.5rem 4rem;
+  }
+
+  .page-layout {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem;
+  }
+
+  .toc-aside { display: none; }
+
+  .mobile-toc {
+    display: block;
+    padding: 1.5rem 0 0;
+    border-bottom: 0.5px solid var(--rule);
+    margin-bottom: 0;
+  }
+
+  .mobile-toc-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 0 1.5rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--ink-3);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .mobile-toc-toggle svg {
+    transition: transform 0.3s var(--ease-out);
+  }
+  .mobile-toc-toggle.open svg { transform: rotate(180deg); }
+
+  .mobile-toc-list {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.45s var(--ease-out);
+  }
+  .mobile-toc-list.open {
+    max-height: 600px;
+  }
+
+  .mobile-toc-item {
+    display: block;
+    padding: 9px 0;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-3);
+    border-top: 0.5px solid var(--rule-light);
+    transition: color 0.2s ease;
+    cursor: pointer;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    font-family: var(--sans);
+    text-align: left;
+    width: 100%;
+  }
+  .mobile-toc-item:last-child { margin-bottom: 1.5rem; }
+  .mobile-toc-item[aria-current="true"] { color: var(--ink); font-weight: 500; }
+  .mobile-toc-item:hover { color: var(--ink-2); }
+
+  .article-wrap {
+    border-left: none;
+    padding: 3rem 0 5rem;
+  }
+
+  .article-section { padding-top: 3.5rem; }
+
+  .paired-lists { grid-template-columns: 1fr; gap: 1.2rem; }
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.sr {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+}
+.sr.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sr-d1 { transition-delay: 0.08s; }
+.sr-d2 { transition-delay: 0.16s; }
+.sr-d3 { transition-delay: 0.24s; }
+
+/* Focus */
+:focus-visible {
+  outline: 1.5px solid var(--ink);
+  outline-offset: 3px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="site-header" role="banner">
+  <a href="/" class="header-logo" aria-label="Endrare home">Endrare</a>
+  <ul class="header-nav" role="list">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#systems">Systems</a></li>
+    <li><a href="/#archive">Archive</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:hello@endrare.com" class="header-cta">Get in touch</a>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<div class="hero" role="banner">
+  <p class="hero-label">05 — Thinking / Case Study</p>
+  <h1 class="hero-title">
+    Building Skift<br>from <em>real operations</em>
+  </h1>
+  <p class="hero-subtitle">
+    A workforce system shaped by what happens before the rush begins.
+  </p>
+  <div class="hero-meta" role="list">
+    <span class="meta-item" role="listitem">Product</span>
+    <span class="meta-item" role="listitem">Operations</span>
+    <span class="meta-item" role="listitem">AI</span>
+    <span class="meta-item" role="listitem">In Progress</span>
+    <span class="meta-item" role="listitem">2026</span>
+    <span class="meta-item" role="listitem">10–12 min read</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     LAYOUT
+     ============================================================ -->
+<div class="page-layout">
+
+  <!-- ===========================================================
+       TABLE OF CONTENTS (desktop sidebar)
+       =========================================================== -->
+  <aside class="toc-aside" aria-label="Table of contents">
+    <a href="/#archive" class="toc-back">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      Back to archive
+    </a>
+    <p class="toc-label">On this page</p>
+    <nav class="toc-nav" aria-label="Article sections">
+      <button class="toc-item" data-target="s-where" aria-current="false"><span class="toc-num">01</span>Where it started</button>
+      <button class="toc-item" data-target="s-problem" aria-current="false"><span class="toc-num">02</span>The problem</button>
+      <button class="toc-item" data-target="s-suspense" aria-current="false"><span class="toc-num">03</span>The suspense behind a shift</button>
+      <button class="toc-item" data-target="s-insight" aria-current="false"><span class="toc-num">04</span>The core insight</button>
+      <button class="toc-item" data-target="s-vision" aria-current="false"><span class="toc-num">05</span>Product vision</button>
+      <button class="toc-item" data-target="s-system" aria-current="false"><span class="toc-num">06</span>The system</button>
+      <button class="toc-item" data-target="s-roles" aria-current="false"><span class="toc-num">07</span>Role structure</button>
+      <button class="toc-item" data-target="s-features" aria-current="false"><span class="toc-num">08</span>Key features</button>
+      <button class="toc-item" data-target="s-integrations" aria-current="false"><span class="toc-num">09</span>Integrations</button>
+      <button class="toc-item" data-target="s-design" aria-current="false"><span class="toc-num">10</span>Design philosophy</button>
+      <button class="toc-item" data-target="s-principle" aria-current="false"><span class="toc-num">11</span>Key product principle</button>
+      <button class="toc-item" data-target="s-story" aria-current="false"><span class="toc-num">12</span>A shift inside Skift</button>
+      <button class="toc-item" data-target="s-different" aria-current="false"><span class="toc-num">13</span>What makes Skift different</button>
+      <button class="toc-item" data-target="s-human" aria-current="false"><span class="toc-num">14</span>The human cost</button>
+      <button class="toc-item" data-target="s-outcome" aria-current="false"><span class="toc-num">15</span>Outcome so far</button>
+      <button class="toc-item" data-target="s-learned" aria-current="false"><span class="toc-num">16</span>What I learned</button>
+      <button class="toc-item" data-target="s-reflection" aria-current="false"><span class="toc-num">17</span>Final reflection</button>
+    </nav>
+  </aside>
+
+  <!-- ===========================================================
+       ARTICLE
+       =========================================================== -->
+  <main class="article-wrap" id="article-main">
+
+    <!-- Mobile TOC -->
+    <div class="mobile-toc" aria-label="Table of contents">
+      <button class="mobile-toc-toggle" aria-expanded="false" aria-controls="mobile-toc-list" id="mobile-toc-btn">
+        On this page
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mobile-toc-list" id="mobile-toc-list" role="list">
+        <button class="mobile-toc-item" data-target="s-where" aria-current="false" role="listitem">Where it started</button>
+        <button class="mobile-toc-item" data-target="s-problem" aria-current="false" role="listitem">The problem</button>
+        <button class="mobile-toc-item" data-target="s-suspense" aria-current="false" role="listitem">The suspense behind a shift</button>
+        <button class="mobile-toc-item" data-target="s-insight" aria-current="false" role="listitem">The core insight</button>
+        <button class="mobile-toc-item" data-target="s-vision" aria-current="false" role="listitem">Product vision</button>
+        <button class="mobile-toc-item" data-target="s-system" aria-current="false" role="listitem">The system</button>
+        <button class="mobile-toc-item" data-target="s-roles" aria-current="false" role="listitem">Role structure</button>
+        <button class="mobile-toc-item" data-target="s-features" aria-current="false" role="listitem">Key features</button>
+        <button class="mobile-toc-item" data-target="s-integrations" aria-current="false" role="listitem">Integrations</button>
+        <button class="mobile-toc-item" data-target="s-design" aria-current="false" role="listitem">Design philosophy</button>
+        <button class="mobile-toc-item" data-target="s-principle" aria-current="false" role="listitem">Key product principle</button>
+        <button class="mobile-toc-item" data-target="s-story" aria-current="false" role="listitem">A shift inside Skift</button>
+        <button class="mobile-toc-item" data-target="s-different" aria-current="false" role="listitem">What makes Skift different</button>
+        <button class="mobile-toc-item" data-target="s-human" aria-current="false" role="listitem">The human cost</button>
+        <button class="mobile-toc-item" data-target="s-outcome" aria-current="false" role="listitem">Outcome so far</button>
+        <button class="mobile-toc-item" data-target="s-learned" aria-current="false" role="listitem">What I learned</button>
+        <button class="mobile-toc-item" data-target="s-reflection" aria-current="false" role="listitem">Final reflection</button>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────
+         01  WHERE IT STARTED
+         ───────────────────────────────────────────────────────── -->
+    <article>
+    <section class="article-section" id="s-where">
+      <span class="article-section-num sr">01</span>
+      <h2 class="article-h2 sr">Where it <em>started</em></h2>
+
+      <p class="article-p sr">Skift did not begin as a product idea.</p>
+      <p class="article-p sr">It began as a pattern I kept noticing while working in fast-moving restaurant environments in Sweden.</p>
+      <p class="article-p sr">The tools available were not built for the actual pace of the work.</p>
+      <p class="article-p sr">Schedules were built in spreadsheets, updated in WhatsApp, and communicated across three different platforms. Sales data was checked separately. Staffing decisions were made from memory. Tasks were assigned verbally and then forgotten. Managers spent their energy coordinating information that should have been automatic.</p>
+      <p class="article-p sr">The result was not inefficiency in the traditional sense.</p>
+      <p class="article-p sr">It was invisible risk.</p>
+      <p class="article-p sr">Every shift carried a quiet layer of unresolved questions that only became visible when something went wrong.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         02  THE PROBLEM
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-problem">
+      <span class="article-section-num sr">02</span>
+      <h2 class="article-h2 sr">The <em>problem</em></h2>
+
+      <p class="article-p sr">Restaurant operations are not complicated in the way that software systems are complicated.</p>
+      <p class="article-p sr">They are complicated in the way that live environments are complicated.</p>
+      <p class="article-p sr">Multiple things happen at once. Time pressure is constant. People are the variables. Conditions change faster than systems can update.</p>
+      <p class="article-p sr">Most workforce tools were built to answer one question:</p>
+
+      <blockquote class="article-quote sr">
+        <p>Who is working?</p>
+      </blockquote>
+
+      <p class="article-p sr">But operations need to answer a different question:</p>
+
+      <blockquote class="article-quote sr">
+        <p>Are the right people working at the right time, for the right reason, with the right information?</p>
+      </blockquote>
+
+      <p class="article-p sr">The gap between those two questions is where problems appear.</p>
+      <p class="article-p sr">When scheduling, sales data, communication, and task management live in separate systems, the manager becomes the integration layer.</p>
+      <p class="article-p sr">The manager becomes the integration layer.</p>
+      <p class="article-p sr">That is dangerous.</p>
+      <p class="article-p sr">Because when the manager is busy, tired, new, or under pressure, the system becomes fragile.</p>
+
+      <blockquote class="article-quote sr">
+        <p>The more a business depends on memory, WhatsApp messages, and manager instinct, the more invisible risk it carries.</p>
+      </blockquote>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         03  THE SUSPENSE BEHIND A NORMAL SHIFT
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-suspense">
+      <span class="article-section-num sr">03</span>
+      <h2 class="article-h2 sr">The suspense behind <em>a normal shift</em></h2>
+
+      <p class="article-p sr">A bad shift rarely announces itself.</p>
+      <p class="article-p sr">It starts quietly.</p>
+
+      <ul class="article-list sr">
+        <li>A weather change.</li>
+        <li>A missing update.</li>
+        <li>A new employee placed during rush.</li>
+        <li>A schedule copied from last week without checking the sales trend.</li>
+        <li>A message sent in the wrong channel.</li>
+        <li>A task assigned verbally and forgotten.</li>
+        <li>A contract-hour limit noticed too late.</li>
+        <li>A manager checking sales only after the pressure has already arrived.</li>
+      </ul>
+
+      <p class="article-p sr">Nothing looks dramatic.</p>
+      <p class="article-p sr">Until the queue grows.</p>
+      <p class="article-p sr">Then everyone sees the problem. But by then, the problem is no longer strategic. It is physical.</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">People move faster.</p>
+        <p class="article-p">Mistakes increase.</p>
+        <p class="article-p">Customers wait.</p>
+        <p class="article-p">The team feels stress.</p>
+        <p class="article-p">Managers start reacting instead of leading.</p>
+      </div>
+
+      <p class="article-p sr">Skift is designed for the moment before that.</p>
+      <p class="article-p sr">The quiet moment. The moment where the system should have already warned you.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         04  THE CORE INSIGHT
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-insight">
+      <span class="article-section-num sr">04</span>
+      <h2 class="article-h2 sr">The core <em>insight</em></h2>
+
+      <p class="article-p sr">Most workforce tools are built around administration.</p>
+      <p class="article-p sr">Skift is built around operational timing.</p>
+      <p class="article-p sr">That difference matters.</p>
+
+      <p class="article-p sr">Administration asks: <em>Who is working?</em></p>
+      <p class="article-p sr">Operations asks: <em>Are the right people working at the right time, for the right reason, with the right information?</em></p>
+
+      <p class="article-p sr">That became the main design principle:</p>
+
+      <blockquote class="article-quote sr">
+        <p>Skift should not only record the operation. It should help the operation think ahead.</p>
+      </blockquote>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         05  PRODUCT VISION
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-vision">
+      <span class="article-section-num sr">05</span>
+      <h2 class="article-h2 sr">Product <em>vision</em></h2>
+
+      <p class="article-p sr">Skift is designed as a connected operating layer for restaurant teams.</p>
+      <p class="article-p sr">Its goal is to bring scheduling, communication, updates, tasks, role permissions, sales intelligence, and AI-assisted planning into one system.</p>
+      <p class="article-p sr">Not to make the product bigger. To make the manager's day smaller.</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">Smaller in clicks.</p>
+        <p class="article-p">Smaller in confusion.</p>
+        <p class="article-p">Smaller in repeated explanations.</p>
+        <p class="article-p">Smaller in last-minute surprises.</p>
+      </div>
+
+      <blockquote class="article-quote sr">
+        <p>A manager should open Skift and understand the state of the branch within seconds.</p>
+      </blockquote>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         06  THE SYSTEM
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-system">
+      <span class="article-section-num sr">06</span>
+      <h2 class="article-h2 sr">The <em>system</em></h2>
+
+      <p class="article-p sr">Skift is divided into two main experiences:</p>
+
+      <h3 class="article-h3 sr">Manager web platform</h3>
+      <p class="article-p sr">For planning, control, visibility, and decisions.</p>
+
+      <h3 class="article-h3 sr">Employee mobile app</h3>
+      <p class="article-p sr">For clarity, communication, schedules, updates, and daily work.</p>
+
+      <p class="article-p sr">The product is not designed as one screen for everyone. It is role-based.</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">A manager does not need the same view as a team member.</p>
+        <p class="article-p">A shift leader does not need the same control as an admin.</p>
+        <p class="article-p">An employee should not see complexity they cannot act on.</p>
+      </div>
+
+      <blockquote class="article-quote sr">
+        <p>Every role should see only what helps them act.</p>
+      </blockquote>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         07  ROLE STRUCTURE
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-roles">
+      <span class="article-section-num sr">07</span>
+      <h2 class="article-h2 sr">Role <em>structure</em></h2>
+
+      <h3 class="article-h3 sr">Manager</h3>
+      <p class="article-p sr">The manager owns planning, control, and branch performance. The manager can:</p>
+      <ul class="article-list sr">
+        <li>Create and edit schedules</li>
+        <li>Assign shifts</li>
+        <li>Approve or manage requests</li>
+        <li>Send updates</li>
+        <li>Create tasks</li>
+        <li>Monitor sales and staffing pressure</li>
+        <li>View branch dashboards</li>
+        <li>Manage employee roles</li>
+        <li>Review AI scheduling suggestions</li>
+        <li>Respond to conflicts and warnings</li>
+      </ul>
+      <p class="article-p sr">The manager view is built for decisions. Not decoration.</p>
+
+      <h3 class="article-h3 sr">Shift leader</h3>
+      <p class="article-p sr">The shift leader owns execution during the shift. The shift leader can:</p>
+      <ul class="article-list sr">
+        <li>View today's team</li>
+        <li>See assigned tasks</li>
+        <li>Read important updates</li>
+        <li>Coordinate employees</li>
+        <li>Report issues</li>
+        <li>Monitor shift readiness</li>
+        <li>Communicate with the team</li>
+        <li>Follow manager instructions</li>
+      </ul>
+
+      <blockquote class="article-quote sr">
+        <p>What is happening today, who is working, and what needs attention?</p>
+      </blockquote>
+
+      <h3 class="article-h3 sr">Team member</h3>
+      <p class="article-p sr">The team member needs clarity, not control. The team member can:</p>
+      <ul class="article-list sr">
+        <li>See their schedule</li>
+        <li>Read updates and announcements</li>
+        <li>Message their team</li>
+        <li>Check tasks assigned to them</li>
+        <li>Request changes</li>
+        <li>Acknowledge shift information</li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         08  KEY FEATURES
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-features">
+      <span class="article-section-num sr">08</span>
+      <h2 class="article-h2 sr">Key <em>features</em></h2>
+
+      <h3 class="article-h3 sr">1. Smart scheduling</h3>
+      <p class="article-p sr">Scheduling is the heart of Skift. But the goal is not only to place names on a calendar. The goal is to create schedules that understand:</p>
+      <ul class="article-list sr">
+        <li>Contract hours</li>
+        <li>Employee availability</li>
+        <li>Branch needs</li>
+        <li>Expected sales</li>
+        <li>Past sales patterns</li>
+        <li>Day-of-week behavior</li>
+        <li>Weather impact</li>
+        <li>Role coverage</li>
+        <li>Skill balance</li>
+        <li>Rest rules</li>
+        <li>Shift fairness</li>
+        <li>Manager preferences</li>
+      </ul>
+
+      <p class="article-p sr">In Sweden, work planning must also respect working-time rules such as rest periods and break rights — at least 11 hours of nightly rest, at least 36 consecutive hours of weekly rest, and constraints around overtime and on-call time. Skift should help managers avoid mistakes before publishing the schedule. Not after.</p>
+
+      <div class="scenario sr">
+        <p class="scenario-label">Useful situation</p>
+        <p class="article-p">A manager is planning next week.</p>
+        <p class="article-p">The old way: check availability, remember contract hours, check who worked last week, guess expected sales, compare with previous weekends, manually avoid overstaffing, manually avoid understaffing, send schedule, fix problems later.</p>
+        <p class="article-p">The Skift way: the system shows expected pressure, suggests staffing levels, warns about contract-hour conflicts, highlights missing role coverage, suggests better shift distribution, lets the manager adjust manually, and publishes the schedule directly to employees.</p>
+        <p class="article-p">Skift does not replace the manager. It gives the manager a better starting point.</p>
+      </div>
+
+      <h3 class="article-h3 sr">2. Sales-aware planning</h3>
+      <p class="article-p sr">This is one of the most important Skift ideas. A schedule should not be blind.</p>
+      <p class="article-p sr">If a branch usually makes higher sales on Friday evenings, the schedule should know that. If weather increases customer flow, the schedule should consider it. If sales drop after lunch, staffing should not remain unnecessarily heavy.</p>
+      <p class="article-p sr">Skift takes connected operational logic and makes it branch-friendly. Not as a giant enterprise dashboard — as a daily operational tool.</p>
+
+      <div class="scenario sr">
+        <p class="scenario-label">Useful situation</p>
+        <p class="article-p">It is Wednesday. The manager is preparing the Friday schedule. Skift notices: last three Fridays had high evening sales, similar weather usually increased foot traffic, two newer employees are placed during the same peak window, one experienced closer is missing, and labor cost is slightly high during a slow afternoon window.</p>
+        <p class="article-p">Skift does not just show a warning. It explains the reason:</p>
+        <blockquote class="article-quote" style="margin-top:1rem;margin-bottom:0">
+          <p>"Friday evening may need stronger grill and closing coverage. Afternoon staffing can be reduced by one person without affecting expected demand."</p>
+        </blockquote>
+      </div>
+
+      <p class="article-p sr" style="margin-top:1.5rem">That is not just scheduling. That is operational intelligence.</p>
+
+      <h3 class="article-h3 sr">3. AI-assisted scheduling</h3>
+      <p class="article-p sr">AI in Skift should not feel like magic. It should feel like a careful assistant. The manager remains in control. The AI suggests, explains, and warns.</p>
+      <p class="article-p sr">It can help with:</p>
+      <ul class="article-list sr">
+        <li>Draft schedules</li>
+        <li>Replacement suggestions</li>
+        <li>Conflict detection</li>
+        <li>Sales-based staffing</li>
+        <li>Contract-hour balancing</li>
+        <li>Employee availability matching</li>
+        <li>Fairness checks</li>
+        <li>Role coverage</li>
+        <li>Peak-hour warnings</li>
+        <li>Weather-aware planning</li>
+      </ul>
+
+      <p class="article-p sr">The important part is explainability. A manager should never see:</p>
+      <blockquote class="article-quote sr">
+        <p>"AI created your schedule."</p>
+      </blockquote>
+      <p class="article-p sr">That is useless. The manager should see:</p>
+      <blockquote class="article-quote sr">
+        <p>"This schedule adds one stronger employee during expected peak sales and avoids placing two new employees together during rush."</p>
+      </blockquote>
+      <p class="article-p sr">That is useful.</p>
+
+      <div class="scenario sr">
+        <p class="scenario-label">Useful situation</p>
+        <p class="article-p">Someone calls in sick two hours before the shift. The manager does not have time to think deeply. Skift suggests replacements based on: availability, role ability, distance if known, contract hours, recent workload, past performance pattern, and whether the person has worked similar rush periods. The manager can choose quickly. The system reduces panic.</p>
+      </div>
+
+      <h3 class="article-h3 sr">4. Real-time dashboard</h3>
+      <p class="article-p sr">The dashboard is the manager's control room. But it should not be overloaded. A dashboard should not become a museum of charts.</p>
+      <p class="article-p sr">It should answer:</p>
+      <ul class="article-list sr">
+        <li>Are we on track today?</li>
+        <li>Is labor aligned with sales?</li>
+        <li>Is any branch under pressure?</li>
+        <li>Are there schedule conflicts?</li>
+        <li>Are tasks being completed?</li>
+        <li>Are employees informed?</li>
+        <li>What needs attention now?</li>
+      </ul>
+
+      <div class="scenario sr">
+        <p class="scenario-label">Useful situation</p>
+        <p class="article-p">A manager opens Skift at the start of the day. Instead of checking multiple places, they see: today's schedule, expected sales pressure, current staffing, important updates, pending tasks, shift conflicts, call-in gaps, and branch alerts.</p>
+        <blockquote class="article-quote" style="margin-top:1rem;margin-bottom:0">
+          <p>The dashboard should feel like: "Here is what matters. Handle this first." Not: "Here are twenty widgets. Good luck."</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         09  INTEGRATIONS
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-integrations">
+      <span class="article-section-num sr">09</span>
+      <h2 class="article-h2 sr"><em>Integrations</em></h2>
+
+      <p class="article-p sr">Skift becomes more powerful when connected to real operational data. Possible integrations include:</p>
+      <ul class="article-list sr">
+        <li>POS and sales systems</li>
+        <li>Oracle inventory or restaurant systems</li>
+        <li>Weather data</li>
+        <li>Payroll systems</li>
+        <li>Employee contracts</li>
+        <li>Branch performance data</li>
+        <li>Internal company communication tools</li>
+      </ul>
+
+      <p class="article-p sr">The long-term idea is not to replace every system immediately. It is to connect the information that affects decisions. Restaurant operations become stronger when data is connected instead of isolated. Skift's opportunity is to make that connected intelligence usable for everyday managers.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         10  DESIGN PHILOSOPHY
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-design">
+      <span class="article-section-num sr">10</span>
+      <h2 class="article-h2 sr">Design <em>philosophy</em></h2>
+
+      <p class="article-p sr">Skift has two design personalities.</p>
+
+      <h3 class="article-h3 sr">The web platform should feel operational</h3>
+      <div class="beat-block sr">
+        <p class="article-p">Fast.</p>
+        <p class="article-p">Clear.</p>
+        <p class="article-p">Structured.</p>
+        <p class="article-p">Readable.</p>
+        <p class="article-p">Low-friction.</p>
+        <p class="article-p">Not overloaded with animations.</p>
+      </div>
+
+      <p class="article-p sr">Managers do not need a beautiful maze. They need a clean cockpit.</p>
+      <p class="article-p sr">The interface should support: single-click actions where possible, visible priorities, clear tables, fast editing, readable typography, useful filters, minimal modals, quick schedule changes, and dashboard warnings that explain themselves.</p>
+
+      <h3 class="article-h3 sr">The mobile app should feel personal</h3>
+      <p class="article-p sr">Employees should not feel like they are inside corporate software. The mobile app should feel modern, simple, and familiar. It can borrow emotional clarity from consumer apps:</p>
+      <ul class="article-list sr">
+        <li>Clean navigation</li>
+        <li>Soft motion</li>
+        <li>Profile-first access</li>
+        <li>Message clarity</li>
+        <li>Shift cards</li>
+        <li>Calendar rhythm</li>
+        <li>Readable updates</li>
+      </ul>
+
+      <p class="article-p sr">The web platform helps the manager control the operation. The mobile app helps employees feel informed. Both sides matter. Because a good system does not only manage work. It reduces anxiety.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         11  KEY PRODUCT PRINCIPLE
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-principle">
+      <span class="article-section-num sr">11</span>
+      <h2 class="article-h2 sr">Key product <em>principle</em></h2>
+
+      <h3 class="article-h3 sr">One system, different truths</h3>
+
+      <blockquote class="article-quote sr">
+        <p>A manager's truth is: "Can I run the branch properly?"</p>
+      </blockquote>
+      <blockquote class="article-quote sr">
+        <p>A shift leader's truth is: "Can I execute today's shift?"</p>
+      </blockquote>
+      <blockquote class="article-quote sr">
+        <p>An employee's truth is: "Do I know what is expected from me?"</p>
+      </blockquote>
+
+      <p class="article-p sr">Skift must respect all three.</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">If the system only helps managers, employees will ignore it.</p>
+        <p class="article-p">If it only feels good for employees, managers will not trust it.</p>
+        <p class="article-p">If it only looks beautiful, operations will break it.</p>
+      </div>
+
+      <p class="article-p sr">The product must survive real work. That became the design standard.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         12  THE STORY OF A SHIFT INSIDE SKIFT
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-story">
+      <span class="article-section-num sr">12</span>
+      <h2 class="article-h2 sr">The story of a shift <em>inside Skift</em></h2>
+
+      <p class="article-p sr">Imagine it is Friday. The manager opens Skift in the morning. The dashboard shows a quiet warning:</p>
+
+      <blockquote class="article-quote sr">
+        <p>"Expected evening pressure is higher than scheduled coverage."</p>
+      </blockquote>
+
+      <p class="article-p sr">Not an alarm. A signal. The manager clicks. Skift explains:</p>
+      <ul class="article-list sr">
+        <li>Last Friday had strong sales after 18:00</li>
+        <li>Weather is favorable today</li>
+        <li>One experienced employee is missing from the evening block</li>
+        <li>Two newer employees are scheduled together during peak time</li>
+        <li>Labor is slightly high before the rush but weak during the rush</li>
+      </ul>
+
+      <p class="article-p sr">The manager sees the recommendation:</p>
+
+      <blockquote class="article-quote sr">
+        <p>Move one experienced employee from 15:00–19:00 to 17:00–21:00, or call one open-shift candidate for 18:00–22:00.</p>
+      </blockquote>
+
+      <p class="article-p sr">Now the manager acts before the problem becomes visible.</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">A replacement is selected.</p>
+        <p class="article-p">The schedule updates.</p>
+        <p class="article-p">The employee receives a notification.</p>
+        <p class="article-p">The shift leader sees the updated team.</p>
+        <p class="article-p">A task is added for extra prep before peak.</p>
+        <p class="article-p">The feed reminds the evening team about the campaign.</p>
+        <p class="article-p">Messages stay attached to the shift.</p>
+        <p class="article-p">The dashboard returns to calm.</p>
+      </div>
+
+      <p class="article-p sr">Nothing dramatic happened. That is the point.</p>
+      <p class="article-p sr">Good operations often look boring from the outside. Because the fire was prevented before anyone saw smoke.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         13  WHAT MAKES SKIFT DIFFERENT
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-different">
+      <span class="article-section-num sr">13</span>
+      <h2 class="article-h2 sr">What makes Skift <em>different</em></h2>
+
+      <p class="article-p sr">Skift is not trying to be another scheduling app. It is trying to become an operational intelligence layer. The difference is in the connections.</p>
+      <p class="article-p sr">Most workforce tools are disconnected. Scheduling is separate from sales. Communication is separate from shifts. Tasks are separate from context. Warnings arrive after problems appear.</p>
+      <p class="article-p sr">Skift connects:</p>
+
+      <ul class="article-list sr">
+        <li>Scheduling with sales data</li>
+        <li>Communication with shift context</li>
+        <li>AI suggestions with explainability</li>
+        <li>Warnings with reasons</li>
+        <li>Role permissions with actual operational needs</li>
+      </ul>
+
+      <p class="article-p sr">That connection is what makes the difference. Not the features. The integration between them.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         14  THE HUMAN COST OF BAD SYSTEMS
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-human">
+      <span class="article-section-num sr">14</span>
+      <h2 class="article-h2 sr">The human cost of <em>bad systems</em></h2>
+
+      <p class="article-p sr">The cost of bad workforce management is not only efficiency. It is stress.</p>
+      <p class="article-p sr">Bad systems make people feel stupid. They force managers to remember too much. They force employees to ask the same questions. They make simple changes feel heavy. They hide important information until it is too late.</p>
+      <p class="article-p sr">Good systems create calm. Not because work becomes easy. But because the next action becomes clear.</p>
+
+      <p class="article-p sr">That is the emotional goal of Skift:</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">Less guessing.</p>
+        <p class="article-p">Less chasing.</p>
+        <p class="article-p">Less repeating.</p>
+        <p class="article-p">Less panic.</p>
+        <p class="article-p">More clarity.</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         15  OUTCOME SO FAR
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-outcome">
+      <span class="article-section-num sr">15</span>
+      <h2 class="article-h2 sr">Outcome <em>so far</em></h2>
+
+      <p class="article-p sr">Skift is currently a product concept and active build direction shaped by real operational experience. The current direction includes:</p>
+      <ul class="article-list sr">
+        <li>A manager-facing web platform</li>
+        <li>An employee-facing mobile app</li>
+        <li>Role-based access</li>
+        <li>Scheduling workflows</li>
+        <li>Messaging</li>
+        <li>Feed and updates</li>
+        <li>Task assignment</li>
+        <li>AI-assisted scheduling</li>
+        <li>Sales-aware planning</li>
+        <li>Integration thinking</li>
+        <li>Production-focused UI/UX</li>
+      </ul>
+
+      <p class="article-p sr">The biggest outcome is not only the product idea. It is the product philosophy:</p>
+
+      <blockquote class="article-quote sr">
+        <p>Real operations do not need more software noise. They need systems that understand timing, pressure, and people.</p>
+      </blockquote>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         16  WHAT I LEARNED
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-learned">
+      <span class="article-section-num sr">16</span>
+      <h2 class="article-h2 sr">What I <em>learned</em></h2>
+
+      <p class="article-p sr">Building Skift changed how I think about software.</p>
+      <p class="article-p sr">Before Skift, it was easy to think of software as screens, features, and databases. After Skift, the deeper lesson became clear:</p>
+
+      <blockquote class="article-quote sr">
+        <p>Software is not valuable because it exists. Software is valuable when it removes a decision, prevents a mistake, or gives someone confidence at the right moment.</p>
+      </blockquote>
+
+      <div class="beat-block sr">
+        <p class="article-p">A manager does not need another dashboard. They need to know what matters now.</p>
+        <p class="article-p">An employee does not need another app. They need to know what changed.</p>
+        <p class="article-p">A business does not need another scheduling tool. It needs fewer surprises.</p>
+      </div>
+
+      <p class="article-p sr">That is the reason Skift exists.</p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         17  FINAL REFLECTION
+         ───────────────────────────────────────────────────────── -->
+    <section class="article-section" id="s-reflection">
+      <span class="article-section-num sr">17</span>
+      <h2 class="article-h2 sr">Final <em>reflection</em></h2>
+
+      <p class="article-p sr">Skift began with scheduling. But scheduling was only the doorway.</p>
+      <p class="article-p sr">Behind it was a larger problem: how do you run a live operation when time, people, sales, weather, communication, labor rules, and pressure are all moving at once?</p>
+
+      <div class="beat-block sr">
+        <p class="article-p">Most tools show pieces of the answer.</p>
+        <p class="article-p">Skift tries to connect them.</p>
+      </div>
+
+      <div class="beat-block sr">
+        <p class="article-p">Not to make the restaurant robotic.</p>
+        <p class="article-p">But to make the human work lighter.</p>
+      </div>
+
+      <p class="article-p sr">Because the best system is not the one people notice all day. It is the one that quietly prevents the worst part of the day from happening.</p>
+
+      <div class="article-closing sr">
+        <p class="closing-line">Skift is my attempt to design the system I wished existed before the rush began.</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────
+         PAGE FOOTER
+         ───────────────────────────────────────────────────────── -->
+    <footer class="article-footer">
+      <span class="footer-brand">Endrare</span>
+      <span class="footer-copy">Based in Sweden · © 2026</span>
+    </footer>
+
+    </article>
+  </main>
+
+</div><!-- /.page-layout -->
+
+<!-- ============================================================
+     SCRIPT
+     ============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Scroll reveal ─────────────────────────────────────────── */
+  const srEls = document.querySelectorAll('.sr');
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.07, rootMargin: '0px 0px -40px 0px' }
+  );
+  srEls.forEach((el) => revealObserver.observe(el));
+
+  /* ── TOC active section tracking ───────────────────────────── */
+  const tocItems   = document.querySelectorAll('.toc-item');
+  const mTocItems  = document.querySelectorAll('.mobile-toc-item');
+  const sections   = Array.from(document.querySelectorAll('.article-section[id]'));
+
+  // Map section id → all toc buttons
+  function setActive(id) {
+    [tocItems, mTocItems].forEach((list) => {
+      list.forEach((btn) => {
+        const isActive = btn.dataset.target === id;
+        btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    });
+  }
+
+  // IntersectionObserver — track which section is in the upper viewport
+  let activeId = sections[0]?.id || '';
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeId = entry.target.id;
+          setActive(activeId);
+        }
+      });
+    },
+    {
+      rootMargin: '-10% 0px -80% 0px',
+      threshold: 0
+    }
+  );
+  sections.forEach((s) => sectionObserver.observe(s));
+
+  // Set initial active
+  if (sections[0]) setActive(sections[0].id);
+
+  /* ── TOC click → smooth scroll ─────────────────────────────── */
+  function scrollToSection(targetId) {
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    const offset = parseInt(getComputedStyle(document.documentElement)
+      .getPropertyValue('--header-h'), 10) + 32;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    // Update hash gently
+    if (history.pushState) history.pushState(null, null, '#' + targetId);
+  }
+
+  [...tocItems, ...mTocItems].forEach((btn) => {
+    btn.addEventListener('click', () => {
+      scrollToSection(btn.dataset.target);
+      // Close mobile menu after click
+      const list = document.getElementById('mobile-toc-list');
+      const toggle = document.getElementById('mobile-toc-btn');
+      if (list && list.classList.contains('open')) {
+        list.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  /* ── Mobile TOC toggle ──────────────────────────────────────── */
+  const mToggle = document.getElementById('mobile-toc-btn');
+  const mList   = document.getElementById('mobile-toc-list');
+  if (mToggle && mList) {
+    mToggle.addEventListener('click', () => {
+      const isOpen = mList.classList.toggle('open');
+      mToggle.classList.toggle('open', isOpen);
+      mToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  /* ── Handle initial hash ────────────────────────────────────── */
+  if (window.location.hash) {
+    const id = window.location.hash.slice(1);
+    if (id) {
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToSection(id), 80);
+      });
+    }
+  }
+
+})();
+</script>
+
+</body>
+</html>

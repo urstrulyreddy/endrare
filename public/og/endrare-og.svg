@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Endrare Open Graph preview</title>
+  <desc id="desc">Endrare wordmark on a warm off-white background with the subtitle Software, AI and product thinking.</desc>
+  <rect width="1200" height="630" fill="#FAFAF8"/>
+  <rect x="64" y="64" width="1072" height="502" fill="none" stroke="#E8E7E2" stroke-width="1"/>
+  <text x="104" y="276" fill="#0F0F0E" font-family="Inter, DM Sans, Arial, sans-serif" font-size="86" font-weight="500" letter-spacing="10">ENDRARE</text>
+  <text x="108" y="348" fill="#3D3C38" font-family="Inter, DM Sans, Arial, sans-serif" font-size="30" font-weight="400">Software, AI and product thinking</text>
+  <text x="108" y="452" fill="#6B6A65" font-family="JetBrains Mono, Fira Code, monospace" font-size="18" font-weight="400" letter-spacing="3">DEEPENDRA SAI KUMAR REDDY</text>
+</svg>

@@ -1,0 +1,3559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skift Presentation</title>
+    <style>
+:root {
+  --bg-top: #fbfaf7;
+  --bg-bottom: #edf2fb;
+  --text: #121827;
+  --subtle: rgba(18, 24, 39, 0.62);
+  --line: rgba(255, 255, 255, 0.72);
+  --glass: rgba(255, 255, 255, 0.5);
+  --glass-strong: rgba(255, 255, 255, 0.68);
+  --shadow: rgba(16, 24, 40, 0.08);
+  --blue: #4377f5;
+  --green: #34b873;
+  --red: #ef6057;
+  --radius-xl: 36px;
+  --radius-lg: 28px;
+  --radius-md: 22px;
+  --section-width: min(1120px, calc(100vw - 48px));
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.2, 0.9, 0.22, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.4)),
+    linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(67, 119, 245, 0.08), transparent 34%),
+    radial-gradient(circle at 80% 25%, rgba(52, 184, 115, 0.08), transparent 28%);
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.16) 45%, transparent 70%);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transform: translateX(-40%);
+  animation: ambientSweep 18s linear infinite;
+}
+
+.ambient {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.ambient-one {
+  width: 420px;
+  height: 420px;
+  top: -140px;
+  left: -120px;
+  background: rgba(67, 119, 245, 0.16);
+  animation: ambientFloat 12s ease-in-out infinite;
+}
+
+.ambient-two {
+  width: 360px;
+  height: 360px;
+  right: -120px;
+  top: 30vh;
+  background: rgba(52, 184, 115, 0.12);
+  animation: ambientFloat 14s ease-in-out infinite reverse;
+}
+
+.ambient-three {
+  width: 300px;
+  height: 300px;
+  left: 25vw;
+  bottom: -120px;
+  background: rgba(239, 96, 87, 0.08);
+  animation: ambientFloat 16s ease-in-out infinite;
+}
+
+.topbar {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--section-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 18px 40px var(--shadow);
+  z-index: 20;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.topnav {
+  display: flex;
+  gap: 18px;
+}
+
+.topnav a {
+  color: var(--subtle);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+main {
+  padding-bottom: 80px;
+}
+
+.scene {
+  width: var(--section-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 140px 0 80px;
+  display: grid;
+  align-items: center;
+  gap: 40px;
+}
+
+.scene-hero {
+  justify-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero-stage {
+  position: absolute;
+  inset: 18% 0 auto;
+  height: 420px;
+  pointer-events: none;
+}
+
+.hero-glow,
+.hero-orbit {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  filter: blur(50px);
+}
+
+.hero-glow {
+  top: 18px;
+  width: min(720px, 88vw);
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.86), rgba(67, 119, 245, 0.12) 42%, transparent 72%);
+  animation: heroBreathe 8s ease-in-out infinite;
+}
+
+.hero-orbit {
+  width: 340px;
+  height: 340px;
+  opacity: 0.45;
+}
+
+.orbit-one {
+  top: -10px;
+  background: rgba(67, 119, 245, 0.16);
+  animation: orbitLeft 14s ease-in-out infinite;
+}
+
+.orbit-two {
+  top: 96px;
+  background: rgba(52, 184, 115, 0.12);
+  animation: orbitRight 16s ease-in-out infinite;
+}
+
+.scene-copy {
+  max-width: 720px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(4.6rem, 10vw, 8.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+  position: relative;
+}
+
+.title-shimmer {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(110deg, #0f1522 18%, #3971f4 50%, #0f1522 82%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: titleShimmer 8s linear infinite;
+}
+
+h2 {
+  font-size: clamp(2.4rem, 4.8vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+}
+
+.subtitle {
+  margin-top: 18px;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  color: var(--subtle);
+}
+
+.body-copy,
+.section-header p {
+  max-width: 700px;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--subtle);
+}
+
+.section-header {
+  display: grid;
+  gap: 16px;
+}
+
+.glass-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.44));
+  box-shadow: 0 24px 64px var(--shadow);
+  backdrop-filter: blur(28px);
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.surface-sheen {
+  position: absolute;
+  inset: -12% auto -12% -36%;
+  width: 34%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  transform: rotate(14deg);
+  animation: sheen 7.5s linear infinite;
+  pointer-events: none;
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.floating-card {
+  padding: 26px;
+  min-height: 240px;
+  transform-style: preserve-3d;
+  animation: float 5.6s ease-in-out infinite;
+  transition: transform 0.9s var(--spring), box-shadow 0.9s var(--spring), filter 0.9s var(--spring);
+}
+
+.floating-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.floating-card:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.floating-card:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.floating-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.floating-card p {
+  color: var(--subtle);
+  line-height: 1.6;
+}
+
+.device-frame,
+.sales-shell,
+.calendar-shell,
+.final-shell {
+  padding: 28px;
+}
+
+.device-frame {
+  max-width: 620px;
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.device-header,
+.sales-headline,
+.feed-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(67, 119, 245, 0.12);
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.device-header p,
+.feed-meta p,
+.calendar-stage p,
+.peak-hour span,
+.meta {
+  color: var(--subtle);
+}
+
+.chat-stack {
+  margin-top: 6px;
+  display: grid;
+  gap: 14px;
+  min-height: 242px;
+  max-height: 242px;
+  overflow: hidden;
+  transition: transform 0.9s var(--spring);
+}
+
+.message-row {
+  display: flex;
+}
+
+.message-row.left {
+  justify-content: flex-start;
+}
+
+.message-row.right {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 78%;
+  padding: 14px 18px;
+  border-radius: 24px;
+  font-size: 1rem;
+  line-height: 1.5;
+  box-shadow: 0 16px 34px rgba(18, 24, 39, 0.05);
+}
+
+.incoming {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.outgoing {
+  color: white;
+  background: linear-gradient(135deg, #3771f5, #5d8cff);
+}
+
+.typing-indicator {
+  display: inline-flex;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.typing-indicator.small {
+  padding: 8px 12px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(18, 24, 39, 0.4);
+  animation: typing 0.9s ease-in-out infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.message-composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.composer-input {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--subtle);
+  overflow: hidden;
+}
+
+.composer-placeholder {
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.composer-draft {
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.cursor {
+  width: 1px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: rgba(18, 24, 39, 0.72);
+  animation: cursorBlink 1.1s step-end infinite;
+}
+
+.composer-cursor {
+  opacity: 0;
+}
+
+.send-button {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #3b72f4, #6a94ff);
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0 16px 34px rgba(67, 119, 245, 0.24);
+  transform: scale(0.94);
+  transition: transform 0.55s var(--spring), box-shadow 0.55s var(--spring), filter 0.55s var(--spring);
+}
+
+.send-button.is-armed {
+  transform: scale(1);
+  box-shadow: 0 24px 44px rgba(67, 119, 245, 0.28);
+}
+
+.send-button.is-fired {
+  transform: scale(0.96);
+  filter: brightness(1.08);
+}
+
+.composer-typing {
+  height: 24px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+
+.composer-typing.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.calendar-stage {
+  display: grid;
+  gap: 20px;
+}
+
+.mode-switch {
+  display: inline-flex;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 14px 28px rgba(18, 24, 39, 0.06);
+}
+
+.mode-pill {
+  border: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--subtle);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.4s var(--ease), background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+.mode-pill.is-active {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text);
+}
+
+.calendar-shell {
+  max-width: 760px;
+  position: relative;
+}
+
+.calendar-panel {
+  display: grid;
+  position: absolute;
+  inset: 28px;
+  min-height: 300px;
+  opacity: 0;
+  transform: scale(0.98) translateY(12px);
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 0.8s var(--spring), transform 0.8s var(--spring), filter 0.8s var(--spring);
+}
+
+.calendar-panel.is-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.calendar-shell {
+  min-height: 356px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.calendar-grid span {
+  height: 72px;
+  border-radius: 18px;
+  border: 1px solid rgba(18, 24, 39, 0.06);
+  background: rgba(255, 255, 255, 0.42);
+  transition: transform 0.8s var(--spring), background-color 0.8s var(--spring), box-shadow 0.8s var(--spring);
+}
+
+.calendar-grid .active-day {
+  background: rgba(67, 119, 245, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(67, 119, 245, 0.24), 0 18px 38px rgba(67, 119, 245, 0.12);
+  transform: translateY(-6px) scale(1.02);
+}
+
+.calendar-grid .shift-day {
+  background: rgba(52, 184, 115, 0.14);
+}
+
+.week-bars {
+  height: 280px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 18px;
+  align-items: end;
+}
+
+.week-bar {
+  height: var(--h);
+  border-radius: 18px 18px 10px 10px;
+  background: rgba(67, 119, 245, 0.22);
+  transform-origin: bottom;
+  transform: scaleY(0.08);
+  transition: transform 0.8s var(--spring);
+  position: relative;
+  overflow: hidden;
+}
+
+.week-bar span {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 40%);
+}
+
+.week-bar.accent {
+  background: rgba(52, 184, 115, 0.5);
+}
+
+.day-list {
+  display: grid;
+  gap: 14px;
+}
+
+.day-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 18px 44px rgba(16, 24, 40, 0.05);
+}
+
+.day-item p,
+.day-item span {
+  color: var(--subtle);
+}
+
+.sales-shell {
+  max-width: 860px;
+  display: grid;
+  gap: 28px;
+}
+
+.sales-number {
+  margin-top: 8px;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.peak-hour {
+  text-align: right;
+}
+
+.peak-hour strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.6rem;
+  color: var(--green);
+}
+
+.live-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--subtle);
+}
+
+.live-pulse span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(52, 184, 115, 0.26);
+  animation: livePulse 2.2s ease-out infinite;
+}
+
+.sales-graph {
+  display: grid;
+  gap: 22px;
+}
+
+.trend-svg {
+  width: 100%;
+  height: 220px;
+}
+
+.trend-path {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.graph-dot {
+  fill: var(--green);
+  filter: drop-shadow(0 0 10px rgba(52, 184, 115, 0.42));
+  opacity: 0;
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+  height: 180px;
+}
+
+.bar {
+  height: var(--bar-h);
+  border-radius: 16px 16px 10px 10px;
+  background: rgba(67, 119, 245, 0.78);
+  transform: scaleY(0.08);
+  transform-origin: bottom;
+  transition: transform 0.9s var(--spring);
+}
+
+.bar.highlight {
+  background: rgba(52, 184, 115, 0.94);
+  box-shadow: 0 0 28px rgba(52, 184, 115, 0.24);
+}
+
+.sales-detail-preview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.58);
+  transform: translateY(18px) scale(0.98);
+  opacity: 0;
+  transition: opacity 0.9s var(--spring), transform 0.9s var(--spring);
+}
+
+.sales-detail-preview.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.detail-column {
+  display: grid;
+  gap: 6px;
+}
+
+.mini-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(18, 24, 39, 0.46);
+}
+
+.detail-chip {
+  justify-self: end;
+  border: 0;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: rgba(18, 24, 39, 0.06);
+  color: var(--text);
+  font: inherit;
+}
+
+.detail-chip.secondary {
+  background: rgba(18, 24, 39, 0.04);
+  color: var(--subtle);
+}
+
+.sales-drilldown {
+  display: grid;
+  gap: 18px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(18px) scale(0.98);
+  transition:
+    max-height 0.9s var(--spring),
+    opacity 0.9s var(--spring),
+    transform 0.9s var(--spring),
+    margin-top 0.9s var(--spring);
+}
+
+.sales-drilldown.is-open {
+  max-height: 320px;
+  margin-top: 10px;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sales-drilldown-header,
+.sales-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.sales-rows {
+  display: grid;
+  gap: 12px;
+}
+
+.sales-row {
+  padding: 14px 0;
+  border-top: 1px solid rgba(18, 24, 39, 0.06);
+}
+
+.sales-row i {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(67, 119, 245, 0.74), rgba(67, 119, 245, 0.18));
+  transform: scaleX(0.08);
+  transform-origin: left;
+  width: var(--row-w);
+}
+
+.sales-drilldown.is-open .sales-row i {
+  transform: scaleX(1);
+  transition: transform 0.9s var(--spring);
+}
+
+.scene-ai {
+  gap: 28px;
+}
+
+.ai-intro,
+.ai-prediction-stage {
+  perspective: 1600px;
+}
+
+.ai-hero-card,
+.ai-prediction-shell,
+.recommendation-card,
+.schedule-intelligence-card,
+.compliance-card,
+.visibility-card,
+.ai-analysis-card {
+  transform-style: preserve-3d;
+}
+
+.ai-hero-card {
+  display: grid;
+  grid-template-columns: 0.95fr 1.15fr;
+  gap: 28px;
+  padding: 34px;
+  align-items: center;
+  min-height: 520px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.52)),
+    radial-gradient(circle at top right, rgba(67, 119, 245, 0.08), transparent 34%);
+}
+
+.ai-hero-copy {
+  display: grid;
+  gap: 16px;
+  max-width: 420px;
+}
+
+.ai-hero-copy h3,
+.prediction-copy h3 {
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+}
+
+.ai-hero-copy p,
+.prediction-copy p,
+.recommendation-panel p,
+.compliance-item p,
+.flow-node p {
+  color: var(--subtle);
+  line-height: 1.65;
+}
+
+.ai-hero-dashboard {
+  position: relative;
+  min-height: 420px;
+  border-radius: calc(var(--radius-xl) - 6px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.36)),
+    radial-gradient(circle at 75% 14%, rgba(67, 119, 245, 0.12), transparent 28%);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  overflow: hidden;
+}
+
+.hero-dashboard-glow {
+  position: absolute;
+  inset: 12% 8% auto auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(67, 119, 245, 0.16), transparent 70%);
+  filter: blur(26px);
+  animation: heroBreathe 7s ease-in-out infinite;
+}
+
+.hero-dashboard-panel {
+  position: absolute;
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 24px 54px rgba(16, 24, 40, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(18px);
+}
+
+.panel-history {
+  top: 34px;
+  left: 34px;
+  width: 58%;
+  transform: translate3d(0, 0, 0);
+}
+
+.panel-forecast {
+  right: 28px;
+  top: 110px;
+  width: 44%;
+  transform: translate3d(0, 0, 48px);
+}
+
+.panel-recommendation {
+  left: 78px;
+  bottom: 30px;
+  width: 56%;
+  transform: translate3d(0, 0, 24px);
+}
+
+.panel-recommendation strong {
+  font-size: 1.24rem;
+  letter-spacing: -0.04em;
+}
+
+.history-ribbon {
+  height: 120px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+}
+
+.history-ribbon i,
+.hour-bars i {
+  display: block;
+  height: var(--ribbon-h, var(--analysis-h));
+  border-radius: 14px 14px 8px 8px;
+  background: rgba(67, 119, 245, 0.72);
+  transform-origin: bottom;
+  transform: scaleY(0.08);
+}
+
+.history-ribbon i:nth-child(5),
+.history-ribbon i:nth-child(7),
+.hour-bars i.accent,
+.day-trend i.accent,
+.schedule-row i.accent,
+.mini-ai-tag {
+  background: rgba(52, 184, 115, 0.88);
+}
+
+.forecast-mini-svg,
+.prediction-svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.forecast-mini-svg {
+  height: 108px;
+}
+
+.forecast-base-path,
+.forecast-future-path,
+.prediction-history-path,
+.prediction-future-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.forecast-base-path,
+.prediction-history-path {
+  stroke: rgba(67, 119, 245, 0.9);
+  stroke-width: 5;
+}
+
+.forecast-future-path,
+.prediction-future-path {
+  stroke: rgba(52, 184, 115, 0.94);
+  stroke-width: 5;
+  stroke-dasharray: 10 12 160 1000;
+}
+
+.ai-analysis-grid,
+.ai-response-grid,
+.ai-governance-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.ai-analysis-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ai-response-grid,
+.ai-governance-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ai-analysis-card,
+.recommendation-card,
+.schedule-intelligence-card,
+.compliance-card,
+.visibility-card {
+  padding: 26px;
+}
+
+.ai-card-heading {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.ai-card-heading strong {
+  font-size: 1.42rem;
+  letter-spacing: -0.04em;
+}
+
+.hour-analysis,
+.day-analysis,
+.month-analysis {
+  min-height: 230px;
+  display: grid;
+  align-items: end;
+}
+
+.hour-bars {
+  height: 188px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.day-trend {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.day-trend i {
+  display: block;
+  height: 160px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(67, 119, 245, 0.22), rgba(67, 119, 245, 0.68));
+  transform-origin: bottom;
+  transform: scaleY(0.1);
+  opacity: 0.72;
+}
+
+.day-trend i::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), transparent 38%);
+  transform: scaleY(var(--day-scale));
+  transform-origin: bottom;
+}
+
+.month-analysis {
+  align-items: center;
+  justify-items: center;
+  gap: 18px;
+}
+
+.month-pulse {
+  position: relative;
+  width: 172px;
+  height: 172px;
+  display: grid;
+  place-items: center;
+}
+
+.month-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(67, 119, 245, 0.16);
+  background: radial-gradient(circle, rgba(67, 119, 245, 0.08), transparent 62%);
+  transform: scale(0.86);
+  opacity: 0;
+}
+
+.month-ring.ring-two {
+  inset: 14px;
+  border-color: rgba(67, 119, 245, 0.12);
+}
+
+.month-ring.ring-three {
+  inset: 28px;
+  border-color: rgba(52, 184, 115, 0.18);
+}
+
+.month-core {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20px 42px rgba(16, 24, 40, 0.08);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.month-summary {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+.month-summary span {
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--subtle);
+}
+
+.ai-prediction-shell {
+  display: grid;
+  grid-template-columns: 0.74fr 1.26fr;
+  gap: 28px;
+  padding: 32px;
+  align-items: center;
+}
+
+.prediction-copy {
+  display: grid;
+  gap: 14px;
+}
+
+.prediction-visual {
+  display: grid;
+  gap: 20px;
+}
+
+.prediction-svg {
+  height: 280px;
+}
+
+.prediction-area {
+  fill: url(#forecastFade);
+  opacity: 0;
+}
+
+.prediction-node {
+  fill: white;
+  stroke: rgba(52, 184, 115, 0.92);
+  stroke-width: 4;
+  opacity: 0;
+}
+
+.prediction-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.prediction-chip {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.prediction-chip.highlight {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.58)),
+    radial-gradient(circle at top right, rgba(52, 184, 115, 0.12), transparent 38%);
+}
+
+.prediction-chip strong {
+  letter-spacing: -0.03em;
+}
+
+.recommendation-body {
+  display: grid;
+  gap: 22px;
+}
+
+.staffing-pressure {
+  display: grid;
+  gap: 10px;
+}
+
+.pressure-meter {
+  position: relative;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(18, 24, 39, 0.06);
+  overflow: hidden;
+}
+
+.pressure-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 56%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(67, 119, 245, 0.8), rgba(52, 184, 115, 0.88));
+  transition: width 0.8s var(--spring);
+}
+
+.pressure-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.recommendation-panel {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.54)),
+    radial-gradient(circle at top right, rgba(52, 184, 115, 0.12), transparent 32%);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow: 0 22px 48px rgba(16, 24, 40, 0.07);
+  transform: translateY(14px) scale(0.98);
+  opacity: 0.82;
+  transition: transform 0.8s var(--spring), opacity 0.8s var(--spring), box-shadow 0.8s var(--spring);
+}
+
+.recommendation-panel strong,
+.flow-node strong {
+  font-size: 1.08rem;
+  letter-spacing: -0.03em;
+}
+
+.decision-flow {
+  display: grid;
+  gap: 18px;
+}
+
+.decision-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.decision-token {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--subtle);
+  transform: translateY(14px);
+  opacity: 0;
+}
+
+.decision-core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 112px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+}
+
+.core-halo {
+  position: absolute;
+  inset: auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(67, 119, 245, 0.16), transparent 68%);
+  filter: blur(18px);
+  animation: heroBreathe 7.4s ease-in-out infinite;
+}
+
+.decision-core strong {
+  position: relative;
+  z-index: 1;
+  font-size: 1.24rem;
+  letter-spacing: -0.04em;
+}
+
+.decision-output {
+  display: grid;
+  gap: 12px;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.schedule-row span,
+.schedule-row strong,
+.pressure-labels span,
+.pressure-labels strong {
+  white-space: nowrap;
+}
+
+.schedule-row i {
+  display: block;
+  height: 12px;
+  width: var(--schedule-w);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(67, 119, 245, 0.8), rgba(67, 119, 245, 0.24));
+  transform: scaleX(0.08);
+  transform-origin: left;
+}
+
+.compliance-list,
+.visibility-flow {
+  display: grid;
+  gap: 14px;
+}
+
+.compliance-item,
+.flow-node {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.status-dot,
+.flow-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.status-dot {
+  margin-top: 2px;
+  background: radial-gradient(circle, rgba(52, 184, 115, 0.88), rgba(52, 184, 115, 0.22));
+  box-shadow: 0 0 0 0 rgba(52, 184, 115, 0.18);
+}
+
+.flow-badge {
+  background: rgba(67, 119, 245, 0.12);
+  color: var(--blue);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.flow-connector {
+  width: 1px;
+  height: 28px;
+  margin-left: 29px;
+  background: linear-gradient(180deg, rgba(67, 119, 245, 0.22), rgba(67, 119, 245, 0));
+}
+
+.flow-node {
+  transform: translateY(14px);
+  opacity: 0.84;
+  transition: transform 0.8s var(--spring), opacity 0.8s var(--spring), box-shadow 0.8s var(--spring);
+}
+
+.flow-node.is-live,
+.manager-node.is-live {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 20px 48px rgba(16, 24, 40, 0.07);
+}
+
+.manager-node {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.56)),
+    radial-gradient(circle at top right, rgba(67, 119, 245, 0.1), transparent 34%);
+}
+
+.feed-stack {
+  display: grid;
+  gap: 16px;
+  max-width: 760px;
+}
+
+.feed-card {
+  padding: 24px;
+  transition: transform 0.8s var(--spring), box-shadow 0.8s var(--spring), background-color 0.8s var(--spring);
+}
+
+.feed-card > p {
+  margin-top: 16px;
+  line-height: 1.65;
+  color: var(--subtle);
+}
+
+.feed-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.feed-action {
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(18, 24, 39, 0.06);
+  color: var(--subtle);
+  font: inherit;
+  transition: transform 0.45s var(--spring), background-color 0.45s var(--spring), color 0.45s var(--spring);
+}
+
+.feed-action.is-liked {
+  color: var(--red);
+  background: rgba(239, 96, 87, 0.12);
+  transform: scale(1.04);
+}
+
+.comment-reveal {
+  margin-top: 14px;
+  padding: 0 16px;
+  max-height: 0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--subtle);
+  overflow: hidden;
+  transition: max-height 0.6s var(--spring), padding 0.6s var(--spring), opacity 0.6s var(--spring);
+  opacity: 0;
+}
+
+.comment-reveal.is-open {
+  max-height: 54px;
+  padding: 14px 16px;
+  opacity: 1;
+}
+
+.role-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  perspective: 1600px;
+}
+
+.role-card {
+  text-align: left;
+  padding: 24px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transform: rotateY(10deg) translateZ(0);
+  transition: transform 0.9s var(--spring), box-shadow 0.9s var(--spring), border-color 0.9s var(--spring), filter 0.9s var(--spring), opacity 0.9s var(--spring);
+  filter: blur(1.5px);
+  opacity: 0.88;
+}
+
+.role-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+}
+
+.role-card p {
+  line-height: 1.6;
+  color: var(--subtle);
+}
+
+.role-card.is-front {
+  transform: rotateY(0deg) translateZ(60px) scale(1.03);
+  box-shadow: 0 30px 80px rgba(16, 24, 40, 0.12);
+  filter: blur(0);
+  opacity: 1;
+}
+
+.final-shell {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  padding: 30px;
+  overflow: hidden;
+  min-height: 620px;
+}
+
+.final-layout {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+}
+
+.final-glow {
+  position: absolute;
+  inset: 12% 18% auto;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(67, 119, 245, 0.16), rgba(255, 255, 255, 0.02) 65%, transparent 80%);
+  filter: blur(34px);
+  animation: heroBreathe 8s ease-in-out infinite;
+}
+
+.final-device {
+  position: relative;
+  width: min(520px, 100%);
+  z-index: 2;
+}
+
+.final-feature {
+  position: absolute;
+  width: 220px;
+  z-index: 1;
+}
+
+.side-left {
+  left: 2%;
+  top: 18%;
+}
+
+.side-right {
+  right: 2%;
+  bottom: 16%;
+}
+
+.mini-app-card {
+  padding: 18px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.52));
+  box-shadow: 0 24px 54px rgba(16, 24, 40, 0.08);
+}
+
+.mini-bubble {
+  height: 16px;
+  border-radius: 999px;
+  margin-top: 14px;
+  background: rgba(18, 24, 39, 0.08);
+}
+
+.mini-bubble.outgoing {
+  width: 72%;
+  margin-left: auto;
+  background: rgba(67, 119, 245, 0.72);
+}
+
+.mini-bubble.incoming {
+  width: 84%;
+}
+
+.mini-chart {
+  height: 88px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  align-items: end;
+  margin-top: 16px;
+}
+
+.mini-chart i,
+.hero-panel-bars i {
+  display: block;
+  border-radius: 10px 10px 6px 6px;
+  background: rgba(67, 119, 245, 0.76);
+}
+
+.mini-chart i:nth-child(1) { height: 42%; }
+.mini-chart i:nth-child(2) { height: 58%; }
+.mini-chart i:nth-child(3) { height: 86%; }
+.mini-chart i:nth-child(4) { height: 72%; }
+
+.ai-mini-chart i:nth-child(1) { height: 36%; }
+.ai-mini-chart i:nth-child(2) { height: 52%; }
+.ai-mini-chart i:nth-child(3) { height: 90%; }
+.ai-mini-chart i:nth-child(4) { height: 64%; }
+
+.mini-chart .accent,
+.hero-panel-bars .accent {
+  background: rgba(52, 184, 115, 0.88);
+}
+
+.mini-ai-tag {
+  margin-top: 14px;
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: white;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.final-ui {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  z-index: 1;
+  padding: 24px;
+  border-radius: 40px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.48));
+  box-shadow: 0 28px 90px rgba(16, 24, 40, 0.12);
+}
+
+.final-top {
+  display: flex;
+  gap: 12px;
+}
+
+.chip {
+  width: 64px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(18, 24, 39, 0.08);
+}
+
+.chip-primary {
+  width: 96px;
+  background: rgba(67, 119, 245, 0.78);
+}
+
+.hero-panel,
+.split-panels > div,
+.bottom-panel {
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.72);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel {
+  height: 180px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 18px;
+  padding: 20px;
+}
+
+.hero-panel-copy {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.hero-panel-copy strong {
+  font-size: 2rem;
+  letter-spacing: -0.05em;
+}
+
+.hero-panel-copy p {
+  color: var(--subtle);
+  line-height: 1.6;
+}
+
+.hero-panel-sales {
+  align-self: end;
+  justify-self: end;
+  display: grid;
+  gap: 10px;
+}
+
+.hero-panel-sales span {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.hero-panel-bars {
+  width: 140px;
+  height: 74px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  align-items: end;
+}
+
+.hero-panel-bars i:nth-child(1) { height: 38%; }
+.hero-panel-bars i:nth-child(2) { height: 54%; }
+.hero-panel-bars i:nth-child(3) { height: 68%; }
+.hero-panel-bars i:nth-child(4) { height: 58%; }
+.hero-panel-bars i:nth-child(5) { height: 82%; }
+
+.panel-messages,
+.panel-calendar,
+.bottom-panel {
+  padding: 16px;
+}
+
+.mini-lines {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.mini-lines i,
+.bottom-posts i {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(18, 24, 39, 0.08);
+}
+
+.mini-lines i:nth-child(2) {
+  width: 74%;
+}
+
+.mini-lines i:nth-child(3) {
+  width: 58%;
+}
+
+.mini-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mini-grid i {
+  display: block;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(18, 24, 39, 0.06);
+}
+
+.mini-grid .accent {
+  background: rgba(67, 119, 245, 0.2);
+}
+
+.split-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.split-panels > div {
+  height: 120px;
+}
+
+.bottom-panel {
+  height: 140px;
+}
+
+.bottom-posts {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.bottom-posts i:nth-child(1) {
+  width: 88%;
+}
+
+.bottom-posts i:nth-child(2) {
+  width: 72%;
+}
+
+.bottom-posts i:nth-child(3) {
+  width: 94%;
+}
+
+.reflection {
+  position: absolute;
+  top: -10%;
+  left: -24%;
+  width: 180px;
+  height: 140%;
+  transform: rotate(14deg);
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+  animation: reflection 4.4s linear infinite;
+}
+
+.outro {
+  text-align: center;
+}
+
+.outro p {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.975) translateZ(0);
+  filter: blur(12px);
+  transition:
+    opacity 1.05s var(--spring),
+    transform 1.05s var(--spring),
+    filter 1.05s var(--spring);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.delay-1 {
+  transition-delay: 0.12s;
+}
+
+.delay-2 {
+  transition-delay: 0.24s;
+}
+
+.delay-3 {
+  transition-delay: 0.36s;
+}
+
+.bubble-enter {
+  opacity: 0;
+  transition:
+    opacity 0.8s var(--spring),
+    transform 0.8s var(--spring);
+}
+
+.bubble-enter {
+  transform: translateY(18px) scale(0.98);
+}
+
+.message-row.left .bubble-enter,
+.bubble-enter.left {
+  transform: translateX(-30px) translateY(8px) scale(0.98);
+}
+
+.message-row.right .bubble-enter,
+.bubble-enter.right {
+  transform: translateX(30px) translateY(8px) scale(0.98);
+}
+
+.scene-messages.in-view .bubble-enter,
+.scene-messages .bubble-enter.is-visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+.reveal-list {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+.scene-calendar.day-mode .reveal-list,
+.reveal-list.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scene-sales.in-view .trend-path,
+.scene-sales.is-animated .trend-path {
+  animation: draw 1.6s var(--ease) forwards;
+}
+
+.scene-sales.in-view .graph-dot,
+.scene-sales.is-animated .graph-dot {
+  animation: dotReveal 0.6s var(--ease) 1.1s forwards;
+}
+
+.scene-sales.in-view .bar,
+.scene-sales.is-animated .bar {
+  animation: growBar 0.9s var(--ease) forwards;
+}
+
+.scene-ai.in-view .history-ribbon i,
+.scene-ai.in-view .hour-bars i,
+.scene-ai.in-view .day-trend i {
+  animation: growBar 0.95s var(--ease) forwards;
+}
+
+.scene-ai.in-view .history-ribbon i:nth-child(2),
+.scene-ai.in-view .hour-bars i:nth-child(2),
+.scene-ai.in-view .day-trend i:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.scene-ai.in-view .history-ribbon i:nth-child(3),
+.scene-ai.in-view .hour-bars i:nth-child(3),
+.scene-ai.in-view .day-trend i:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.scene-ai.in-view .history-ribbon i:nth-child(4),
+.scene-ai.in-view .hour-bars i:nth-child(4),
+.scene-ai.in-view .day-trend i:nth-child(4) {
+  animation-delay: 0.18s;
+}
+
+.scene-ai.in-view .history-ribbon i:nth-child(5),
+.scene-ai.in-view .hour-bars i:nth-child(5),
+.scene-ai.in-view .day-trend i:nth-child(5) {
+  animation-delay: 0.24s;
+}
+
+.scene-ai.in-view .history-ribbon i:nth-child(6),
+.scene-ai.in-view .hour-bars i:nth-child(6),
+.scene-ai.in-view .day-trend i:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.scene-ai.in-view .history-ribbon i:nth-child(7),
+.scene-ai.in-view .hour-bars i:nth-child(7),
+.scene-ai.in-view .day-trend i:nth-child(7) {
+  animation-delay: 0.36s;
+}
+
+.scene-ai.in-view .forecast-base-path,
+.scene-ai.in-view .prediction-history-path {
+  animation: draw 1.4s var(--ease) forwards;
+}
+
+.scene-ai.in-view .forecast-future-path,
+.scene-ai.in-view .prediction-future-path {
+  animation: draw 1s var(--ease) 0.8s forwards;
+}
+
+.scene-ai.in-view .prediction-area {
+  animation: aiFadeUp 1.1s var(--ease) 0.7s forwards;
+}
+
+.scene-ai.in-view .prediction-node {
+  animation: dotReveal 0.55s var(--ease) 1.05s forwards;
+}
+
+.scene-ai.in-view .month-ring {
+  animation: monthRing 2.6s var(--spring) forwards;
+}
+
+.scene-ai.in-view .month-ring.ring-two {
+  animation-delay: 0.18s;
+}
+
+.scene-ai.in-view .month-ring.ring-three {
+  animation-delay: 0.34s;
+}
+
+.scene-ai.in-view .decision-token {
+  animation: aiTokenIn 0.8s var(--spring) forwards;
+}
+
+.scene-ai.in-view .decision-token:nth-child(2) { animation-delay: 0.08s; }
+.scene-ai.in-view .decision-token:nth-child(3) { animation-delay: 0.16s; }
+.scene-ai.in-view .decision-token:nth-child(4) { animation-delay: 0.24s; }
+.scene-ai.in-view .decision-token:nth-child(5) { animation-delay: 0.32s; }
+
+.scene-ai.in-view .schedule-row i {
+  animation: scheduleGrow 0.9s var(--spring) forwards;
+}
+
+.scene-ai.in-view .schedule-row:nth-child(2) i {
+  animation-delay: 0.1s;
+}
+
+.scene-ai.in-view .schedule-row:nth-child(3) i {
+  animation-delay: 0.2s;
+}
+
+.scene-ai.in-view .status-dot {
+  animation: livePulse 2.6s ease-out infinite;
+}
+
+.scene-ai.is-animated .recommendation-panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  box-shadow: 0 26px 58px rgba(16, 24, 40, 0.1);
+}
+
+.scene-calendar.week-mode .week-bar,
+.week-bar.is-grown {
+  transform: scaleY(1);
+}
+
+.final-float {
+  animation: float 6.6s ease-in-out infinite;
+}
+
+.final-feature.side-right {
+  animation-delay: 0.6s;
+}
+
+.final-device {
+  animation-delay: 0.3s;
+}
+
+.feed-lift {
+  transition: transform 0.7s var(--ease), box-shadow 0.7s var(--ease);
+}
+
+.feed-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 64px rgba(16, 24, 40, 0.12);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes ambientFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(12px, -16px, 0);
+  }
+}
+
+@keyframes ambientSweep {
+  0% {
+    transform: translateX(-42%);
+  }
+  100% {
+    transform: translateX(42%);
+  }
+}
+
+@keyframes heroBreathe {
+  0%,
+  100% {
+    transform: scale(0.98);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitLeft {
+  0%,
+  100% {
+    transform: translateX(-52%) translateY(0);
+  }
+  50% {
+    transform: translateX(-46%) translateY(-18px);
+  }
+}
+
+@keyframes orbitRight {
+  0%,
+  100% {
+    transform: translateX(-46%) translateY(0);
+  }
+  50% {
+    transform: translateX(-54%) translateY(18px);
+  }
+}
+
+@keyframes titleShimmer {
+  0% {
+    background-position: 120% 50%;
+  }
+  100% {
+    background-position: -20% 50%;
+  }
+}
+
+@keyframes typing {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+@keyframes cursorBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dotReveal {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes growBar {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes aiFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aiTokenIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes monthRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.52;
+  }
+}
+
+@keyframes scheduleGrow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 184, 115, 0.26);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 184, 115, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 184, 115, 0);
+  }
+}
+
+@keyframes sheen {
+  0% {
+    transform: translateX(0) rotate(14deg);
+    opacity: 0;
+  }
+  16% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(480%) rotate(14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes reflection {
+  0% {
+    transform: translateX(0) rotate(14deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(820px) rotate(14deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .topbar {
+    width: calc(100vw - 24px);
+  }
+
+  .scene {
+    width: calc(100vw - 32px);
+    padding-top: 120px;
+  }
+
+  .ecosystem-grid,
+  .role-stack,
+  .ai-analysis-grid,
+  .ai-response-grid,
+  .ai-governance-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ai-hero-card,
+  .ai-prediction-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-history,
+  .panel-forecast,
+  .panel-recommendation {
+    width: auto;
+  }
+
+  .panel-history {
+    right: 34px;
+  }
+
+  .panel-forecast {
+    left: 46%;
+    top: 164px;
+  }
+
+  .panel-recommendation {
+    right: 54px;
+  }
+
+  .topnav {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .scene {
+    min-height: auto;
+    padding-bottom: 64px;
+  }
+
+  .ecosystem-grid,
+  .role-stack,
+  .split-panels,
+  .ai-analysis-grid,
+  .ai-response-grid,
+  .ai-governance-grid,
+  .prediction-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .device-frame,
+  .sales-shell,
+  .calendar-shell,
+  .final-shell,
+  .feed-card,
+  .ai-hero-card,
+  .ai-prediction-shell,
+  .ai-analysis-card,
+  .recommendation-card,
+  .schedule-intelligence-card,
+  .compliance-card,
+  .visibility-card {
+    padding: 22px;
+  }
+
+  .bars {
+    gap: 10px;
+  }
+
+  .sales-detail-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-chip {
+    justify-self: start;
+  }
+
+  .sales-headline,
+  .device-header,
+  .feed-meta,
+  .day-item,
+  .pressure-labels {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .peak-hour {
+    text-align: left;
+  }
+
+  .ai-hero-dashboard {
+    min-height: 460px;
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .hero-dashboard-panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
+  .schedule-row {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-connector {
+    margin-left: 14px;
+  }
+
+  .final-feature {
+    position: static;
+    width: 100%;
+  }
+
+  .final-layout {
+    gap: 16px;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <header class="topbar">
+      <div class="brand">Skift</div>
+      <nav class="topnav">
+        <a href="#hero">Intro</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#sales">Sales</a>
+        <a href="#ai">AI</a>
+        <a href="#finale">Finale</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="scene hero scene-hero" id="hero" data-scene>
+        <div class="hero-stage">
+          <div class="hero-glow"></div>
+          <div class="hero-orbit orbit-one"></div>
+          <div class="hero-orbit orbit-two"></div>
+        </div>
+        <div class="scene-copy reveal hero-copy">
+          <p class="eyebrow">Workforce Super App</p>
+          <h1><span class="title-shimmer">Skift</span></h1>
+          <p class="subtitle">One app. Complete control.</p>
+          <p class="body-copy">
+            Messaging, scheduling, feed, and performance intelligence presented as one seamless ecosystem.
+          </p>
+        </div>
+      </section>
+
+      <section class="scene scene-ecosystem" id="ecosystem" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Ecosystem</p>
+          <h2>Everything employees need, in one flow.</h2>
+          <p>
+            Glass surfaces, layered depth, and quiet motion carry each feature with the same design language.
+          </p>
+        </div>
+
+        <div class="ecosystem-grid">
+          <article class="glass-card floating-card reveal" data-depth-card>
+            <span class="card-icon">💬</span>
+            <div class="surface-sheen"></div>
+            <h3>Messages</h3>
+            <p>Fast communication with conversational clarity and live team context.</p>
+          </article>
+          <article class="glass-card floating-card reveal delay-1" data-depth-card>
+            <span class="card-icon">🗓️</span>
+            <div class="surface-sheen"></div>
+            <h3>Calendar</h3>
+            <p>Monthly planning, day precision, and workforce visibility without clutter.</p>
+          </article>
+          <article class="glass-card floating-card reveal delay-2" data-depth-card>
+            <span class="card-icon">📰</span>
+            <div class="surface-sheen"></div>
+            <h3>Feed</h3>
+            <p>Company updates, announcements, and social communication in one stream.</p>
+          </article>
+          <article class="glass-card floating-card reveal delay-3" data-depth-card>
+            <span class="card-icon">📈</span>
+            <div class="surface-sheen"></div>
+            <h3>Sales</h3>
+            <p>Operational performance surfaced where managers already work.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene-messages" id="messages" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Messages</p>
+          <h2>iMessage-inspired speed and calm.</h2>
+          <p>
+            Bubble timing, alignment, and typing feedback are tuned to feel natural instead of mechanical.
+          </p>
+        </div>
+
+        <div class="glass-card device-frame reveal">
+          <div class="surface-sheen"></div>
+          <div class="device-header">
+            <div class="avatar">EB</div>
+            <div>
+              <h3>Emma Brooks</h3>
+              <p>Shift Leader</p>
+            </div>
+          </div>
+
+          <div class="chat-stack" data-chat-stack>
+            <div class="message-row left bubble-enter initial">
+              <div class="message-bubble incoming">Can you cover the 18:00 handoff?</div>
+            </div>
+            <div class="message-row right bubble-enter staged" data-chat-bubble="draft">
+              <div class="message-bubble outgoing">
+                <span class="draft-text" data-draft-text></span><span class="cursor"></span>
+              </div>
+            </div>
+            <div class="message-row left bubble-enter staged" data-chat-bubble="reply">
+              <div class="message-bubble incoming">Perfect. Ping me when the floor is reset.</div>
+            </div>
+            <div class="message-row left typing-row" data-chat-typing="other">
+              <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="message-composer" data-composer>
+            <div class="composer-input">
+              <span class="composer-placeholder">Message</span>
+              <span class="composer-draft" data-composer-draft></span>
+              <span class="cursor composer-cursor"></span>
+            </div>
+            <button class="send-button" type="button" data-send-button>
+              <span>↑</span>
+            </button>
+          </div>
+
+          <div class="composer-typing" data-chat-typing="self">
+            <div class="typing-indicator small">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-calendar" id="calendar" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Calendar</p>
+          <h2>Month, week, and day views with workforce precision.</h2>
+          <p>
+            Scroll-driven transitions preview how Skift moves from broad scheduling context into exact shift detail.
+          </p>
+        </div>
+
+        <div class="calendar-stage reveal">
+          <div class="mode-switch">
+            <button class="mode-pill is-active" data-mode="month">Month</button>
+            <button class="mode-pill" data-mode="week">Week</button>
+            <button class="mode-pill" data-mode="day">Day</button>
+          </div>
+
+          <div class="glass-card calendar-shell">
+            <div class="surface-sheen"></div>
+            <div class="calendar-panel panel-month is-visible" data-panel="month">
+              <div class="calendar-grid">
+                <span></span><span></span><span class="active-day"></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span class="shift-day"></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span class="shift-day"></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="calendar-panel panel-week" data-panel="week">
+              <div class="week-bars">
+                <div class="week-bar" style="--h: 58%"><span></span></div>
+                <div class="week-bar" style="--h: 74%"><span></span></div>
+                <div class="week-bar" style="--h: 62%"><span></span></div>
+                <div class="week-bar" style="--h: 84%"><span></span></div>
+                <div class="week-bar accent" style="--h: 95%"><span></span></div>
+                <div class="week-bar" style="--h: 48%"><span></span></div>
+                <div class="week-bar" style="--h: 36%"><span></span></div>
+              </div>
+            </div>
+
+            <div class="calendar-panel panel-day" data-panel="day">
+              <div class="day-list">
+                <div class="day-item reveal-list">
+                  <div>
+                    <h4>Emma Brooks</h4>
+                    <p>Shift Leader</p>
+                  </div>
+                  <span>08:00 - 16:00</span>
+                </div>
+                <div class="day-item reveal-list delay-1">
+                  <div>
+                    <h4>Deependra Reddy</h4>
+                    <p>Team Member</p>
+                  </div>
+                  <span>12:00 - 20:00</span>
+                </div>
+                <div class="day-item reveal-list delay-2">
+                  <div>
+                    <h4>Maya Singh</h4>
+                    <p>Team Member</p>
+                  </div>
+                  <span>16:00 - 23:00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-sales" id="sales" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Sales Dashboard</p>
+          <h2>Performance insight, built into the home experience.</h2>
+          <p>
+            Numbers rise in place, trends draw cleanly, and peak performance stands out without visual noise.
+          </p>
+        </div>
+
+        <div class="glass-card sales-shell reveal">
+          <div class="surface-sheen"></div>
+          <div class="sales-headline">
+            <div>
+              <p class="meta">Mister York Gothenburg</p>
+              <div class="sales-number" data-countup="132300">SEK 0</div>
+            </div>
+            <div class="peak-hour">
+              <span>Peak Hour</span>
+              <strong>18:00</strong>
+              <div class="live-pulse">
+                <span></span>
+                <label>Live</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="sales-graph">
+            <svg viewBox="0 0 720 220" class="trend-svg" aria-hidden="true">
+              <path
+                class="trend-path"
+                d="M40 176 C90 164, 120 154, 160 142 S240 104, 300 100 S390 78, 440 66 S520 92, 580 52 S650 34, 680 28"
+              ></path>
+              <circle class="graph-dot" cx="580" cy="52" r="6"></circle>
+            </svg>
+            <div class="bars">
+              <div class="bar" style="--bar-h: 34%"></div>
+              <div class="bar" style="--bar-h: 42%"></div>
+              <div class="bar" style="--bar-h: 48%"></div>
+              <div class="bar" style="--bar-h: 56%"></div>
+              <div class="bar" style="--bar-h: 68%"></div>
+              <div class="bar highlight" style="--bar-h: 88%"></div>
+              <div class="bar" style="--bar-h: 74%"></div>
+              <div class="bar" style="--bar-h: 94%"></div>
+            </div>
+          </div>
+
+          <div class="sales-detail-preview" data-sales-detail>
+            <div class="detail-column">
+              <span class="mini-label">Today</span>
+              <strong>1,286 orders</strong>
+            </div>
+            <div class="detail-column">
+              <span class="mini-label">Best Window</span>
+              <strong>18:00 - 19:00</strong>
+            </div>
+            <button class="detail-chip" type="button" data-sales-toggle>Detailed Analytics</button>
+          </div>
+
+          <div class="sales-drilldown" data-sales-drilldown>
+            <div class="sales-drilldown-header">
+              <div>
+                <span class="mini-label">Detailed View</span>
+                <strong>Hourly Sales</strong>
+              </div>
+              <button class="detail-chip secondary" type="button" data-sales-close>Close</button>
+            </div>
+            <div class="sales-rows">
+              <div class="sales-row"><span>16:00</span><i style="--row-w: 46%"></i><strong>SEK 12,400</strong></div>
+              <div class="sales-row"><span>17:00</span><i style="--row-w: 58%"></i><strong>SEK 15,900</strong></div>
+              <div class="sales-row"><span>18:00</span><i style="--row-w: 92%"></i><strong>SEK 24,300</strong></div>
+              <div class="sales-row"><span>19:00</span><i style="--row-w: 78%"></i><strong>SEK 19,700</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene-ai" id="ai" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Labour Intelligence</p>
+          <h2>Intelligence built into every shift.</h2>
+          <p>
+            Historical demand, live staffing pressure, and schedule guidance move together in one calm operational view.
+          </p>
+        </div>
+
+        <div class="ai-intro reveal">
+          <article class="glass-card ai-hero-card" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-hero-copy">
+              <span class="mini-label">AI Scheduling</span>
+              <h3>Scheduling, guided by live business reality.</h3>
+              <p>
+                Skift reads sales behavior, predicts demand, and recommends labour action before service pressure appears.
+              </p>
+            </div>
+            <div class="ai-hero-dashboard">
+              <div class="hero-dashboard-glow"></div>
+              <div class="hero-dashboard-panel panel-history">
+                <span class="mini-label">Historical Signal</span>
+                <div class="history-ribbon">
+                  <i style="--ribbon-h: 38%"></i>
+                  <i style="--ribbon-h: 46%"></i>
+                  <i style="--ribbon-h: 52%"></i>
+                  <i style="--ribbon-h: 68%"></i>
+                  <i style="--ribbon-h: 74%"></i>
+                  <i style="--ribbon-h: 62%"></i>
+                  <i style="--ribbon-h: 82%"></i>
+                </div>
+              </div>
+              <div class="hero-dashboard-panel panel-forecast">
+                <span class="mini-label">Forecast</span>
+                <svg viewBox="0 0 320 120" class="forecast-mini-svg" aria-hidden="true">
+                  <path class="forecast-base-path" d="M16 86 C48 76, 76 72, 108 58 S166 44, 196 50 S240 44, 268 30"></path>
+                  <path class="forecast-future-path" d="M268 30 C286 26, 296 18, 306 12"></path>
+                </svg>
+              </div>
+              <div class="hero-dashboard-panel panel-recommendation">
+                <span class="mini-label">Action</span>
+                <strong data-ai-recommendation-label>Increase dinner coverage</strong>
+                <p data-ai-recommendation-note>Projected 18:00 demand exceeds current floor staffing.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-analysis-grid">
+          <article class="glass-card ai-analysis-card reveal" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">By Hour</span>
+              <strong>Patterns, minute by minute.</strong>
+            </div>
+            <div class="hour-analysis">
+              <div class="hour-bars">
+                <i style="--analysis-h: 26%"></i>
+                <i style="--analysis-h: 34%"></i>
+                <i style="--analysis-h: 42%"></i>
+                <i style="--analysis-h: 54%"></i>
+                <i style="--analysis-h: 76%"></i>
+                <i class="accent" style="--analysis-h: 92%"></i>
+                <i style="--analysis-h: 74%"></i>
+                <i style="--analysis-h: 58%"></i>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card ai-analysis-card reveal delay-1" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">By Day</span>
+              <strong>Weekly rhythm, clearly surfaced.</strong>
+            </div>
+            <div class="day-analysis">
+              <div class="day-trend">
+                <i style="--day-scale: 0.82"></i>
+                <i style="--day-scale: 0.9"></i>
+                <i style="--day-scale: 0.74"></i>
+                <i style="--day-scale: 0.86"></i>
+                <i class="accent" style="--day-scale: 1"></i>
+                <i style="--day-scale: 0.68"></i>
+                <i style="--day-scale: 0.56"></i>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card ai-analysis-card reveal delay-2" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">By Month</span>
+              <strong>Seasonality, read in one glance.</strong>
+            </div>
+            <div class="month-analysis">
+              <div class="month-pulse">
+                <span class="month-ring ring-one"></span>
+                <span class="month-ring ring-two"></span>
+                <span class="month-ring ring-three"></span>
+                <div class="month-core">Q4</div>
+              </div>
+              <div class="month-summary">
+                <span>Recurring dinner peaks</span>
+                <span>Weekend uplift</span>
+                <span>Campaign sensitivity</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-prediction-stage reveal">
+          <article class="glass-card ai-prediction-shell">
+            <div class="surface-sheen"></div>
+            <div class="prediction-copy">
+              <span class="mini-label">Demand Forecast</span>
+              <h3>AI that sees demand before it arrives.</h3>
+              <p>Historical performance extends into a live projection, with staffing response forming around it.</p>
+            </div>
+            <div class="prediction-visual">
+              <svg viewBox="0 0 760 280" class="prediction-svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="forecastFade" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#4377f5" stop-opacity="0.18"></stop>
+                    <stop offset="100%" stop-color="#34b873" stop-opacity="0.08"></stop>
+                  </linearGradient>
+                </defs>
+                <path class="prediction-area" d="M40 230 C90 214, 128 198, 170 174 S250 140, 308 136 S392 148, 446 130 S534 112, 596 78 S664 62, 710 54 L710 250 L40 250 Z"></path>
+                <path class="prediction-history-path" d="M40 230 C90 214, 128 198, 170 174 S250 140, 308 136 S392 148, 446 130"></path>
+                <path class="prediction-future-path" d="M446 130 C494 116, 534 112, 596 78 S664 62, 710 54"></path>
+                <circle class="prediction-node" cx="446" cy="130" r="7"></circle>
+              </svg>
+              <div class="prediction-metrics">
+                <div class="prediction-chip">
+                  <span class="mini-label">Forecast Window</span>
+                  <strong>17:30 - 20:00</strong>
+                </div>
+                <div class="prediction-chip">
+                  <span class="mini-label">Demand Shift</span>
+                  <strong>+18%</strong>
+                </div>
+                <div class="prediction-chip highlight">
+                  <span class="mini-label">System Reading</span>
+                  <strong>Coverage pressure building</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-response-grid">
+          <article class="glass-card recommendation-card reveal" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Labour Recommendation</span>
+              <strong>When sales rise, staffing responds.</strong>
+            </div>
+            <div class="recommendation-body">
+              <div class="staffing-pressure">
+                <div class="pressure-meter">
+                  <span class="pressure-fill" data-ai-pressure></span>
+                </div>
+                <div class="pressure-labels">
+                  <span>Coverage</span>
+                  <strong data-ai-pressure-label>Elevated</strong>
+                </div>
+              </div>
+              <div class="recommendation-panel" data-ai-recommendation-card>
+                <span class="mini-label">Recommended Action</span>
+                <strong data-ai-action-title>Add one floor lead from 17:30</strong>
+                <p data-ai-action-body>Dining room demand is trending above planned labour capacity.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card schedule-intelligence-card reveal delay-1" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Schedule Generation</span>
+              <strong>Operational logic, aligned automatically.</strong>
+            </div>
+            <div class="decision-flow">
+              <div class="decision-inputs">
+                <div class="decision-token">Sales demand</div>
+                <div class="decision-token">Contract hours</div>
+                <div class="decision-token">Labour law</div>
+                <div class="decision-token">Role coverage</div>
+                <div class="decision-token">Fair allocation</div>
+              </div>
+              <div class="decision-core">
+                <div class="core-halo"></div>
+                <strong>Skift Intelligence</strong>
+              </div>
+              <div class="decision-output">
+                <div class="schedule-row">
+                  <span>Floor Lead</span>
+                  <i style="--schedule-w: 74%"></i>
+                  <strong>17:30 - 22:00</strong>
+                </div>
+                <div class="schedule-row">
+                  <span>Front Counter</span>
+                  <i style="--schedule-w: 62%"></i>
+                  <strong>16:00 - 21:00</strong>
+                </div>
+                <div class="schedule-row">
+                  <span>Runner</span>
+                  <i class="accent" style="--schedule-w: 81%"></i>
+                  <strong>18:00 - 23:00</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="ai-governance-grid">
+          <article class="glass-card compliance-card reveal" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Compliance</span>
+              <strong>Rules checked before a shift moves.</strong>
+            </div>
+            <div class="compliance-list">
+              <div class="compliance-item">
+                <span class="status-dot"></span>
+                <div>
+                  <strong>Country labour rules</strong>
+                  <p>Local break and coverage logic validated.</p>
+                </div>
+              </div>
+              <div class="compliance-item">
+                <span class="status-dot"></span>
+                <div>
+                  <strong>Contract hours</strong>
+                  <p>Hours stay within agreed weekly allocation.</p>
+                </div>
+              </div>
+              <div class="compliance-item">
+                <span class="status-dot"></span>
+                <div>
+                  <strong>Staffing restrictions</strong>
+                  <p>Role mix and operational constraints remain intact.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card visibility-card reveal delay-1" data-depth-card>
+            <div class="surface-sheen"></div>
+            <div class="ai-card-heading">
+              <span class="mini-label">Traceability</span>
+              <strong>Recommendation, change, notification.</strong>
+            </div>
+            <div class="visibility-flow">
+              <div class="flow-node is-live">
+                <span class="flow-badge">1</span>
+                <div>
+                  <strong>AI recommends</strong>
+                  <p data-ai-flow-copy>Coverage increased for projected dinner demand.</p>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-node">
+                <span class="flow-badge">2</span>
+                <div>
+                  <strong>Schedule updates</strong>
+                  <p>Shift blocks re-balance in real time.</p>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-node manager-node" data-ai-manager-node>
+                <span class="flow-badge">3</span>
+                <div>
+                  <strong>Manager notified</strong>
+                  <p>Every operational change stays visible and reviewable.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene-feed" id="feed" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Feed</p>
+          <h2>Announcements and company updates that feel alive.</h2>
+          <p>
+            Posts rise into view naturally, preserving a clean reading rhythm instead of overwhelming the screen.
+          </p>
+        </div>
+
+        <div class="feed-stack">
+          <article class="glass-card feed-card reveal feed-lift">
+            <div class="surface-sheen"></div>
+            <div class="feed-meta">
+              <div>
+                <h3>Emma Brooks</h3>
+                <p>Manager</p>
+              </div>
+              <span>9m</span>
+            </div>
+            <p>Friday evening coverage is fully staffed across the branch.</p>
+            <div class="feed-actions">
+              <button class="feed-action" type="button" data-like-button>Like</button>
+              <button class="feed-action" type="button" data-comment-toggle>Comment</button>
+            </div>
+            <div class="comment-reveal" data-comment-field>Reply to the team</div>
+          </article>
+          <article class="glass-card feed-card reveal delay-1 feed-lift">
+            <div class="surface-sheen"></div>
+            <div class="feed-meta">
+              <div>
+                <h3>Deependra Reddy</h3>
+                <p>Shift Leader</p>
+              </div>
+              <span>14m</span>
+            </div>
+            <p>Front-of-house reset is complete and ready for the dinner window.</p>
+            <div class="feed-actions">
+              <button class="feed-action" type="button" data-like-button>Like</button>
+              <button class="feed-action" type="button" data-comment-toggle>Comment</button>
+            </div>
+            <div class="comment-reveal" data-comment-field>Reply to the team</div>
+          </article>
+          <article class="glass-card feed-card reveal delay-2 feed-lift">
+            <div class="surface-sheen"></div>
+            <div class="feed-meta">
+              <div>
+                <h3>Lina Park</h3>
+                <p>Manager</p>
+              </div>
+              <span>22m</span>
+            </div>
+            <p>Inventory handoff has been logged with the opening team.</p>
+            <div class="feed-actions">
+              <button class="feed-action" type="button" data-like-button>Like</button>
+              <button class="feed-action" type="button" data-comment-toggle>Comment</button>
+            </div>
+            <div class="comment-reveal" data-comment-field>Reply to the team</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scene scene-roles" id="roles" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Roles</p>
+          <h2>Permission layers made visible.</h2>
+          <p>
+            Spatial depth communicates authority, access, and context without relying on dense explanation.
+          </p>
+        </div>
+
+        <div class="role-stack" data-role-stack>
+          <button class="glass-card role-card is-front" data-role-card>
+            <div class="surface-sheen"></div>
+            <h3>Manager</h3>
+            <p>Branch oversight, analytics, team structure, and operational control.</p>
+          </button>
+          <button class="glass-card role-card" data-role-card>
+            <div class="surface-sheen"></div>
+            <h3>Shift Leader</h3>
+            <p>Scoped management, communication leadership, and daily execution.</p>
+          </button>
+          <button class="glass-card role-card" data-role-card>
+            <div class="surface-sheen"></div>
+            <h3>Team Member</h3>
+            <p>Clear schedule, tasks, messaging, and company context.</p>
+          </button>
+        </div>
+      </section>
+
+      <section class="scene scene-finale" id="finale" data-scene>
+        <div class="section-header reveal">
+          <p class="eyebrow">Final Product View</p>
+          <h2>A single ecosystem, presented with quiet confidence.</h2>
+        </div>
+
+        <div class="glass-card final-shell reveal">
+          <div class="final-glow"></div>
+          <div class="reflection"></div>
+          <div class="final-layout">
+            <div class="final-feature side-left final-float">
+              <div class="mini-app-card">
+                <span class="mini-label">Messages</span>
+                <div class="mini-bubble incoming"></div>
+                <div class="mini-bubble outgoing"></div>
+              </div>
+            </div>
+
+            <div class="final-device final-float">
+              <div class="final-ui">
+                <div class="final-top">
+                  <span class="chip chip-primary"></span>
+                  <span class="chip"></span>
+                  <span class="chip"></span>
+                </div>
+                <div class="hero-panel">
+                  <div class="hero-panel-copy">
+                    <span class="mini-label">Home</span>
+                    <strong>Skift</strong>
+                    <p>Messages, shifts, feed, and live sales.</p>
+                  </div>
+                  <div class="hero-panel-sales">
+                    <span>SEK 132,300</span>
+                    <div class="hero-panel-bars">
+                      <i></i><i></i><i></i><i></i><i class="accent"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="split-panels">
+                  <div class="panel-messages">
+                    <span class="mini-label">Messages</span>
+                    <div class="mini-lines">
+                      <i></i><i></i><i></i>
+                    </div>
+                  </div>
+                  <div class="panel-calendar">
+                    <span class="mini-label">Calendar</span>
+                    <div class="mini-grid">
+                      <i></i><i></i><i class="accent"></i><i></i><i></i><i></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom-panel">
+                  <span class="mini-label">Feed</span>
+                  <div class="bottom-posts">
+                    <i></i><i></i><i></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="final-feature side-right final-float">
+              <div class="mini-app-card">
+                <span class="mini-label">AI Labour</span>
+                <div class="mini-chart ai-mini-chart">
+                  <i></i><i></i><i class="accent"></i><i></i>
+                </div>
+                <div class="mini-ai-tag">Coverage adjusted</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="outro reveal">
+          <p>One app. Complete control.</p>
+        </div>
+      </section>
+    </main>
+    <script>
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+      }
+    });
+  },
+  {
+    threshold: 0.18,
+    rootMargin: "0px 0px -8% 0px",
+  }
+);
+
+document.querySelectorAll(".reveal, [data-scene]").forEach((node) => revealObserver.observe(node));
+
+const sceneObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("is-active", entry.isIntersecting);
+    });
+  },
+  { threshold: 0.38 }
+);
+
+document.querySelectorAll("[data-scene]").forEach((scene) => sceneObserver.observe(scene));
+
+const depthCards = document.querySelectorAll("[data-depth-card]");
+const parallaxScenes = document.querySelectorAll(".scene");
+let ticking = false;
+
+function applyScrollMotion() {
+  const viewportHeight = window.innerHeight;
+
+  depthCards.forEach((card, index) => {
+    const rect = card.getBoundingClientRect();
+    const progress = (rect.top + rect.height * 0.5 - viewportHeight * 0.5) / viewportHeight;
+    const y = progress * -18;
+    const scale = 1 - Math.min(Math.abs(progress) * 0.04, 0.04);
+    const rotateX = progress * 4;
+    const rotateY = (index % 2 === 0 ? 1 : -1) * progress * 5;
+    card.style.transform = `translate3d(0, ${y}px, 0) scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  parallaxScenes.forEach((scene) => {
+    const rect = scene.getBoundingClientRect();
+    const offset = (rect.top / viewportHeight) * -20;
+    scene.style.setProperty("--scene-offset", `${offset}px`);
+  });
+
+  ticking = false;
+}
+
+function requestParallaxFrame() {
+  if (prefersReducedMotion || ticking) return;
+  ticking = true;
+  requestAnimationFrame(applyScrollMotion);
+}
+
+window.addEventListener("scroll", requestParallaxFrame, { passive: true });
+window.addEventListener("resize", requestParallaxFrame);
+requestParallaxFrame();
+
+const salesNumber = document.querySelector("[data-countup]");
+const salesSection = document.querySelector(".scene-sales");
+const salesDetail = document.querySelector("[data-sales-detail]");
+const salesToggle = document.querySelector("[data-sales-toggle]");
+const salesClose = document.querySelector("[data-sales-close]");
+const salesDrilldown = document.querySelector("[data-sales-drilldown]");
+let salesAnimated = false;
+let salesLiveTimer;
+let currentSalesValue = Number(salesNumber?.dataset.countup || 0);
+
+function formatSEK(value) {
+  return new Intl.NumberFormat("en-SE", {
+    style: "currency",
+    currency: "SEK",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function animateCountup(node, target, duration = 1600) {
+  const startValue = 0;
+  const start = performance.now();
+
+  function frame(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(startValue + (target - startValue) * eased);
+    node.textContent = formatSEK(value);
+
+    if (progress < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      currentSalesValue = target;
+      startSalesPulse();
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+function startSalesPulse() {
+  if (prefersReducedMotion || !salesNumber || salesLiveTimer) return;
+  salesLiveTimer = window.setInterval(() => {
+    const increment = 120 + Math.round(Math.random() * 320);
+    currentSalesValue += increment;
+    salesNumber.textContent = formatSEK(currentSalesValue);
+    salesNumber.animate(
+      [
+        { transform: "translateY(0) scale(1)", opacity: 1 },
+        { transform: "translateY(-2px) scale(1.015)", opacity: 1 },
+        { transform: "translateY(0) scale(1)", opacity: 1 },
+      ],
+      {
+        duration: 720,
+        easing: "cubic-bezier(0.2, 0.9, 0.22, 1)",
+      }
+    );
+  }, 2600);
+}
+
+const salesObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting || salesAnimated || !salesSection || !salesNumber) return;
+      salesAnimated = true;
+      salesSection.classList.add("is-animated");
+      animateCountup(salesNumber, Number(salesNumber.dataset.countup));
+      window.setTimeout(() => salesDetail?.classList.add("is-visible"), 820);
+    });
+  },
+  { threshold: 0.35 }
+);
+
+if (salesSection && salesNumber) {
+  salesObserver.observe(salesSection);
+}
+
+const aiScene = document.querySelector(".scene-ai");
+const aiPressure = document.querySelector("[data-ai-pressure]");
+const aiPressureLabel = document.querySelector("[data-ai-pressure-label]");
+const aiActionTitle = document.querySelector("[data-ai-action-title]");
+const aiActionBody = document.querySelector("[data-ai-action-body]");
+const aiRecommendationLabel = document.querySelector("[data-ai-recommendation-label]");
+const aiRecommendationNote = document.querySelector("[data-ai-recommendation-note]");
+const aiFlowCopy = document.querySelector("[data-ai-flow-copy]");
+const aiManagerNode = document.querySelector("[data-ai-manager-node]");
+let aiAnimated = false;
+let aiCycleTimer;
+let aiStateIndex = 0;
+
+const aiStates = [
+  {
+    pressure: "56%",
+    pressureLabel: "Elevated",
+    actionTitle: "Add one floor lead from 17:30",
+    actionBody: "Dining room demand is trending above planned labour capacity.",
+    heroLabel: "Increase dinner coverage",
+    heroNote: "Projected 18:00 demand exceeds current floor staffing.",
+    flowCopy: "Coverage increased for projected dinner demand.",
+  },
+  {
+    pressure: "72%",
+    pressureLabel: "High priority",
+    actionTitle: "Extend front counter coverage by 90 minutes",
+    actionBody: "Forecasted order acceleration is compressing queue resilience.",
+    heroLabel: "Adjust shift coverage",
+    heroNote: "Front counter demand is climbing faster than scheduled allocation.",
+    flowCopy: "Shift coverage expanded to protect service speed.",
+  },
+  {
+    pressure: "64%",
+    pressureLabel: "Manager review",
+    actionTitle: "Notify manager and publish refined closing plan",
+    actionBody: "Projected late demand requires visible coordination across the floor.",
+    heroLabel: "Manager notified",
+    heroNote: "Operational change is published with full visibility and traceability.",
+    flowCopy: "Managers informed and downstream changes logged in real time.",
+  },
+];
+
+function applyAiState(state) {
+  aiPressure?.style.setProperty("width", state.pressure);
+  if (aiPressureLabel) aiPressureLabel.textContent = state.pressureLabel;
+  if (aiActionTitle) aiActionTitle.textContent = state.actionTitle;
+  if (aiActionBody) aiActionBody.textContent = state.actionBody;
+  if (aiRecommendationLabel) aiRecommendationLabel.textContent = state.heroLabel;
+  if (aiRecommendationNote) aiRecommendationNote.textContent = state.heroNote;
+  if (aiFlowCopy) aiFlowCopy.textContent = state.flowCopy;
+
+  if (!prefersReducedMotion) {
+    [aiPressureLabel, aiActionTitle, aiActionBody, aiRecommendationLabel, aiRecommendationNote, aiFlowCopy].forEach((node) => {
+      node?.animate(
+        [
+          { opacity: 0.6, transform: "translateY(4px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        {
+          duration: 620,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        }
+      );
+    });
+
+    aiManagerNode?.animate(
+      [
+        { transform: "translateY(0) scale(1)", boxShadow: "0 20px 48px rgba(16, 24, 40, 0.07)" },
+        { transform: "translateY(-2px) scale(1.01)", boxShadow: "0 28px 58px rgba(67, 119, 245, 0.12)" },
+        { transform: "translateY(0) scale(1)", boxShadow: "0 20px 48px rgba(16, 24, 40, 0.07)" },
+      ],
+      {
+        duration: 900,
+        easing: "cubic-bezier(0.2, 0.9, 0.22, 1)",
+      }
+    );
+  }
+}
+
+function startAiCycle() {
+  if (!aiScene || !aiPressure || aiCycleTimer) return;
+  applyAiState(aiStates[aiStateIndex]);
+  aiCycleTimer = window.setInterval(() => {
+    aiStateIndex = (aiStateIndex + 1) % aiStates.length;
+    applyAiState(aiStates[aiStateIndex]);
+  }, prefersReducedMotion ? 4800 : 3200);
+}
+
+function stopAiCycle() {
+  if (!aiCycleTimer) return;
+  window.clearInterval(aiCycleTimer);
+  aiCycleTimer = undefined;
+}
+
+const aiObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        aiScene?.classList.add("is-animated");
+        aiManagerNode?.classList.add("is-live");
+        if (!aiAnimated) {
+          aiAnimated = true;
+          applyAiState(aiStates[aiStateIndex]);
+        }
+        startAiCycle();
+      } else {
+        stopAiCycle();
+        aiManagerNode?.classList.remove("is-live");
+      }
+    });
+  },
+  { threshold: 0.35 }
+);
+
+if (aiScene) {
+  aiObserver.observe(aiScene);
+}
+
+salesToggle?.addEventListener("click", () => {
+  salesDrilldown?.classList.add("is-open");
+});
+
+salesClose?.addEventListener("click", () => {
+  salesDrilldown?.classList.remove("is-open");
+});
+
+const modeButtons = Array.from(document.querySelectorAll(".mode-pill"));
+const panels = Array.from(document.querySelectorAll("[data-panel]"));
+const calendarScene = document.querySelector(".scene-calendar");
+const listItems = document.querySelectorAll(".reveal-list");
+const weekBars = document.querySelectorAll(".week-bar");
+let modeIndex = 0;
+
+function setCalendarMode(mode) {
+  modeButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.mode === mode);
+  });
+
+  panels.forEach((panel) => {
+    panel.classList.toggle("is-visible", panel.dataset.panel === mode);
+  });
+
+  if (!calendarScene) return;
+
+  calendarScene.classList.toggle("day-mode", mode === "day");
+  calendarScene.classList.toggle("week-mode", mode === "week");
+
+  if (mode === "week") {
+    weekBars.forEach((bar, index) => {
+      window.setTimeout(() => bar.classList.add("is-grown"), index * 65);
+    });
+  } else {
+    weekBars.forEach((bar) => bar.classList.remove("is-grown"));
+  }
+
+  if (mode === "day") {
+    listItems.forEach((item, index) => {
+      window.setTimeout(() => item.classList.add("is-visible"), index * 120);
+    });
+  } else {
+    listItems.forEach((item) => item.classList.remove("is-visible"));
+  }
+}
+
+modeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    modeIndex = modeButtons.indexOf(button);
+    setCalendarMode(button.dataset.mode);
+  });
+});
+
+if (!prefersReducedMotion) {
+  window.setInterval(() => {
+    modeIndex = (modeIndex + 1) % modeButtons.length;
+    setCalendarMode(modeButtons[modeIndex].dataset.mode);
+  }, 3400);
+}
+
+if (modeButtons.length > 0) {
+  setCalendarMode(modeButtons[modeIndex].dataset.mode);
+}
+
+const roleCards = Array.from(document.querySelectorAll("[data-role-card]"));
+
+function selectRole(index) {
+  roleCards.forEach((card, cardIndex) => {
+    card.classList.toggle("is-front", cardIndex === index);
+    const offset = cardIndex - index;
+    const rotation = offset === 0 ? 0 : offset < 0 ? -11 : 11;
+    const translate = offset === 0 ? 60 : -24 * Math.abs(offset);
+    const scale = offset === 0 ? 1.03 : 0.95;
+    card.style.transform = `rotateY(${rotation}deg) translateZ(${translate}px) scale(${scale})`;
+    card.style.opacity = offset === 0 ? "1" : "0.84";
+    card.style.filter = offset === 0 ? "blur(0px)" : `blur(${Math.min(Math.abs(offset) * 1.6, 2.4)}px)`;
+  });
+}
+
+roleCards.forEach((card, index) => {
+  card.addEventListener("click", () => selectRole(index));
+});
+
+let roleIndex = 0;
+selectRole(roleIndex);
+
+if (!prefersReducedMotion) {
+  window.setInterval(() => {
+    roleIndex = (roleIndex + 1) % roleCards.length;
+    selectRole(roleIndex);
+  }, 3000);
+}
+
+const feedCards = document.querySelectorAll(".feed-card");
+feedCards.forEach((card) => {
+  const likeButton = card.querySelector("[data-like-button]");
+  const commentToggle = card.querySelector("[data-comment-toggle]");
+  const commentField = card.querySelector("[data-comment-field]");
+
+  likeButton?.addEventListener("click", () => {
+    likeButton.classList.toggle("is-liked");
+  });
+
+  commentToggle?.addEventListener("click", () => {
+    commentField?.classList.toggle("is-open");
+  });
+});
+
+const chatStack = document.querySelector("[data-chat-stack]");
+const draftText = document.querySelector("[data-draft-text]");
+const composerDraft = document.querySelector("[data-composer-draft]");
+const composerPlaceholder = document.querySelector(".composer-placeholder");
+const composerCursor = document.querySelector(".composer-cursor");
+const sendButton = document.querySelector("[data-send-button]");
+const selfTyping = document.querySelector('[data-chat-typing="self"]');
+const otherTyping = document.querySelector('[data-chat-typing="other"]');
+const draftBubble = document.querySelector('[data-chat-bubble="draft"]');
+const replyBubble = document.querySelector('[data-chat-bubble="reply"]');
+const initialBubble = document.querySelector(".message-row.initial");
+const messageScene = document.querySelector(".scene-messages");
+const messageCopy = "Yes. I’ve got the close checklist too.";
+let messageLoopStarted = false;
+let messageRunToken = 0;
+
+function sleep(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+function scrollConversation() {
+  if (!chatStack || prefersReducedMotion) return;
+  chatStack.style.transform = "translateY(-24px)";
+}
+
+function resetConversation() {
+  if (!chatStack || !draftText || !composerDraft || !composerPlaceholder || !composerCursor || !sendButton || !selfTyping || !otherTyping || !draftBubble || !replyBubble) {
+    return;
+  }
+
+  chatStack.style.transform = "translateY(0)";
+  draftText.textContent = "";
+  composerDraft.textContent = "";
+  composerPlaceholder.style.opacity = "1";
+  composerPlaceholder.style.transform = "translateX(0)";
+  composerCursor.style.opacity = "0";
+  sendButton.classList.remove("is-armed", "is-fired");
+  selfTyping.classList.remove("is-visible");
+  otherTyping.classList.remove("is-visible");
+  draftBubble.classList.remove("is-visible");
+  replyBubble.classList.remove("is-visible");
+}
+
+async function runConversationDemo() {
+  if (prefersReducedMotion || messageLoopStarted) return;
+  messageLoopStarted = true;
+  const token = ++messageRunToken;
+
+  while (token === messageRunToken && messageScene?.classList.contains("in-view")) {
+    resetConversation();
+    await sleep(700);
+    if (token !== messageRunToken) break;
+
+    selfTyping?.classList.add("is-visible");
+    composerCursor.style.opacity = "1";
+    composerPlaceholder.style.opacity = "0";
+    composerPlaceholder.style.transform = "translateX(-10px)";
+
+    for (const char of messageCopy) {
+      if (token !== messageRunToken) break;
+      composerDraft.textContent += char;
+      await sleep(38);
+    }
+    if (token !== messageRunToken) break;
+
+    await sleep(280);
+    if (token !== messageRunToken) break;
+    selfTyping?.classList.remove("is-visible");
+    sendButton?.classList.add("is-armed");
+    await sleep(240);
+    if (token !== messageRunToken) break;
+    sendButton?.classList.add("is-fired");
+    draftText.textContent = composerDraft.textContent;
+    draftBubble?.classList.add("is-visible");
+    composerDraft.textContent = "";
+    composerCursor.style.opacity = "0";
+    scrollConversation();
+
+    await sleep(420);
+    if (token !== messageRunToken) break;
+    sendButton?.classList.remove("is-fired");
+    otherTyping?.classList.add("is-visible");
+    await sleep(1050);
+    if (token !== messageRunToken) break;
+    otherTyping?.classList.remove("is-visible");
+    replyBubble?.classList.add("is-visible");
+    scrollConversation();
+
+    await sleep(2600);
+  }
+
+  messageLoopStarted = false;
+}
+
+const messageObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        initialBubble?.classList.add("is-visible");
+        runConversationDemo();
+      } else {
+        messageRunToken += 1;
+        messageLoopStarted = false;
+        resetConversation();
+      }
+    });
+  },
+  { threshold: 0.45 }
+);
+
+if (messageScene) {
+  messageObserver.observe(messageScene);
+}
+
+    </script>
+  </body>
+</html>

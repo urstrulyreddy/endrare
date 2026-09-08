@@ -1,0 +1,44 @@
+/archive /archive/ 301
+/archive/thinking /archive/thinking/ 301
+/products /products/ 301
+/start /start/ 301
+/about /about/ 301
+/contact /contact/ 301
+
+/case-studies/building-skift-from-real-operations /case-studies/building-skift-from-real-operations/ 301
+/case-studies/why-clarity-is-a-product-decision /case-studies/why-clarity-is-a-product-decision/ 301
+/notes/what-working-in-sweden-taught-me-about-software /notes/what-working-in-sweden-taught-me-about-software/ 301
+/notes/backend-systems-should-feel-invisible /notes/backend-systems-should-feel-invisible/ 301
+
+/products/expense-hive /products/expense-hive/ 301
+/products/pose-estimation /products/pose-estimation/ 301
+/products/food-tracker /products/food-tracker/ 301
+/products/outliner /products/outliner/ 301
+/products/flask-docker-aws /products/flask-docker-aws/ 301
+/products/cloud-infrastructure /products/cloud-infrastructure/ 301
+/products/skift /products/skift/ 301
+/products/endrare /products/endrare/ 301
+
+/skift /presentations/skiftpresentation.html 302
+/skift/ /presentations/skiftpresentation.html 302
+/skiftpresentation.html /presentations/skiftpresentation.html 301
+
+/casestudy/skiftcasestudy.html /case-studies/building-skift-from-real-operations/ 301
+/skiftcasestudy.html /case-studies/building-skift-from-real-operations/ 301
+/skift-case-study /case-studies/building-skift-from-real-operations/ 301
+/skift-case-study/ /case-studies/building-skift-from-real-operations/ 301
+
+/casestudy/productclarity.html /case-studies/why-clarity-is-a-product-decision/ 301
+/productclarity.html /case-studies/why-clarity-is-a-product-decision/ 301
+/product-clarity /case-studies/why-clarity-is-a-product-decision/ 301
+/product-clarity/ /case-studies/why-clarity-is-a-product-decision/ 301
+
+/notes/taughtinsweden.html /notes/what-working-in-sweden-taught-me-about-software/ 301
+/taughtinsweden.html /notes/what-working-in-sweden-taught-me-about-software/ 301
+/taught-in-sweden /notes/what-working-in-sweden-taught-me-about-software/ 301
+/taught-in-sweden/ /notes/what-working-in-sweden-taught-me-about-software/ 301
+
+/notes/backendinvisible.html /notes/backend-systems-should-feel-invisible/ 301
+/backendinvisible.html /notes/backend-systems-should-feel-invisible/ 301
+/backend-invisible /notes/backend-systems-should-feel-invisible/ 301
+/backend-invisible/ /notes/backend-systems-should-feel-invisible/ 301

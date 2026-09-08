@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Why clarity is a product decision — Reducing cognitive load is not a design problem. It is an engineering problem." />
+<title>Why clarity is a product decision — Endrare</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet" />
+
+<style>
+/* ─── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #f8f5ef;
+  --bg-header:    rgba(248,245,239,0.94);
+  --ink:          #111111;
+  --ink-2:        #3a3a37;
+  --ink-3:        #6e6e6a;
+  --ink-4:        #9e9e99;
+  --rule:         #e2ddd5;
+  --rule-light:   #ede9e1;
+  --sans:         'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --serif:        'Instrument Serif', Georgia, serif;
+  --mono:         'Fira Code', 'SFMono-Regular', Consolas, monospace;
+  --ease:         cubic-bezier(0.22, 1, 0.36, 1);
+  --header-h:     60px;
+}
+
+html { font-size: 17px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); overflow-x: hidden; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+strong { font-weight: 500; }
+
+/* ─── Header ──────────────────────────────────────────────── */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: var(--bg-header);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.header-logo { font-family: var(--mono); font-size: 14px; font-weight: 300; letter-spacing: 0.13em; color: var(--ink); text-transform: uppercase; }
+.header-nav { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.header-nav a { font-size: 13px; font-weight: 400; color: var(--ink-3); letter-spacing: 0.01em; transition: color 0.2s ease; }
+.header-nav a:hover { color: var(--ink); }
+.header-cta { font-size: 12px; font-weight: 500; color: var(--ink); border: 0.5px solid var(--ink); padding: 6px 15px; letter-spacing: 0.04em; transition: background 0.2s ease, color 0.2s ease; }
+.header-cta:hover { background: var(--ink); color: var(--bg); }
+
+/* ─── Hero ────────────────────────────────────────────────── */
+.hero {
+  max-width: 900px; margin: 0 auto;
+  padding: calc(var(--header-h) + 7rem) 3rem 5.5rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+.hero-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 300;
+  color: var(--ink-4); letter-spacing: 0.22em; text-transform: uppercase;
+  margin-bottom: 2.2rem; display: flex; align-items: center; gap: 10px;
+}
+.hero-label::before { content: ''; display: inline-block; width: 20px; height: 0.5px; background: var(--ink-4); flex-shrink: 0; }
+.hero-title { font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 300; line-height: 1.12; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 1.4rem; }
+.hero-title em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.hero-subtitle { font-size: 1.05rem; font-weight: 300; color: var(--ink-3); line-height: 1.7; max-width: 580px; margin-bottom: 3rem; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 1.8rem; align-items: center; padding-top: 2rem; border-top: 0.5px solid var(--rule-light); }
+.meta-item { font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--ink-4); letter-spacing: 0.14em; text-transform: uppercase; position: relative; }
+.meta-item + .meta-item::before { content: '/'; position: absolute; left: -1rem; color: var(--rule); font-family: var(--sans); }
+
+/* ─── Layout ──────────────────────────────────────────────── */
+.page-layout { display: grid; grid-template-columns: 260px 1fr; max-width: 1160px; margin: 0 auto; padding: 0 3rem; align-items: start; }
+
+/* ─── TOC ─────────────────────────────────────────────────── */
+.toc-aside {
+  position: sticky; top: calc(var(--header-h) + 3rem);
+  padding: 3.5rem 3.5rem 3rem 0;
+  max-height: calc(100vh - var(--header-h) - 4rem);
+  overflow-y: auto; scrollbar-width: none;
+}
+.toc-aside::-webkit-scrollbar { display: none; }
+.toc-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--ink-4); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 3rem; transition: color 0.2s ease; }
+.toc-back:hover { color: var(--ink-3); }
+.toc-label { font-family: var(--mono); font-size: 9.5px; font-weight: 300; color: var(--ink-4); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1.4rem; }
+.toc-nav { display: flex; flex-direction: column; gap: 0; }
+.toc-item {
+  display: block; position: relative; padding: 7px 0 7px 16px;
+  font-size: 12.5px; font-weight: 400; color: var(--ink-4);
+  letter-spacing: 0.01em; line-height: 1.45;
+  transition: color 0.25s ease;
+  cursor: pointer; border: none; background: none; text-align: left; font-family: var(--sans);
+}
+.toc-item::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 1px; height: 0; background: var(--ink);
+  transition: height 0.3s var(--ease), opacity 0.3s ease; opacity: 0;
+}
+.toc-item:hover { color: var(--ink-2); }
+.toc-item[aria-current="true"] { color: var(--ink); font-weight: 500; }
+.toc-item[aria-current="true"]::before { height: 1.1em; opacity: 1; }
+.toc-num { font-family: var(--mono); font-size: 9px; color: var(--ink-4); margin-right: 7px; font-weight: 300; letter-spacing: 0.04em; }
+
+/* ─── Article ─────────────────────────────────────────────── */
+.article-wrap { border-left: 0.5px solid var(--rule-light); padding: 4.5rem 0 8rem 5rem; min-width: 0; }
+.article-section { padding-top: 5rem; padding-bottom: 1rem; }
+.article-section + .article-section { border-top: 0.5px solid var(--rule-light); margin-top: 1rem; }
+
+.article-section-num { font-family: var(--mono); font-size: 9.5px; font-weight: 300; color: var(--ink-4); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1.6rem; display: block; }
+.article-h2 { font-size: clamp(1.55rem, 2vw, 1.95rem); font-weight: 300; letter-spacing: -0.025em; line-height: 1.15; color: var(--ink); margin-bottom: 2rem; }
+.article-h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.article-h3 { font-size: 1.08rem; font-weight: 500; letter-spacing: -0.015em; line-height: 1.35; color: var(--ink); margin-top: 2.5rem; margin-bottom: 1rem; }
+
+.article-p { font-size: 1rem; font-weight: 300; color: var(--ink-2); line-height: 1.82; margin-bottom: 1.2rem; max-width: 660px; }
+
+.beat-block { margin: 1.6rem 0; display: flex; flex-direction: column; gap: 0.55rem; max-width: 660px; }
+.beat-block .article-p { margin-bottom: 0; }
+
+.article-quote { margin: 2.8rem 0; padding-left: 1.6rem; border-left: 1.5px solid var(--ink); max-width: 620px; }
+.article-quote p { font-family: var(--serif); font-style: italic; font-size: 1.15rem; line-height: 1.65; font-weight: 400; color: var(--ink); }
+
+.article-list { margin: 1.2rem 0 1.5rem; padding-left: 0; list-style: none; max-width: 640px; display: flex; flex-direction: column; gap: 0.45rem; }
+.article-list li { display: flex; align-items: baseline; gap: 0.75rem; font-size: 0.96rem; font-weight: 300; color: var(--ink-2); line-height: 1.65; }
+.article-list li::before { content: '—'; font-size: 0.75rem; color: var(--ink-4); flex-shrink: 0; font-weight: 300; }
+
+/* Pipeline / chain notation */
+.pipeline { font-family: var(--mono); font-size: 0.82rem; font-weight: 300; color: var(--ink-3); letter-spacing: 0.04em; margin: 1.4rem 0; max-width: 660px; line-height: 1.7; }
+
+/* Wrong/clearer comparison block */
+.compare-block { margin: 2rem 0; max-width: 660px; }
+.compare-row { display: grid; grid-template-columns: 80px 1fr; gap: 1rem; margin-bottom: 1rem; align-items: start; }
+.compare-label { font-family: var(--mono); font-size: 9px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-4); padding-top: 3px; }
+.compare-label.clearer { color: var(--ink-3); }
+.compare-text { font-size: 0.96rem; font-weight: 300; color: var(--ink-2); line-height: 1.65; font-style: italic; }
+
+/* Closing */
+.article-closing { margin-top: 5.5rem; padding-top: 3rem; border-top: 0.5px solid var(--rule-light); max-width: 600px; }
+.closing-line { font-family: var(--serif); font-style: italic; font-size: 1.25rem; font-weight: 400; line-height: 1.55; color: var(--ink); }
+
+.article-footer { margin-top: 5rem; padding-top: 2.5rem; border-top: 0.5px solid var(--rule-light); display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.footer-brand { font-family: var(--mono); font-size: 13px; font-weight: 300; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.12em; }
+.footer-copy { font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--ink-4); letter-spacing: 0.08em; }
+
+/* ─── Mobile TOC ──────────────────────────────────────────── */
+.mobile-toc { display: none; }
+
+@media (max-width: 900px) {
+  .site-header { padding: 0 1.5rem; }
+  .header-nav { display: none; }
+  .hero { padding: calc(var(--header-h) + 4rem) 1.5rem 4rem; }
+  .page-layout { grid-template-columns: 1fr; padding: 0 1.5rem; }
+  .toc-aside { display: none; }
+  .mobile-toc { display: block; padding: 1.5rem 0 0; border-bottom: 0.5px solid var(--rule); }
+  .mobile-toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer; padding: 0 0 1.5rem; font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .mobile-toc-toggle svg { transition: transform 0.3s var(--ease); }
+  .mobile-toc-toggle.open svg { transform: rotate(180deg); }
+  .mobile-toc-list { overflow: hidden; max-height: 0; transition: max-height 0.45s var(--ease); }
+  .mobile-toc-list.open { max-height: 800px; }
+  .mobile-toc-item { display: block; padding: 9px 0; font-size: 13px; font-weight: 400; color: var(--ink-3); border-top: 0.5px solid var(--rule-light); transition: color 0.2s ease; cursor: pointer; background: none; border-left: none; border-right: none; border-bottom: none; font-family: var(--sans); text-align: left; width: 100%; }
+  .mobile-toc-item:last-child { margin-bottom: 1.5rem; }
+  .mobile-toc-item[aria-current="true"] { color: var(--ink); font-weight: 500; }
+  .article-wrap { border-left: none; padding: 3rem 0 5rem; }
+  .article-section { padding-top: 3.5rem; }
+  .compare-row { grid-template-columns: 70px 1fr; }
+}
+
+/* ─── Scroll reveal ───────────────────────────────────────── */
+.sr { opacity: 0; transform: translateY(14px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+.sr.visible { opacity: 1; transform: translateY(0); }
+.sr-d1 { transition-delay: 0.08s; }
+.sr-d2 { transition-delay: 0.16s; }
+
+:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 3px; }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <a href="/" class="header-logo" aria-label="Endrare home">Endrare</a>
+  <ul class="header-nav" role="list">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#systems">Systems</a></li>
+    <li><a href="/#archive">Archive</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:hello@endrare.com" class="header-cta">Get in touch</a>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">05 — Thinking / Essay</p>
+  <h1 class="hero-title">
+    Why clarity is a<br><em>product decision</em>
+  </h1>
+  <p class="hero-subtitle">
+    Reducing cognitive load is not a design problem. It is an engineering problem.
+  </p>
+  <div class="hero-meta" role="list">
+    <span class="meta-item" role="listitem">Product Thinking</span>
+    <span class="meta-item" role="listitem">UX</span>
+    <span class="meta-item" role="listitem">Engineering</span>
+    <span class="meta-item" role="listitem">Essay</span>
+    <span class="meta-item" role="listitem">2026</span>
+    <span class="meta-item" role="listitem">12–14 min read</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="page-layout">
+
+  <!-- TOC sidebar -->
+  <aside class="toc-aside" aria-label="Table of contents">
+    <a href="/#archive" class="toc-back">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      Back to archive
+    </a>
+    <p class="toc-label">On this page</p>
+    <nav class="toc-nav" aria-label="Article sections">
+      <button class="toc-item" data-target="s-01" aria-current="false"><span class="toc-num">01</span>The screen was not the first crime scene</button>
+      <button class="toc-item" data-target="s-02" aria-current="false"><span class="toc-num">02</span>The pattern I kept finding</button>
+      <button class="toc-item" data-target="s-03" aria-current="false"><span class="toc-num">03</span>Expense Hive: when money becomes memory</button>
+      <button class="toc-item" data-target="s-04" aria-current="false"><span class="toc-num">04</span>Food Tracker: when logging becomes invisible</button>
+      <button class="toc-item" data-target="s-05" aria-current="false"><span class="toc-num">05</span>Pose Estimation: when movement becomes data</button>
+      <button class="toc-item" data-target="s-06" aria-current="false"><span class="toc-num">06</span>Skift: when scheduling becomes intelligence</button>
+      <button class="toc-item" data-target="s-07" aria-current="false"><span class="toc-num">07</span>Calendar: when time becomes a system</button>
+      <button class="toc-item" data-target="s-08" aria-current="false"><span class="toc-num">08</span>Endrare: when identity needs structure</button>
+      <button class="toc-item" data-target="s-09" aria-current="false"><span class="toc-num">09</span>What these products taught me</button>
+      <button class="toc-item" data-target="s-10" aria-current="false"><span class="toc-num">10</span>How products become unclear</button>
+      <button class="toc-item" data-target="s-11" aria-current="false"><span class="toc-num">11</span>The engineering behind clarity</button>
+      <button class="toc-item" data-target="s-12" aria-current="false"><span class="toc-num">12</span>The design behind clarity</button>
+      <button class="toc-item" data-target="s-13" aria-current="false"><span class="toc-num">13</span>The suspense of a clear product</button>
+      <button class="toc-item" data-target="s-14" aria-current="false"><span class="toc-num">14</span>The wrong way and the clearer way</button>
+      <button class="toc-item" data-target="s-15" aria-current="false"><span class="toc-num">15</span>Principles I use now</button>
+      <button class="toc-item" data-target="s-16" aria-current="false"><span class="toc-num">16</span>What I now believe</button>
+      <button class="toc-item" data-target="s-17" aria-current="false"><span class="toc-num">17</span>The final lesson</button>
+    </nav>
+  </aside>
+
+  <!-- ARTICLE -->
+  <main class="article-wrap" id="article-main">
+
+    <!-- Mobile TOC -->
+    <div class="mobile-toc" aria-label="Table of contents">
+      <button class="mobile-toc-toggle" aria-expanded="false" aria-controls="mobile-toc-list" id="mobile-toc-btn">
+        On this page
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="mobile-toc-list" id="mobile-toc-list">
+        <button class="mobile-toc-item" data-target="s-01" aria-current="false">The screen was not the first crime scene</button>
+        <button class="mobile-toc-item" data-target="s-02" aria-current="false">The pattern I kept finding</button>
+        <button class="mobile-toc-item" data-target="s-03" aria-current="false">Expense Hive</button>
+        <button class="mobile-toc-item" data-target="s-04" aria-current="false">Food Tracker</button>
+        <button class="mobile-toc-item" data-target="s-05" aria-current="false">Pose Estimation</button>
+        <button class="mobile-toc-item" data-target="s-06" aria-current="false">Skift</button>
+        <button class="mobile-toc-item" data-target="s-07" aria-current="false">Calendar tracking</button>
+        <button class="mobile-toc-item" data-target="s-08" aria-current="false">Endrare</button>
+        <button class="mobile-toc-item" data-target="s-09" aria-current="false">What these products taught me</button>
+        <button class="mobile-toc-item" data-target="s-10" aria-current="false">How products become unclear</button>
+        <button class="mobile-toc-item" data-target="s-11" aria-current="false">The engineering behind clarity</button>
+        <button class="mobile-toc-item" data-target="s-12" aria-current="false">The design behind clarity</button>
+        <button class="mobile-toc-item" data-target="s-13" aria-current="false">The suspense of a clear product</button>
+        <button class="mobile-toc-item" data-target="s-14" aria-current="false">The wrong way and the clearer way</button>
+        <button class="mobile-toc-item" data-target="s-15" aria-current="false">Principles I use now</button>
+        <button class="mobile-toc-item" data-target="s-16" aria-current="false">What I now believe</button>
+        <button class="mobile-toc-item" data-target="s-17" aria-current="false">The final lesson</button>
+      </div>
+    </div>
+
+    <article>
+
+    <!-- 01 -->
+    <section class="article-section" id="s-01">
+      <span class="article-section-num sr">01</span>
+      <h2 class="article-h2 sr">The screen was not<br>the first <em>crime scene</em></h2>
+      <p class="article-p sr">Most people blame the interface first.</p>
+      <div class="beat-block sr">
+        <p class="article-p">The button is not clear.</p>
+        <p class="article-p">The page has too much text.</p>
+        <p class="article-p">The dashboard is messy.</p>
+        <p class="article-p">The user does not understand the flow.</p>
+        <p class="article-p">The app feels heavy.</p>
+        <p class="article-p">The product feels complicated.</p>
+      </div>
+      <p class="article-p sr">So the normal reaction is to redesign.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Make it cleaner.</p>
+        <p class="article-p">Add spacing.</p>
+        <p class="article-p">Change the font.</p>
+        <p class="article-p">Use better colors.</p>
+        <p class="article-p">Add icons.</p>
+        <p class="article-p">Reduce text.</p>
+        <p class="article-p">Move the button.</p>
+        <p class="article-p">Make it "premium."</p>
+      </div>
+      <p class="article-p sr">Sometimes that helps.</p>
+      <p class="article-p sr">But sometimes the interface is only confessing what the system already did wrong.</p>
+      <p class="article-p sr">A confusing screen is often just the visible body of a deeper problem.</p>
+      <div class="beat-block sr">
+        <p class="article-p">The product has too many states.</p>
+        <p class="article-p">The user role is unclear.</p>
+        <p class="article-p">The data is not structured properly.</p>
+        <p class="article-p">The action has no priority.</p>
+        <p class="article-p">The workflow has no opinion.</p>
+        <p class="article-p">The system does not know what matters now.</p>
+        <p class="article-p">So it throws everything at the user and hopes they decide.</p>
+      </div>
+      <p class="article-p sr">That is not design freedom. That is system failure.</p>
+      <p class="article-p sr">The first real pattern became visible when I looked back at the products I had built. They were not connected by category. They were connected by friction.</p>
+    </section>
+
+    <!-- 02 -->
+    <section class="article-section" id="s-02">
+      <span class="article-section-num sr">02</span>
+      <h2 class="article-h2 sr">The pattern I <em>kept finding</em></h2>
+      <p class="article-p sr">At first, each product looked different.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Expense Hive was about money.</p>
+        <p class="article-p">Food Tracker was about health and habits.</p>
+        <p class="article-p">Pose Estimation was about sports movement and injury risk.</p>
+        <p class="article-p">Skift was about restaurant operations.</p>
+        <p class="article-p">Endrare was about identity and presentation.</p>
+        <p class="article-p">Calendar tracking was about time and daily structure.</p>
+      </div>
+      <p class="article-p sr">But under the surface, all of them were fighting the same problem. People were not struggling because the subjects were impossible. They were struggling because the systems around those subjects forced them to remember too much.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Who owes whom?</p>
+        <p class="article-p">What did I eat?</p>
+        <p class="article-p">Which movement matters?</p>
+        <p class="article-p">Which shift is risky?</p>
+        <p class="article-p">What changed today?</p>
+        <p class="article-p">What should I do next?</p>
+        <p class="article-p">What should this product show first?</p>
+        <p class="article-p">What should it hide?</p>
+        <p class="article-p">What should it remember?</p>
+      </div>
+      <p class="article-p sr">Different questions. Same enemy.</p>
+      <p class="article-p sr">Unmanaged cognitive load.</p>
+      <blockquote class="article-quote sr">
+        <p>Good products do not make complex things fake-simple. They make complex things navigable.</p>
+      </blockquote>
+    </section>
+
+    <!-- 03 -->
+    <section class="article-section" id="s-03">
+      <span class="article-section-num sr">03</span>
+      <h2 class="article-h2 sr">Expense Hive: when money<br>becomes <em>memory</em></h2>
+      <p class="article-p sr">Expense Hive was not built because expense apps did not exist. It was built because the problem appeared in real life.</p>
+      <p class="article-p sr">During bachelor's, my friends and I kept running into the same small financial confusion. Someone paid for food. Someone paid for travel. Someone bought something for the group. Someone forgot to add a bill. Someone said they would pay later. Someone remembered the expense, but not the exact split. Someone had personal spending mixed with shared spending.</p>
+      <p class="article-p sr">Nothing looked serious at first. But slowly, small amounts became small confusion. And small confusion became repeated conversations.</p>
+      <div class="beat-block sr">
+        <p class="article-p">"How much did I spend?"</p>
+        <p class="article-p">"Who paid last time?"</p>
+        <p class="article-p">"Did you add that bill?"</p>
+        <p class="article-p">"Is this personal or group?"</p>
+        <p class="article-p">"How much do I owe you?"</p>
+        <p class="article-p">"Remind me later."</p>
+      </div>
+      <p class="article-p sr">That was the gap. So I built Expense Hive — a mobile app made to instantly log expenses, split expenses between groups, add bills, use group chat, track personal expenses, manage group splits, add payment reminders, and see how much was spent during a week or month.</p>
+      <p class="article-p sr">The important part was not only the feature list. The important part was timing. Expense tracking fails when logging happens too late. By the time a person opens the app later, the context is already weak. The amount may be remembered, but the reason is blurry. The group may be remembered, but the split is unclear. The bill may exist, but the responsibility is floating.</p>
+      <p class="article-p sr">Expense Hive had to reduce that gap. It needed to answer:</p>
+      <ul class="article-list sr">
+        <li>Is this personal or shared?</li>
+        <li>Who paid?</li>
+        <li>Who owes whom?</li>
+        <li>Has the bill been added?</li>
+        <li>Is there a reminder?</li>
+        <li>What did I spend this week?</li>
+        <li>What did the group spend this month?</li>
+        <li>Did someone forget to settle?</li>
+        <li>Is the conversation connected to the expense?</li>
+      </ul>
+      <p class="article-p sr">That last question mattered more than it looked. Money between friends is not only math. It is memory, trust, timing, and communication. A split without conversation becomes another loose thread.</p>
+      <p class="article-p sr">So Expense Hive needed to connect:</p>
+      <p class="pipeline sr">expense → bill → group → people → reminder → settlement → conversation</p>
+      <p class="article-p sr">That connection is clarity. Not just a clean UI.</p>
+      <p class="article-p sr">A normal app records the amount. Expense Hive tried to preserve the context around the amount. That is where I started understanding something deeper:</p>
+      <blockquote class="article-quote sr">
+        <p>The user does not only need storage. The user needs the system to remember the situation.</p>
+      </blockquote>
+      <p class="article-p sr">Because my friends and I actually used our own app, the feedback was immediate.</p>
+      <div class="beat-block sr">
+        <p class="article-p">If logging took too long, it failed.</p>
+        <p class="article-p">If group splitting felt confusing, it failed.</p>
+        <p class="article-p">If reminders were hidden, it failed.</p>
+        <p class="article-p">If personal and group expenses mixed together, it failed.</p>
+        <p class="article-p">If chat and expense context lived separately, it failed.</p>
+      </div>
+      <p class="article-p sr">Real use exposed fake clarity very quickly.</p>
+      <p class="article-p sr">Expense Hive taught me that clarity is not created by showing fewer things. It is created by connecting the right things.</p>
+    </section>
+
+    <!-- 04 -->
+    <section class="article-section" id="s-04">
+      <span class="article-section-num sr">04</span>
+      <h2 class="article-h2 sr">Food Tracker: when logging<br>becomes <em>invisible</em></h2>
+      <p class="article-p sr">The food tracker was personal. I built it because I wanted to track food, gym, and daily activity without turning my life into spreadsheet work.</p>
+      <p class="article-p sr">Most tracking apps demand too much.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Search the food.</p>
+        <p class="article-p">Select quantity.</p>
+        <p class="article-p">Adjust serving size.</p>
+        <p class="article-p">Check nutrition.</p>
+        <p class="article-p">Save entry.</p>
+        <p class="article-p">Repeat again at the next meal.</p>
+      </div>
+      <p class="article-p sr">That sounds fine for one day. But after a week, the tracker becomes the task. That is backwards. The goal was not to become better at logging. The goal was to become better at living with the data.</p>
+      <p class="article-p sr">So I built a more automated food tracker. Instead of manually entering everything through forms, I could simply say:</p>
+      <blockquote class="article-quote sr">
+        <p>"I ate 2 eggs."</p>
+      </blockquote>
+      <p class="article-p sr">The system would break it down into nutritional values and log it automatically. That small interaction changed the product.</p>
+      <div class="beat-block sr">
+        <p class="article-p">The input became natural.</p>
+        <p class="article-p">The output became structured.</p>
+        <p class="article-p">The habit became easier to maintain.</p>
+      </div>
+      <p class="article-p sr">The food tracker connected: food logging, nutrition breakdown, gym tracking, daily activity, personal patterns, repeated meals, and progress over time.</p>
+      <p class="article-p sr">The real product question was not:</p>
+      <blockquote class="article-quote sr">
+        <p>"How do I make the food logging screen beautiful?"</p>
+      </blockquote>
+      <p class="article-p sr">The real question was:</p>
+      <blockquote class="article-quote sr">
+        <p>"How do I make logging almost disappear?"</p>
+      </blockquote>
+      <p class="article-p sr">That is where clarity moved from design into engineering. The system had to understand simple human input and convert it into useful structured data. It needed: natural language input, food parsing, nutrition calculation, automatic logging, daily summaries, gym/activity connection, repeated food handling, low-friction corrections, and simple review.</p>
+      <p class="article-p sr">A generic tracker asks the user to become precise. A clear tracker carries some of that precision for the user. The clearest interface is sometimes the one the user barely has to touch.</p>
+      <blockquote class="article-quote sr">
+        <p>If the user has to fight the system to build a habit, the system becomes the habit.</p>
+      </blockquote>
+      <p class="article-p sr">A health product should not add stress to a health goal. It should reduce the distance between intention and action.</p>
+    </section>
+
+    <!-- 05 -->
+    <section class="article-section" id="s-05">
+      <span class="article-section-num sr">05</span>
+      <h2 class="article-h2 sr">Pose Estimation: when movement<br>becomes <em>data</em></h2>
+      <p class="article-p sr">Pose Estimation was my thesis. The idea was not limited to one sport. Cycling was one example, but the deeper concept was broader:</p>
+      <blockquote class="article-quote sr">
+        <p>Can a machine learning system analyze an athlete's body movement and give coaches useful real-time movement data?</p>
+      </blockquote>
+      <p class="article-p sr">In sports, performance is movement. A runner's knee angle. A cyclist's ankle motion. A football player's body balance. Small movements can create big outcomes. Some movements improve performance. Some waste energy. Some increase injury risk. Some problems are too subtle, too fast, or too repetitive to catch consistently with the eye.</p>
+      <p class="article-p sr">The system translated:</p>
+      <p class="pipeline sr">video → body points → motion attributes → coaching insight</p>
+      <p class="article-p sr">That chain is fragile. A human sees an athlete moving. A machine sees frames, pixels, coordinates, keypoints, confidence scores, missing detections, noise, angles, and temporal changes. Somewhere inside that chain, raw motion must become meaning.</p>
+      <p class="article-p sr">That is not a design problem first. It is a system problem.</p>
+      <p class="article-p sr">A coach does not need raw coordinates. A coach needs answers:</p>
+      <ul class="article-list sr">
+        <li>Is the movement stable?</li>
+        <li>Is the posture risky?</li>
+        <li>Is the ankle movement consistent?</li>
+        <li>Is the leg motion efficient?</li>
+        <li>Is the athlete repeating a harmful pattern?</li>
+        <li>Is the output reliable enough to act on?</li>
+        <li>What should be watched over time?</li>
+      </ul>
+      <p class="article-p sr">The product needed to avoid a common trap:</p>
+      <blockquote class="article-quote sr">
+        <p>Technical output can look impressive and still be useless.</p>
+      </blockquote>
+      <p class="article-p sr">A skeleton overlay may look futuristic. A chart may look clean. A dashboard may look scientific. But if the coach cannot understand what to do with it, the system has failed.</p>
+      <p class="article-p sr">Pose Estimation taught me that clarity in technical products means showing not only the result, but also the meaning and limits of that result. The system must communicate: what it detected, what changed, what matters, what might be uncertain, and what the coach should review.</p>
+      <p class="article-p sr">Data is not clarity. Meaning is clarity. And in sports technology, meaning can protect the body.</p>
+    </section>
+
+    <!-- 06 -->
+    <section class="article-section" id="s-06">
+      <span class="article-section-num sr">06</span>
+      <h2 class="article-h2 sr">Skift: when scheduling becomes<br><em>operational intelligence</em></h2>
+      <p class="article-p sr">Skift came later, but the pattern was already familiar. Once again, the visible problem looked simple. Scheduling. A restaurant needs people in the right place at the right time. That sounds like a calendar problem.</p>
+      <p class="article-p sr">But after working inside real restaurant operations, the calendar started looking innocent. The deeper problem was not placing names into boxes. The deeper problem was that the schedule was being asked to carry information it did not understand.</p>
+      <p class="article-p sr">A shift is not just time. A shift contains:</p>
+      <div class="beat-block sr">
+        <p class="article-p">Pressure. Sales expectations. Labor cost. Employee strengths. Contract limits. Weather. Peak hours. Branch rhythm. Manager instinct. Communication. Risk.</p>
+      </div>
+      <p class="article-p sr">But most scheduling systems flatten all of that into a clean grid.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Monday. Tuesday. Wednesday. Name. Time. Publish.</p>
+      </div>
+      <p class="article-p sr">Clean, yes. Clear, not always.</p>
+      <blockquote class="article-quote sr">
+        <p>Clarity does not mean the screen has fewer elements. Clarity means the system understands what the user is trying to decide.</p>
+      </blockquote>
+      <p class="article-p sr">For Skift, the manager is not only asking: "Can I place this employee from 16:00 to 22:00?" The real question is:</p>
+      <blockquote class="article-quote sr">
+        <p>"Will this branch survive Friday evening without stress, overstaffing, missed updates, or mistakes?"</p>
+      </blockquote>
+      <p class="article-p sr">That changed the product. The calendar could not simply display shifts. It had to understand them.</p>
+      <div class="beat-block sr">
+        <p class="article-p">A weak schedule can look beautiful.</p>
+        <p class="article-p">A dangerous schedule can look clean.</p>
+        <p class="article-p">A wrong schedule can still pass visual inspection.</p>
+      </div>
+      <p class="article-p sr">So Skift needed a deeper clarity layer: expected sales pressure, role coverage, employee availability, contract-hour awareness, shift conflicts, replacement options, weather-aware hints, task readiness, communication status, branch alerts, AI scheduling suggestions, and explanations behind recommendations.</p>
+      <p class="article-p sr">The manager should not have to remember everything alone. Who is good at closing. Who is new. Who already worked too many hours. Who missed the update. When sales usually rise. Which shift is risky. Who can replace someone quickly.</p>
+      <p class="article-p sr">If the manager carries all of this alone, the manager becomes the integration layer. That is bad product design. And bad engineering.</p>
+      <p class="article-p sr">Skift's purpose is to reduce that invisible burden. Not by replacing the manager. But by preparing the decision.</p>
+      <p class="article-p sr">A clean calendar is design. A calendar that explains risk is engineering.</p>
+    </section>
+
+    <!-- 07 -->
+    <section class="article-section" id="s-07">
+      <span class="article-section-num sr">07</span>
+      <h2 class="article-h2 sr">Calendar tracking: when time<br>becomes <em>a system</em></h2>
+      <p class="article-p sr">Calendar tracking looks ordinary.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Dates. Events. Tasks. Reminders. Schedules.</p>
+      </div>
+      <p class="article-p sr">But time is not just a list. Time is pressure. A calendar is not valuable because it stores events. It is valuable when it helps the user understand what their day is becoming.</p>
+      <p class="article-p sr">A normal calendar says:</p>
+      <blockquote class="article-quote sr">
+        <p>"You have something at 17:00."</p>
+      </blockquote>
+      <p class="article-p sr">A clearer system asks:</p>
+      <blockquote class="article-quote sr">
+        <p>"Does this fit your day, your energy, your priorities, and your previous commitments?"</p>
+      </blockquote>
+      <p class="article-p sr">The problem is not remembering an event. The problem is connecting the event to the rest of life.</p>
+      <p class="article-p sr">A calendar system can become unclear when:</p>
+      <ul class="article-list sr">
+        <li>Tasks are separate from events</li>
+        <li>Reminders are too late</li>
+        <li>Priorities are not visible</li>
+        <li>Repeated routines are not understood</li>
+        <li>Work, gym, study, food, and personal plans live separately</li>
+        <li>The user has to mentally calculate what matters</li>
+      </ul>
+      <p class="article-p sr">The system should help reduce this load. It should understand: what is fixed, what is flexible, what repeats, what is urgent, what is optional, what requires preparation, and what affects the rest of the day.</p>
+      <blockquote class="article-quote sr">
+        <p>Time management is not about filling boxes. It is about reducing future confusion.</p>
+      </blockquote>
+    </section>
+
+    <!-- 08 -->
+    <section class="article-section" id="s-08">
+      <span class="article-section-num sr">08</span>
+      <h2 class="article-h2 sr">Endrare: when identity<br>needs <em>structure</em></h2>
+      <p class="article-p sr">Endrare itself became a clarity problem.</p>
+      <p class="article-p sr">A normal portfolio is easy to build.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Hero section. Skills. Projects. Resume. Contact.</p>
+      </div>
+      <p class="article-p sr">But normal was the problem. A portfolio that shows everything often explains nothing. The visitor arrives and sees: too many projects, too many skills, generic copy, random animations, no clear positioning, no reason to remember the person.</p>
+      <p class="article-p sr">So the real question became:</p>
+      <blockquote class="article-quote sr">
+        <p>What should Endrare make clear within seconds?</p>
+      </blockquote>
+      <p class="article-p sr">Not everything I have done. Only the direction.</p>
+      <p class="article-p sr">Endrare needed to communicate:</p>
+      <ul class="article-list sr">
+        <li>I build software</li>
+        <li>I think in systems</li>
+        <li>I care about design</li>
+        <li>I understand operations</li>
+        <li>I can connect business and engineering</li>
+        <li>I can build products from real problems</li>
+        <li>I am not just listing projects</li>
+        <li>I am building a body of work</li>
+      </ul>
+      <p class="article-p sr">That is why the archive matters. That is why "05-thinking" matters. The case studies are not decorations. They are evidence.</p>
+      <p class="article-p sr">Endrare is not only a website. It is a clarity system for identity. It decides what to show, what to hide, what to sequence, and what feeling the reader should carry after leaving. That is product design. And again, it is engineering too. Because structure creates perception.</p>
+    </section>
+
+    <!-- 09 -->
+    <section class="article-section" id="s-09">
+      <span class="article-section-num sr">09</span>
+      <h2 class="article-h2 sr">What these products<br><em>taught me</em></h2>
+      <p class="article-p sr">Looking back, the products were different, but the lesson kept repeating.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Expense Hive taught me that money becomes confusing when context disappears.</p>
+        <p class="article-p">Food Tracker taught me that logging fails when the system asks too much from the user.</p>
+        <p class="article-p">Pose Estimation taught me that technical data is useless until it becomes readable at the decision point.</p>
+        <p class="article-p">Skift taught me that operations break when managers become the integration layer.</p>
+        <p class="article-p">Calendar tracking taught me that time becomes stressful when events are not connected to priorities.</p>
+        <p class="article-p">Endrare taught me that even identity needs structure.</p>
+      </div>
+      <p class="article-p sr">Different products. Same lesson.</p>
+      <p class="article-p sr">Clarity is not decoration. Clarity is system design. And system design lives in decisions most users never see.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="article-section" id="s-10">
+      <span class="article-section-num sr">10</span>
+      <h2 class="article-h2 sr">How products<br>become <em>unclear</em></h2>
+      <p class="article-p sr">After building these systems, I started noticing common ways products lose clarity.</p>
+
+      <h3 class="article-h3 sr">Too many decisions are pushed to the user</h3>
+      <p class="article-p sr">The system refuses to prioritize. So the user must decide everything: what matters, where to click, what to ignore, what changed, what is urgent, what is safe, what happens next. This creates stress. A product should not ask the user to manage the product.</p>
+
+      <h3 class="article-h3 sr">The system shows data without meaning</h3>
+      <p class="article-p sr">Data is not clarity. A dashboard full of numbers can still be useless. The user needs interpretation: Is this good? Is this bad? Compared to what? Should I act? Is this normal? Is this urgent? Without meaning, data becomes decoration.</p>
+
+      <h3 class="article-h3 sr">Workflows are designed from screens, not situations</h3>
+      <p class="article-p sr">A screen-first product asks: "What should this page contain?" A situation-first product asks: "What is happening in the user's life when they open this?" That changes everything.</p>
+      <div class="beat-block sr">
+        <p class="article-p">A manager opening Skift during rush is not browsing.</p>
+        <p class="article-p">A user logging food after dinner is not doing nutrition research.</p>
+        <p class="article-p">A coach reviewing athlete movement is not debugging coordinates.</p>
+        <p class="article-p">A friend splitting a bill is not doing accounting.</p>
+        <p class="article-p">A recruiter opening Endrare is not reading every word.</p>
+      </div>
+      <p class="article-p sr">Context decides design.</p>
+
+      <h3 class="article-h3 sr">Labels are vague</h3>
+      <p class="article-p sr">Words carry product logic. "Dashboard" is not enough. "Overview" is not enough. "Manage" is not enough. "Details" is not enough. Clear products name things according to user intent. Not developer convenience.</p>
+
+      <h3 class="article-h3 sr">Every feature wants equal attention</h3>
+      <p class="article-p sr">Products become unclear when everything screams. Urgent messages. Normal updates. Old tasks. New tasks. Analytics. Settings. Suggestions. Notifications. If everything is important, nothing is. Engineering must support priority. The UI cannot fix bad priority logic.</p>
+
+      <h3 class="article-h3 sr">The product does not remember enough</h3>
+      <p class="article-p sr">Users hate repeating context. If the system already knows something, it should not ask again without reason. This applies to: previous group expenses, repeated foods, athlete history, employee availability, previous schedules, recurring events, user goals, and common actions. Memory creates clarity when used carefully.</p>
+
+      <h3 class="article-h3 sr">The product remembers too much</h3>
+      <p class="article-p sr">The opposite is also dangerous. A system that remembers everything can become noisy. Not all history is useful. Good memory needs selection. A clear product remembers what reduces friction and hides what creates noise.</p>
+
+      <h3 class="article-h3 sr">The system hides consequences</h3>
+      <p class="article-p sr">Users need to know what will happen after an action.</p>
+      <div class="beat-block sr">
+        <p class="article-p">If I publish this schedule, who gets notified?</p>
+        <p class="article-p">If I change this shift, does the employee see it?</p>
+        <p class="article-p">If I delete this expense, does it affect the group split?</p>
+        <p class="article-p">If I accept this AI suggestion, what changed?</p>
+        <p class="article-p">If a coach trusts this movement output, how reliable is it?</p>
+      </div>
+      <p class="article-p sr">Clarity means consequences are visible before action.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="article-section" id="s-11">
+      <span class="article-section-num sr">11</span>
+      <h2 class="article-h2 sr">The engineering<br>behind <em>clarity</em></h2>
+      <p class="article-p sr">Clarity requires technical decisions. Not only visual polish.</p>
+
+      <h3 class="article-h3 sr">Information architecture</h3>
+      <p class="article-p sr">The system must decide where things belong. If messages, tasks, updates, schedules, bills, logs, and reminders are all mixed together, the user suffers. Good information architecture makes the product feel obvious.</p>
+
+      <h3 class="article-h3 sr">Data modeling</h3>
+      <p class="article-p sr">The product must understand relationships.</p>
+      <p class="article-p sr">In Expense Hive: user belongs to group, expense belongs to user or group, bill belongs to group, reminder belongs to payment, chat belongs to group, settlement belongs to split. In Skift: employee belongs to branch, shift belongs to schedule, task can belong to shift, message can belong to group or shift, warning can belong to schedule conflict, sales data can belong to branch and hour. In Pose Estimation: frame belongs to video, keypoint belongs to body, movement belongs to sequence, insight belongs to coaching context.</p>
+      <p class="article-p sr">If the relationships are weak, the UI becomes messy.</p>
+
+      <h3 class="article-h3 sr">State management</h3>
+      <p class="article-p sr">The system must know what state something is in.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Draft. Published. Changed. Pending. Approved. Rejected. Completed. Overdue. Conflicting. Recommended. Settled. Unsettled. Detected. Uncertain.</p>
+      </div>
+      <p class="article-p sr">Without clear states, users feel unsafe.</p>
+
+      <h3 class="article-h3 sr">Permissions</h3>
+      <p class="article-p sr">Clarity depends on role. A manager, shift leader, and employee should not see the same product. A coach and athlete may need different views. A group member and expense creator may need different controls. Permissions are not only security. They are UX.</p>
+
+      <h3 class="article-h3 sr">Defaults</h3>
+      <p class="article-p sr">Defaults are product opinions. A good default removes work. A bad default creates repeated correction. In Food Tracker, repeated meals should be easy. In Skift, common shift patterns should not need rebuilding. In Expense Hive, recent groups and common splits should be accessible. Defaults decide whether the product feels intelligent or stubborn.</p>
+
+      <h3 class="article-h3 sr">Validation</h3>
+      <p class="article-p sr">The system should prevent errors early. Not after damage. Examples: impossible split amounts, missing group members, duplicate expense entries, schedule conflicts, contract-hour warnings, invalid food quantities, uncertain movement detection, missing athlete data. Validation is not just error handling. It is clarity before failure.</p>
+
+      <h3 class="article-h3 sr">Notifications</h3>
+      <p class="article-p sr">Notification logic is engineering. The design can make a notification pretty. But engineering decides whether it should exist. Not every update deserves interruption. A payment reminder may need a notification. A shift change today definitely needs one. A weekly food summary can wait. A pose anomaly may need coach review. A normal archive update does not need noise.</p>
+
+      <h3 class="article-h3 sr">Search and filtering</h3>
+      <p class="article-p sr">A system becomes stressful when users cannot find what they need. Filters must match real mental models. Not database columns.</p>
+      <div class="beat-block sr">
+        <p class="article-p">A user doesn't think "show transaction objects with group_id." They think "show what I owe."</p>
+        <p class="article-p">A manager doesn't think "show employee availability rows." They think "who can cover tonight?"</p>
+        <p class="article-p">A coach doesn't think "show keypoint confidence series." They think "which movement needs attention?"</p>
+      </div>
+      <p class="article-p sr">Good filters speak the user's language.</p>
+
+      <h3 class="article-h3 sr">Performance</h3>
+      <p class="article-p sr">Slow products feel unclear. When the interface delays, the user doubts themselves. Did I click? Did it save? Did it fail? Should I refresh? Was the log added? Was the shift published? Was the expense split? Performance is emotional clarity.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="article-section" id="s-12">
+      <span class="article-section-num sr">12</span>
+      <h2 class="article-h2 sr">The design<br>behind <em>clarity</em></h2>
+      <p class="article-p sr">Design still matters deeply. But design becomes strongest when it is supported by system thinking.</p>
+      <p class="article-p sr">Good design creates: hierarchy, rhythm, space, contrast, grouping, focus, readability, calmness, trust.</p>
+      <p class="article-p sr">A product can be technically powerful and still feel terrible if the design is noisy.</p>
+      <p class="article-p sr">For my products and Endrare, my design direction became:</p>
+      <ul class="article-list sr">
+        <li>White or warm off-white backgrounds</li>
+        <li>Black text</li>
+        <li>Calm spacing</li>
+        <li>Subtle motion</li>
+        <li>Clear section hierarchy</li>
+        <li>Minimal decoration</li>
+        <li>No unnecessary gradients</li>
+        <li>No fake futuristic UI</li>
+        <li>Readable typography</li>
+        <li>Interface confidence without shouting</li>
+      </ul>
+      <p class="article-p sr">Because clarity has a visual temperature.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Too cold, and the product feels dead.</p>
+        <p class="article-p">Too flashy, and the product feels unserious.</p>
+        <p class="article-p">Too dense, and the user feels trapped.</p>
+        <p class="article-p">Too empty, and the user feels lost.</p>
+      </div>
+      <p class="article-p sr">The goal is calm precision. A clear product should make the user feel:</p>
+      <div class="beat-block sr">
+        <p class="article-p">"I know where I am."</p>
+        <p class="article-p">"I know what changed."</p>
+        <p class="article-p">"I know what matters."</p>
+        <p class="article-p">"I know what to do next."</p>
+      </div>
+      <p class="article-p sr">That feeling is designed on the screen. But it is engineered underneath.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="article-section" id="s-13">
+      <span class="article-section-num sr">13</span>
+      <h2 class="article-h2 sr">The suspense of<br>a <em>clear product</em></h2>
+      <p class="article-p sr">The strange thing about clarity is that users rarely notice it directly. They notice the absence of pain.</p>
+      <p class="article-p sr">They do not say: "Excellent cognitive load reduction."</p>
+      <div class="beat-block sr">
+        <p class="article-p">They say: "This makes sense."</p>
+        <p class="article-p">They say: "I found it."</p>
+        <p class="article-p">They say: "I know what to do."</p>
+        <p class="article-p">They say: "This feels clean."</p>
+        <p class="article-p">They say: "This is easy."</p>
+      </div>
+      <p class="article-p sr">But behind that ease is a chain of decisions.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Someone decided what not to show.</p>
+        <p class="article-p">Someone decided what should be remembered.</p>
+        <p class="article-p">Someone decided what should be warned.</p>
+        <p class="article-p">Someone decided which action matters first.</p>
+        <p class="article-p">Someone decided the default.</p>
+        <p class="article-p">Someone decided the order.</p>
+        <p class="article-p">Someone decided the language.</p>
+        <p class="article-p">Someone decided the system state.</p>
+      </div>
+      <blockquote class="article-quote sr">
+        <p>Clarity is not the absence of complexity. It is the presence of decisions.</p>
+      </blockquote>
+    </section>
+
+    <!-- 14 -->
+    <section class="article-section" id="s-14">
+      <span class="article-section-num sr">14</span>
+      <h2 class="article-h2 sr">The wrong way and<br>the <em>clearer way</em></h2>
+
+      <h3 class="article-h3 sr">Expense Hive</h3>
+      <div class="compare-block sr">
+        <div class="compare-row">
+          <span class="compare-label">Wrong</span>
+          <span class="compare-text">"Enter amount, category, date, note."</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label clearer">Clearer</span>
+          <span class="compare-text">"Who paid, who shared, who owes, and should we remind them?"</span>
+        </div>
+      </div>
+      <p class="article-p sr">The second product understands the situation.</p>
+
+      <h3 class="article-h3 sr">Food Tracker</h3>
+      <div class="compare-block sr">
+        <div class="compare-row">
+          <span class="compare-label">Wrong</span>
+          <span class="compare-text">"Search food and manually enter nutrition."</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label clearer">Clearer</span>
+          <span class="compare-text">"I ate 2 eggs." Then the system calculates, logs, and summarizes.</span>
+        </div>
+      </div>
+      <p class="article-p sr">The second product removes friction.</p>
+
+      <h3 class="article-h3 sr">Pose Estimation</h3>
+      <div class="compare-block sr">
+        <div class="compare-row">
+          <span class="compare-label">Wrong</span>
+          <span class="compare-text">"Show skeleton overlay and raw coordinates."</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label clearer">Clearer</span>
+          <span class="compare-text">"Show movement attributes, risk patterns, confidence, and what the coach should review."</span>
+        </div>
+      </div>
+      <p class="article-p sr">The second product turns data into action.</p>
+
+      <h3 class="article-h3 sr">Skift</h3>
+      <div class="compare-block sr">
+        <div class="compare-row">
+          <span class="compare-label">Wrong</span>
+          <span class="compare-text">"Here is the schedule."</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label clearer">Clearer</span>
+          <span class="compare-text">"Friday evening coverage may be weak because expected sales are high and role balance is low."</span>
+        </div>
+      </div>
+      <p class="article-p sr">The second product explains risk.</p>
+
+      <h3 class="article-h3 sr">Endrare</h3>
+      <div class="compare-block sr">
+        <div class="compare-row">
+          <span class="compare-label">Wrong</span>
+          <span class="compare-text">"Here are all my projects."</span>
+        </div>
+        <div class="compare-row">
+          <span class="compare-label clearer">Clearer</span>
+          <span class="compare-text">"Here is how I think, build, and connect systems."</span>
+        </div>
+      </div>
+      <p class="article-p sr">The second product creates memory.</p>
+    </section>
+
+    <!-- 15 -->
+    <section class="article-section" id="s-15">
+      <span class="article-section-num sr">15</span>
+      <h2 class="article-h2 sr">Principles<br>I <em>use now</em></h2>
+
+      <h3 class="article-h3 sr">Start from the user's situation, not the screen</h3>
+      <p class="article-p sr">Ask: what is happening when the user opens this? A user does not open a product in a vacuum. They open it during pressure, confusion, curiosity, planning, stress, or decision-making.</p>
+
+      <h3 class="article-h3 sr">Make the system choose priority</h3>
+      <p class="article-p sr">Do not show everything equally. Equal visual weight creates unequal mental pressure.</p>
+
+      <h3 class="article-h3 sr">Connect related information</h3>
+      <p class="article-p sr">If a message belongs to a shift, attach it to the shift. If a reminder belongs to a bill, attach it to the bill. If a movement attribute belongs to a body part, attach it to the athlete's performance context. If a food log belongs to a gym day, connect them.</p>
+
+      <h3 class="article-h3 sr">Design for the next action</h3>
+      <blockquote class="article-quote sr">
+        <p>Every screen should quietly answer: "What should I do next?"</p>
+      </blockquote>
+
+      <h3 class="article-h3 sr">Explain warnings</h3>
+      <p class="article-p sr">Do not just alert. Explain why. A warning without reason creates anxiety. A warning with reason creates trust.</p>
+
+      <h3 class="article-h3 sr">Use memory carefully</h3>
+      <p class="article-p sr">Remember what reduces friction. Forget or hide what creates noise.</p>
+
+      <h3 class="article-h3 sr">Make states visible</h3>
+      <p class="article-p sr">Users should know whether something is draft, saved, changed, pending, approved, risky, completed, unsettled, or uncertain. Invisible state creates fear.</p>
+
+      <h3 class="article-h3 sr">Keep language human</h3>
+      <p class="article-p sr">The product should speak like it understands the work. Not like a database table.</p>
+
+      <h3 class="article-h3 sr">Make performance part of design</h3>
+      <p class="article-p sr">Fast response creates trust. Slow response creates doubt.</p>
+
+      <h3 class="article-h3 sr">Remove before adding</h3>
+      <p class="article-p sr">Every new feature increases cognitive load unless it removes more than it adds. This is one of the hardest product rules. Because adding looks like progress. But removing often creates clarity.</p>
+    </section>
+
+    <!-- 16 -->
+    <section class="article-section" id="s-16">
+      <span class="article-section-num sr">16</span>
+      <h2 class="article-h2 sr">What I <em>now believe</em></h2>
+      <p class="article-p sr">I now believe clarity is one of the most valuable product qualities. Not because minimalism is trendy. But because people already carry too much.</p>
+      <div class="beat-block sr">
+        <p class="article-p">Managers carry pressure.</p>
+        <p class="article-p">Employees carry uncertainty.</p>
+        <p class="article-p">Friends carry social trust around money.</p>
+        <p class="article-p">Athletes carry performance and injury risk.</p>
+        <p class="article-p">Coaches carry responsibility.</p>
+        <p class="article-p">Students carry goals.</p>
+        <p class="article-p">Builders carry ideas.</p>
+        <p class="article-p">Users carry context.</p>
+        <p class="article-p">Customers carry impatience.</p>
+      </div>
+      <p class="article-p sr">A product either adds to that weight or removes some of it. That is the real test.</p>
+      <p class="article-p sr">A clear product should do at least one of these:</p>
+      <ul class="article-list sr">
+        <li>Reduce decisions</li>
+        <li>Reduce memory load</li>
+        <li>Reduce repeated work</li>
+        <li>Reduce uncertainty</li>
+        <li>Reduce searching</li>
+        <li>Reduce fear of mistakes</li>
+        <li>Reduce interpretation effort</li>
+        <li>Reduce unnecessary choices</li>
+        <li>Reduce manual calculation</li>
+        <li>Reduce disconnected communication</li>
+      </ul>
+      <p class="article-p sr">If it does none of these, it may still look good. But it is not clear.</p>
+    </section>
+
+    <!-- 17 -->
+    <section class="article-section" id="s-17">
+      <span class="article-section-num sr">17</span>
+      <h2 class="article-h2 sr">The final <em>lesson</em></h2>
+      <p class="article-p sr">For a long time, I thought clarity meant making things simple. Now I think differently.</p>
+      <p class="article-p sr">Clarity is not simplicity. Clarity is responsibility.</p>
+      <p class="article-p sr">It means the product takes responsibility for structure, priority, memory, timing, consequence, and interpretation.</p>
+      <p class="article-p sr">It means the system does not throw complexity at the user and call it flexibility.</p>
+      <p class="article-p sr">It means design and engineering stop blaming each other.</p>
+      <p class="article-p sr">Because the user does not care whether confusion came from the UI, backend, database, permissions, model output, or workflow. The user only feels the confusion. So the product must solve it as one system.</p>
+      <div class="beat-block sr">
+        <p class="article-p">That is why reducing cognitive load is not only a design problem.</p>
+        <p class="article-p">It is an engineering problem.</p>
+        <p class="article-p">And a product decision.</p>
+      </div>
+
+      <div class="article-closing sr">
+        <p class="closing-line">I used to think clarity meant making screens simple.<br>Now I think clarity means building systems that do not force people to hold the product in their head.</p>
+      </div>
+    </section>
+
+    <footer class="article-footer">
+      <span class="footer-brand">Endrare</span>
+      <span class="footer-copy">Based in Sweden · © 2026</span>
+    </footer>
+
+    </article>
+  </main>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* Scroll reveal */
+  const srEls = document.querySelectorAll('.sr');
+  const revealObserver = new IntersectionObserver(
+    (entries) => { entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } }); },
+    { threshold: 0.07, rootMargin: '0px 0px -40px 0px' }
+  );
+  srEls.forEach((el) => revealObserver.observe(el));
+
+  /* TOC active tracking */
+  const tocItems  = document.querySelectorAll('.toc-item');
+  const mTocItems = document.querySelectorAll('.mobile-toc-item');
+  const sections  = Array.from(document.querySelectorAll('.article-section[id]'));
+
+  function setActive(id) {
+    [...tocItems, ...mTocItems].forEach((btn) => {
+      btn.setAttribute('aria-current', btn.dataset.target === id ? 'true' : 'false');
+    });
+  }
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => { entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }); },
+    { rootMargin: '-10% 0px -80% 0px', threshold: 0 }
+  );
+  sections.forEach((s) => sectionObserver.observe(s));
+  if (sections[0]) setActive(sections[0].id);
+
+  /* TOC click scroll */
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) + 32;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+    if (history.pushState) history.pushState(null, null, '#' + id);
+  }
+
+  [...tocItems, ...mTocItems].forEach((btn) => {
+    btn.addEventListener('click', () => {
+      scrollTo(btn.dataset.target);
+      const list = document.getElementById('mobile-toc-list');
+      const toggle = document.getElementById('mobile-toc-btn');
+      if (list?.classList.contains('open')) {
+        list.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  /* Mobile TOC toggle */
+  const mToggle = document.getElementById('mobile-toc-btn');
+  const mList   = document.getElementById('mobile-toc-list');
+  if (mToggle && mList) {
+    mToggle.addEventListener('click', () => {
+      const open = mList.classList.toggle('open');
+      mToggle.classList.toggle('open', open);
+      mToggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  /* Handle initial hash */
+  if (window.location.hash) {
+    const id = window.location.hash.slice(1);
+    if (id) requestAnimationFrame(() => setTimeout(() => scrollTo(id), 80));
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Endrare",
+  "short_name": "Endrare",
+  "description": "Deependra’s archive of software products, AI projects, product thinking, case studies, field notes, and systems.",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#FAFAF8",
+  "theme_color": "#FAFAF8",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

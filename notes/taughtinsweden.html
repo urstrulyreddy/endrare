@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="What working in Sweden taught me about software — Good systems do not ask people to shout for clarity." />
+<title>What working in Sweden taught me about software — Endrare</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet" />
+
+<style>
+/* ─── Reset ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #f8f5ef;
+  --bg-header:   rgba(248,245,239,0.94);
+  --ink:         #111111;
+  --ink-2:       #3a3a37;
+  --ink-3:       #6e6e6a;
+  --ink-4:       #9e9e99;
+  --rule:        #e2ddd5;
+  --rule-light:  #ede9e1;
+  --sans:        'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --serif:       'Instrument Serif', Georgia, serif;
+  --mono:        'Fira Code', 'SFMono-Regular', Consolas, monospace;
+  --ease:        cubic-bezier(0.22, 1, 0.36, 1);
+  --header-h:    60px;
+}
+
+html { font-size: 17px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); overflow-x: hidden; line-height: 1.8; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── Header ─────────────────────────────────────── */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: var(--bg-header);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.header-logo { font-family: var(--mono); font-size: 14px; font-weight: 300; letter-spacing: 0.13em; color: var(--ink); text-transform: uppercase; }
+.header-nav  { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.header-nav a { font-size: 13px; font-weight: 400; color: var(--ink-3); letter-spacing: 0.01em; transition: color 0.2s ease; }
+.header-nav a:hover { color: var(--ink); }
+.header-cta { font-size: 12px; font-weight: 500; color: var(--ink); border: 0.5px solid var(--ink); padding: 6px 15px; letter-spacing: 0.04em; transition: background 0.2s ease, color 0.2s ease; }
+.header-cta:hover { background: var(--ink); color: var(--bg); }
+
+/* ─── Note wrapper ───────────────────────────────── */
+/* NOTE: single column, narrower, more intimate than case study */
+.note-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 6rem) 3rem 8rem;
+}
+
+/* ─── Note type badge ────────────────────────────── */
+.note-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2.8rem;
+}
+.badge-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 400;
+  color: var(--ink-4);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 0.5px solid var(--rule);
+}
+.badge-sep { color: var(--rule); font-size: 11px; }
+
+/* ─── Note title area ────────────────────────────── */
+.note-title {
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+.note-title em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+
+.note-subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--ink-3);
+  line-height: 1.65;
+  max-width: 560px;
+  margin-bottom: 2.2rem;
+}
+
+/* ─── Note metadata strip ────────────────────────── */
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  padding: 1.5rem 0;
+  border-top: 0.5px solid var(--rule-light);
+  border-bottom: 0.5px solid var(--rule-light);
+  margin-bottom: 4rem;
+}
+.meta-pair {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding-right: 1.8rem;
+  margin-right: 1.8rem;
+  border-right: 0.5px solid var(--rule-light);
+}
+.meta-pair:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+.meta-key {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.meta-val {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-3);
+}
+
+/* ─── Opening paragraph ──────────────────────────── */
+/* Slightly larger, more personal tone than case study body */
+.note-opening {
+  font-size: 1.06rem;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.85;
+  margin-bottom: 1.4rem;
+  max-width: 100%;
+}
+.note-opening + .note-opening { margin-top: 0; }
+
+/* ─── Section heading — note style ──────────────── */
+/* Lighter than case study h2, more conversational */
+.note-section {
+  margin-top: 4rem;
+  padding-top: 3.5rem;
+  border-top: 0.5px solid var(--rule-light);
+}
+.note-section-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+.note-h2 {
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 1.6rem;
+}
+.note-h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+
+/* ─── Body text ──────────────────────────────────── */
+.note-p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.82;
+  margin-bottom: 1.15rem;
+  max-width: 100%;
+}
+
+/* Beat lines — same staccato structure as other notes */
+.beat {
+  margin: 1.4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.beat .note-p { margin-bottom: 0; color: var(--ink-3); }
+
+/* Pull quote — thinner and quieter than case study blockquote */
+.note-pull {
+  margin: 2.4rem 0;
+  padding-left: 1.4rem;
+  border-left: 1px solid var(--ink-3);
+  max-width: 580px;
+}
+.note-pull p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+/* Observation block — unique to notes, replaces scenario box */
+.observation {
+  margin: 2rem 0;
+  padding: 1.4rem 1.6rem;
+  background: rgba(255,255,255,0.38);
+  border-left: 2px solid var(--rule);
+  max-width: 100%;
+}
+.observation-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 0.7rem;
+}
+.observation .note-p { color: var(--ink-3); margin-bottom: 0; }
+.observation .note-p + .note-p { margin-top: 0.5rem; }
+
+/* Product question pair — unique note element */
+.product-qs {
+  margin: 1.6rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.product-q {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.8rem;
+  align-items: start;
+}
+.pq-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  padding-top: 2px;
+  line-height: 1.4;
+}
+.pq-text {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-3);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ─── Closing ─────────────────────────────────────── */
+.note-closing {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 0.5px solid var(--rule-light);
+}
+.closing-line {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 540px;
+}
+.closing-line + .closing-line { margin-top: 0.5rem; }
+
+/* ─── Note footer ─────────────────────────────────── */
+.note-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 0.5px solid var(--rule-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.nf-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+.nf-back:hover { color: var(--ink-3); }
+.nf-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--ink-4);
+  letter-spacing: 0.08em;
+}
+
+/* ─── Scroll reveal ───────────────────────────────── */
+.sr { opacity: 0; transform: translateY(12px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.sr.visible { opacity: 1; transform: translateY(0); }
+.sr-d1 { transition-delay: 0.07s; }
+.sr-d2 { transition-delay: 0.14s; }
+
+/* ─── Mobile ──────────────────────────────────────── */
+@media (max-width: 760px) {
+  .site-header { padding: 0 1.5rem; }
+  .header-nav  { display: none; }
+  .note-wrap   { padding: calc(var(--header-h) + 4rem) 1.5rem 5rem; }
+  .note-meta   { gap: 0; }
+  .meta-pair   { padding-right: 1.2rem; margin-right: 1.2rem; }
+  .product-q   { grid-template-columns: 100px 1fr; }
+}
+
+:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 3px; }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <a href="/" class="header-logo" aria-label="Endrare home">Endrare</a>
+  <ul class="header-nav" role="list">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#systems">Systems</a></li>
+    <li><a href="/#archive">Archive</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:hello@endrare.com" class="header-cta">Get in touch</a>
+</header>
+
+<!-- NOTE BODY -->
+<main class="note-wrap" id="main-content">
+
+  <!-- Badge -->
+  <div class="note-badge sr">
+    <span class="badge-tag">Field Note</span>
+    <span class="badge-sep">/</span>
+    <span class="badge-tag">Work · Culture · Systems</span>
+  </div>
+
+  <!-- Title -->
+  <h1 class="note-title sr">
+    What working in Sweden<br>taught me about <em>software</em>
+  </h1>
+
+  <p class="note-subtitle sr">
+    Good systems do not ask people to shout for clarity.
+  </p>
+
+  <!-- Metadata strip -->
+  <div class="note-meta sr" role="list">
+    <div class="meta-pair" role="listitem">
+      <span class="meta-key">Type</span>
+      <span class="meta-val">Field Note</span>
+    </div>
+    <div class="meta-pair" role="listitem">
+      <span class="meta-key">Year</span>
+      <span class="meta-val">2026</span>
+    </div>
+    <div class="meta-pair" role="listitem">
+      <span class="meta-key">Read</span>
+      <span class="meta-val">6–8 min</span>
+    </div>
+    <div class="meta-pair" role="listitem">
+      <span class="meta-key">Status</span>
+      <span class="meta-val">Note</span>
+    </div>
+  </div>
+
+  <!-- Opening -->
+  <article>
+
+  <p class="note-opening sr">When I first came to Sweden, I noticed something strange.</p>
+  <div class="beat sr">
+    <p class="note-p">Not something loud.</p>
+    <p class="note-p">Something quiet.</p>
+  </div>
+  <p class="note-opening sr">Many things were expected to work without constant chasing.</p>
+  <div class="beat sr">
+    <p class="note-p">Appointments. Schedules. Digital forms. Public transport. Banking. Work routines. Documents. Rules. Emails. Responsibilities.</p>
+  </div>
+  <p class="note-opening sr">Not perfectly. No country is perfect. No system is perfect. But the expectation was different.</p>
+  <p class="note-opening sr">People expected systems to reduce confusion. If something was unclear, it felt like a system problem — not always a personal failure.</p>
+  <p class="note-opening sr">That changed how I looked at software.</p>
+  <div class="beat sr">
+    <p class="note-p">Before, I mostly judged software by what it could do.</p>
+    <p class="note-p">Now I started judging it by what it made people repeat.</p>
+  </div>
+  <p class="note-opening sr">Because repetition reveals weakness.</p>
+  <div class="beat sr">
+    <p class="note-p">If a person has to ask twice, the system did not speak clearly.</p>
+    <p class="note-p">If a manager has to remind everyone manually, the system did not carry the message.</p>
+    <p class="note-p">If a student has to search five pages for one rule, the system did not respect attention.</p>
+    <p class="note-p">If friends keep asking who owes whom, the expense app did not preserve context.</p>
+    <p class="note-p">If a coach sees movement data but cannot act on it, the model did not become a product.</p>
+    <p class="note-p">If a user logs food but feels tired of logging, the tracker became the problem.</p>
+  </div>
+  <p class="note-opening sr">Working in Sweden taught me that good software is not only functional. Good software lowers the amount of unnecessary human effort around the function.</p>
+
+  <!-- 01 -->
+  <section class="note-section" id="s-01">
+    <span class="note-section-label sr">01</span>
+    <h2 class="note-h2 sr">The first lesson was <em>quietness</em></h2>
+
+    <p class="note-p sr">Some systems are loud because they are weak.</p>
+    <div class="beat sr">
+      <p class="note-p">They need reminders. Follow-ups. Screenshots. Manual checks. Repeated messages.</p>
+      <p class="note-p">"Did you see this?" "Can you confirm?" "Where is that?" "What should I do now?"</p>
+    </div>
+    <p class="note-p sr">A good system feels quieter. Not because nothing is happening. Because the right things are already clear.</p>
+    <p class="note-p sr">This is something I slowly started respecting in Sweden.</p>
+    <div class="beat sr">
+      <p class="note-p">A process does not need to be dramatic to be serious.</p>
+      <p class="note-p">A product does not need to shout to be powerful.</p>
+      <p class="note-p">A workflow does not need to be complex to be responsible.</p>
+    </div>
+    <p class="note-p sr">That changed my design taste. I stopped liking interfaces that perform intelligence. I started liking systems that quietly remove confusion.</p>
+  </section>
+
+  <!-- 02 -->
+  <section class="note-section" id="s-02">
+    <span class="note-section-label sr">02</span>
+    <h2 class="note-h2 sr">Systems should not<br>need <em>chasing</em></h2>
+
+    <p class="note-p sr">Chasing is one of the most underrated signs of bad software.</p>
+    <div class="beat sr">
+      <p class="note-p">Chasing information. Chasing confirmation. Chasing status. Chasing payments. Chasing updates. Chasing schedules. Chasing documents. Chasing people.</p>
+    </div>
+    <p class="note-p sr">When a system does not make the next state clear, people start chasing. This happened in many places I observed and built around.</p>
+
+    <div class="observation sr">
+      <p class="observation-label">In Expense Hive</p>
+      <p class="note-p">The problem was not only splitting money. The problem was chasing memory. Who paid? Who owes? Was the bill added? Did someone settle? Was it personal or group? That is why the product needed expense logging, group splits, bills, reminders, and group chat together. The money was not separate from the conversation.</p>
+    </div>
+
+    <div class="observation sr">
+      <p class="observation-label">In Food Tracker</p>
+      <p class="note-p">The problem was not only nutrition data. The problem was chasing discipline. If logging food takes too much effort, the user stops. So the system had to let me say something simple like "I ate 2 eggs" — then break down the nutrition and log it automatically.</p>
+    </div>
+
+    <div class="observation sr">
+      <p class="observation-label">In Pose Estimation</p>
+      <p class="note-p">The problem was not only detecting body points. The problem was chasing meaning from movement. A coach does not need raw coordinates. A coach needs readable movement attributes that help understand performance and reduce injury risk.</p>
+    </div>
+
+    <div class="note-pull sr">
+      <p>The product should reduce chasing. Not create a new place where chasing happens.</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="note-section" id="s-03">
+    <span class="note-section-label sr">03</span>
+    <h2 class="note-h2 sr">Trust is built before<br>the button is <em>clicked</em></h2>
+
+    <p class="note-p sr">People often think trust comes after using a product. But I think trust starts earlier. It starts when the product makes its structure visible.</p>
+    <div class="beat sr">
+      <p class="note-p">Can I understand where I am?</p>
+      <p class="note-p">Can I see what changed?</p>
+      <p class="note-p">Can I predict what will happen if I click?</p>
+      <p class="note-p">Can I recover if I make a mistake?</p>
+      <p class="note-p">Can I trust that this data means what it says?</p>
+    </div>
+    <p class="note-p sr">This matters in every product.</p>
+    <div class="beat sr">
+      <p class="note-p">In an expense app, users need to trust that the split is correct.</p>
+      <p class="note-p">In a health tracker, users need to trust that the log is saved.</p>
+      <p class="note-p">In a sports analysis system, a coach needs to trust what the movement output means.</p>
+      <p class="note-p">In a portfolio, the reader needs to trust that the person behind it has taste and direction.</p>
+    </div>
+    <p class="note-p sr">Trust is not only security. Trust is also clarity. A confusing product asks the user to take a risk. A clear product reduces that risk before the action.</p>
+  </section>
+
+  <!-- 04 -->
+  <section class="note-section" id="s-04">
+    <span class="note-section-label sr">04</span>
+    <h2 class="note-h2 sr">Documentation<br>is not <em>boring</em></h2>
+
+    <p class="note-p sr">Before, I used to think documentation was just supporting material. Something you write after building. Sweden changed that view.</p>
+    <p class="note-p sr">Here, documents, rules, instructions, and written clarity matter more than I expected. Not because people love paperwork. But because documentation reduces dependence on memory and repeated explanation.</p>
+    <div class="beat sr">
+      <p class="note-p">A good document is a product.</p>
+      <p class="note-p">It has users. It has structure. It has navigation. It has hierarchy. It can succeed or fail.</p>
+    </div>
+    <p class="note-p sr">This directly changed how I think about Endrare. That is why I do not want Endrare to be only a portfolio. I want it to contain case studies, field notes, product thinking, and archives.</p>
+    <p class="note-p sr">Because writing is also interface design. A reader should not fight the page to understand the idea. A case study should not be a wall of text. A note should not pretend to be a project. A product explanation should have rhythm, sections, and a clear path.</p>
+    <div class="note-pull sr">
+      <p>If an idea cannot be explained clearly, the product around it is probably still confused.</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="note-section" id="s-05">
+    <span class="note-section-label sr">05</span>
+    <h2 class="note-h2 sr">Time is treated like<br>a <em>shared resource</em></h2>
+
+    <p class="note-p sr">Time feels different when people treat it as a shared resource.</p>
+    <div class="beat sr">
+      <p class="note-p">Being late is not only personal.</p>
+      <p class="note-p">Changing a plan is not only personal.</p>
+      <p class="note-p">Unclear scheduling is not only personal.</p>
+      <p class="note-p">Bad communication does not only affect one person.</p>
+    </div>
+    <p class="note-p sr">It creates a chain.</p>
+    <div class="beat sr">
+      <p class="note-p">Someone waits. Someone adjusts. Someone asks again. Someone loses focus. Someone makes a backup plan. Someone carries the uncertainty.</p>
+    </div>
+    <p class="note-p sr">That changed my software thinking.</p>
+    <div class="beat sr">
+      <p class="note-p">A calendar is not just a list of events. It is a promise about attention.</p>
+      <p class="note-p">A reminder is not just a notification. It is a small agreement with the future.</p>
+      <p class="note-p">A schedule is not just working hours. It is someone's day.</p>
+    </div>
+    <p class="note-p sr">This is why I became more interested in systems that respect timing. Not just because timing is efficient. Because timing is social. Bad timing creates social debt. Good software reduces it.</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="note-section" id="s-06">
+    <span class="note-section-label sr">06</span>
+    <h2 class="note-h2 sr">Boundaries are<br><em>product decisions</em></h2>
+
+    <p class="note-p sr">One thing I respect about Swedish work culture is the idea that boundaries matter.</p>
+    <div class="beat sr">
+      <p class="note-p">Work should not consume everything.</p>
+      <p class="note-p">Rules should be visible.</p>
+      <p class="note-p">Responsibilities should be clear.</p>
+      <p class="note-p">People should know what is expected.</p>
+      <p class="note-p">Systems should not quietly abuse flexibility.</p>
+    </div>
+    <p class="note-p sr">That gave me a different way to think about product design. A product without boundaries often looks powerful.</p>
+    <div class="beat sr">
+      <p class="note-p">Unlimited notifications. Unlimited access. Unlimited edits. Unlimited messages. Unlimited availability. Unlimited tracking.</p>
+    </div>
+    <p class="note-p sr">But unlimited is not always better. Sometimes boundaries create trust.</p>
+    <div class="beat sr">
+      <p class="note-p">A health tracker should not make the user feel guilty all day.</p>
+      <p class="note-p">An expense app should not expose unnecessary group tension.</p>
+      <p class="note-p">A sports analysis tool should not pretend to know more than it does.</p>
+      <p class="note-p">A workplace tool should not disturb people for low-value updates.</p>
+      <p class="note-p">A portfolio should not show everything just because everything exists.</p>
+    </div>
+    <p class="note-p sr">Good software decides limits. That is not weakness. That is maturity.</p>
+  </section>
+
+  <!-- 07 -->
+  <section class="note-section" id="s-07">
+    <span class="note-section-label sr">07</span>
+    <h2 class="note-h2 sr">India taught me speed.<br>Sweden taught me <em>structure.</em></h2>
+
+    <p class="note-p sr">This is probably the deepest personal lesson.</p>
+    <p class="note-p sr">India taught me how to move fast.</p>
+    <div class="beat sr">
+      <p class="note-p">How to adjust. How to work through noise. How to solve with limited resources. How to keep going even when the system is imperfect. How to improvise.</p>
+    </div>
+    <p class="note-p sr">Sweden taught me something different.</p>
+    <div class="beat sr">
+      <p class="note-p">How structure protects people. How planning reduces stress. How clarity creates trust. How boundaries matter. How systems can make daily life lighter.</p>
+    </div>
+    <p class="note-p sr">One is not better than the other. Both shaped me.</p>
+    <div class="beat sr">
+      <p class="note-p">Speed without structure becomes chaos.</p>
+      <p class="note-p">Structure without speed becomes stiffness.</p>
+    </div>
+    <p class="note-p sr">The builder I want to become needs both. I want the movement I learned from India and the system thinking I learned from Sweden.</p>
+    <p class="note-p sr">That combination changed my product taste. I no longer want to build things that are only fast. I want to build things that are fast <em>and</em> understandable. Not just impressive. Useful.</p>
+  </section>
+
+  <!-- 08 -->
+  <section class="note-section" id="s-08">
+    <span class="note-section-label sr">08</span>
+    <h2 class="note-h2 sr">Good software reduces<br><em>social friction</em></h2>
+
+    <p class="note-p sr">This is the biggest lesson. Software does not only manage data. It manages relationships.</p>
+    <div class="beat sr">
+      <p class="note-p">Expense Hive was about friends and money.</p>
+      <p class="note-p">Food Tracker was about self-discipline and health.</p>
+      <p class="note-p">Pose Estimation was about athletes and coaches.</p>
+      <p class="note-p">Endrare is about me and the people trying to understand my work.</p>
+      <p class="note-p">Calendar tracking is about promises made to time.</p>
+      <p class="note-p">Skift, yes, is about teams and operations — but it is only one example of the same larger pattern.</p>
+    </div>
+    <p class="note-p sr">In every case, the product sits between people and decisions. That means software can create social friction or reduce it.</p>
+    <p class="note-p sr">It can make someone ask again. Make someone doubt. Make someone feel stupid. Make someone wait. Make someone over-explain. Make someone carry mental load that should have been handled by the system.</p>
+    <p class="note-p sr">Or it can do the opposite.</p>
+    <div class="beat sr">
+      <p class="note-p">Clarify. Remind. Explain. Connect. Protect. Summarize. Warn. Guide.</p>
+    </div>
+    <p class="note-p sr">That is the kind of software I started caring about more. Not software that only has features. Software that improves the human situation around the feature.</p>
+  </section>
+
+  <!-- 09 -->
+  <section class="note-section" id="s-09">
+    <span class="note-section-label sr">09</span>
+    <h2 class="note-h2 sr">The products I build now<br>feel <em>different</em></h2>
+
+    <p class="note-p sr">After these experiences, I started judging my own products differently.</p>
+
+    <div class="product-qs sr">
+      <div class="product-q">
+        <span class="pq-label">Expense Hive</span>
+        <span class="pq-text">Does this reduce awkwardness between friends?</span>
+      </div>
+      <div class="product-q">
+        <span class="pq-label">Food Tracker</span>
+        <span class="pq-text">Does this make logging easier than forgetting?</span>
+      </div>
+      <div class="product-q">
+        <span class="pq-label">Pose Estimation</span>
+        <span class="pq-text">Does this help a coach understand movement, not just view data?</span>
+      </div>
+      <div class="product-q">
+        <span class="pq-label">Endrare</span>
+        <span class="pq-text">Does this make my work easier to understand without over-explaining myself?</span>
+      </div>
+      <div class="product-q">
+        <span class="pq-label">Calendar</span>
+        <span class="pq-text">Does this reduce future confusion?</span>
+      </div>
+      <div class="product-q">
+        <span class="pq-label">Any product</span>
+        <span class="pq-text">What human effort is this removing?</span>
+      </div>
+    </div>
+
+    <p class="note-p sr">That last question is better than asking what feature am I adding. Because features are easy to count. Reduced friction is harder to see. But people feel it.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="note-section" id="s-10">
+    <span class="note-section-label sr">10</span>
+    <h2 class="note-h2 sr">The final <em>lesson</em></h2>
+
+    <p class="note-p sr">Working in Sweden did not teach me only one thing about software. It changed the lens.</p>
+    <p class="note-p sr">I stopped seeing software as only screens and code. I started seeing it as a structure around human effort.</p>
+    <div class="beat sr">
+      <p class="note-p">A product decides who has to remember.</p>
+      <p class="note-p">Who has to ask.</p>
+      <p class="note-p">Who has to wait.</p>
+      <p class="note-p">Who has to trust.</p>
+      <p class="note-p">Who has to explain.</p>
+      <p class="note-p">Who has to fix the gap.</p>
+    </div>
+    <p class="note-p sr">That is why clarity matters. Not as decoration. As respect.</p>
+    <div class="beat sr">
+      <p class="note-p">Respect for time. Respect for attention. Respect for responsibility. Respect for people who are already carrying enough.</p>
+    </div>
+    <p class="note-p sr">The software I want to build now is not loud. It does not need to prove itself with noise. It should feel calm, fast, useful, and clear.</p>
+    <div class="beat sr">
+      <p class="note-p">It should reduce chasing.</p>
+      <p class="note-p">It should reduce repeated explanation.</p>
+      <p class="note-p">It should reduce the invisible weight around daily decisions.</p>
+    </div>
+    <p class="note-p sr">Because good systems do not ask people to shout for clarity. They make clarity available before the shouting starts.</p>
+  </section>
+
+  <!-- Closing -->
+  <div class="note-closing sr">
+    <p class="closing-line">India taught me how to move when systems are missing.</p>
+    <p class="closing-line">Sweden taught me why good systems matter.</p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="note-footer">
+    <a href="/#archive" class="nf-back">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      Back to archive
+    </a>
+    <span class="nf-copy">Endrare · Sweden · © 2026</span>
+  </footer>
+
+  </article>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  const srEls = document.querySelectorAll('.sr');
+  const obs = new IntersectionObserver(
+    (entries) => { entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); },
+    { threshold: 0.07, rootMargin: '0px 0px -36px 0px' }
+  );
+  srEls.forEach((el) => obs.observe(el));
+})();
+</script>
+
+</body>
+</html>
