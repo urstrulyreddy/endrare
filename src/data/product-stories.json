@@ -1,0 +1,362 @@
+{
+  "expense-hive": {
+    "positioningHeadline": "Remember the expense. Keep the friendship easy.",
+    "storyTitle": "The small confusion behind shared spending",
+    "problem": "Shared spending rarely becomes confusing because the arithmetic is difficult. During my bachelor’s, friends paid for meals, travel, and things for the group, then tried to reconstruct the details later. An amount might be remembered while the people, purpose, or intended split had already become unclear.",
+    "context": "Expense Hive grew out of those everyday conversations. My friends and I used the app ourselves, so awkward logging and confusing splits became visible quickly. Personal spending also needed its own place: mixing it with group costs made even a correct total difficult to understand.",
+    "approach": "I brought expense logging, bills, group splitting, reminders, chat, and spending summaries into one mobile experience. The aim was to capture the situation while it was still fresh, then preserve the connection between an amount, the people involved, and the conversation around settling it.",
+    "workflowTitle": "From the receipt to a shared understanding",
+    "workflow": [
+      {
+        "title": "Capture it while it is fresh",
+        "body": "Add the expense close to the moment of payment, identify who paid, and place it in personal spending or the relevant group. Attaching the bill keeps a concrete reference beside the amount, reducing the need to remember the details later."
+      },
+      {
+        "title": "Make the split understandable",
+        "body": "Assign the people involved and use the appropriate split. The useful result is a clear view of who owes whom, with group chat available for questions about the expense. The record and its explanation belong together."
+      },
+      {
+        "title": "Return with the context intact",
+        "body": "Use reminders to follow up and weekly or monthly summaries to understand spending over time. A later review should reconnect someone with the original expense instead of starting another search through messages and receipts."
+      }
+    ],
+    "decisionsTitle": "Designing around memory, timing, and trust",
+    "decisions": [
+      {
+        "title": "Separate personal from shared",
+        "body": "Personal totals and group obligations answer different questions. Keeping that distinction visible was essential to making summaries useful and preventing a group purchase from becoming ambiguous personal spending."
+      },
+      {
+        "title": "Connect chat to the money",
+        "body": "A financial record alone cannot explain every shared decision. Bringing group conversation into the app recognised that settling a bill involves agreement and context as well as a calculated amount."
+      },
+      {
+        "title": "Treat logging speed as part of accuracy",
+        "body": "The longer entry takes, the easier it is to postpone. Reducing the effort of adding an expense helped preserve details before memory weakened, making interaction design part of the quality of the record."
+      }
+    ],
+    "statusTitle": "A project shaped by personal use",
+    "statusLimitations": "Expense Hive is a bachelor project built around a real need and used within my own circle. Its story concerns recording, splitting, and discussing expenses. It does not establish payment-processing capabilities, a current public release, or adoption beyond that personal context.",
+    "nextTitle": "Questions worth taking further",
+    "nextExploration": "How should a corrected bill change an existing split without confusing the group? Could settlement history explain changes as clearly as the current balance? Those questions would guide further exploration of shared accountability and the moments when a simple expense becomes an exception.",
+    "sources": [
+      "src/data/seo.js:expense-hive",
+      "casestudy/productclarity.html:s-03"
+    ]
+  },
+  "pose-estimation": {
+    "positioningHeadline": "Turn visible movement into something a coach can examine.",
+    "storyTitle": "Beyond an impressive skeleton overlay",
+    "problem": "An athlete’s movement contains details that can be difficult to follow consistently at speed. A changing ankle position or repeated leg motion may matter, yet a video alone leaves the observer to find and compare those details. My thesis asked how machine learning could make that review more useful.",
+    "context": "Cycling provided one example, but the underlying research question was broader: could a system analyse body movement and present useful attributes to coaches? The challenge sat between computer vision and interpretation. Coordinates are a technical result; understanding what deserves another look is a different problem.",
+    "approach": "The project used pose estimation to extract joint positions frame by frame from standard video, then examine body, leg, ankle, and movement attributes. MediaPipe supported the tracking work. The product perspective was to make the resulting motion data readable for people whose expertise is sport, rather than machine learning.",
+    "workflowTitle": "From footage to a focused review",
+    "workflow": [
+      {
+        "title": "Begin with the movement",
+        "body": "Use video as the input to the analysis. The subject, view, and visible movement provide the context for everything that follows. A useful review starts with footage that lets the relevant body points be seen rather than assuming every frame contains dependable information."
+      },
+      {
+        "title": "Translate frames into attributes",
+        "body": "Extract body keypoints and examine how their positions change over time. This connects individual detections to movement patterns and attributes, making it possible to look beyond an isolated pose toward the motion occurring across the sequence."
+      },
+      {
+        "title": "Bring interpretation back to the person",
+        "body": "Present movement information for a coach or analyst to inspect alongside the athlete’s action. The intended question is what warrants closer attention. An output becomes useful when its meaning and uncertainty remain understandable to the person reviewing it."
+      }
+    ],
+    "decisionsTitle": "Keeping technical output interpretable",
+    "decisions": [
+      {
+        "title": "Work from ordinary video",
+        "body": "The research starts with standard video input and a pose-estimation pipeline. That keeps the central investigation focused on extracting useful movement information from imagery rather than assuming a specialised motion-capture environment."
+      },
+      {
+        "title": "Follow change across frames",
+        "body": "Movement is a sequence, so a single set of coordinates cannot carry the whole explanation. The analysis connects detected positions to temporal changes, with cycling providing a concrete setting for examining repeated motion."
+      },
+      {
+        "title": "Make limits part of the explanation",
+        "body": "Confidence, missing detections, and noise sit between a video and its interpretation. The design principle is to communicate those limits, avoiding a polished chart or overlay that implies more certainty than the underlying detection can support."
+      }
+    ],
+    "statusTitle": "Thesis research, with human interpretation",
+    "statusLimitations": "This is a thesis and research project exploring movement analysis, including real-time attributes. Its outputs support investigation and coaching review; they should not be read as a validated diagnosis or prediction of injury. No numerical accuracy, latency, or cross-sport validation result is claimed here.",
+    "nextTitle": "Where further evaluation would begin",
+    "nextExploration": "How does a change in camera angle affect the usefulness of an attribute? When should a weak detection be withheld rather than visualised? Which explanations help a coach distinguish a movement pattern from tracking noise? These remain valuable questions for further evaluation.",
+    "sources": [
+      "src/data/seo.js:pose-estimation",
+      "casestudy/productclarity.html:s-05"
+    ]
+  },
+  "food-tracker": {
+    "positioningHeadline": "A daily record that asks less of the day.",
+    "storyTitle": "When tracking becomes another task",
+    "problem": "I wanted to keep track of food, gym sessions, and daily activity without making every meal an administrative exercise. Searching for a food, choosing a serving, checking the values, and saving an entry can seem minor once. Repeated throughout a week, that effort begins to dominate the habit.",
+    "context": "Food Tracker began as personal automation. The aim was a useful record I could live with, rather than a more elaborate logging screen. An ordinary sentence such as “I ate two eggs” offered a simpler starting point than asking me to translate the meal into a form first.",
+    "approach": "The tool takes natural-language input, parses the food or activity, and turns it into structured entries. Food entries are broken into nutritional values automatically, while gym and daily activity belong to the same continuing record. Summaries make that record easier to review without repeating the original entry work.",
+    "workflowTitle": "Say it, structure it, see the pattern",
+    "workflow": [
+      {
+        "title": "Describe the actual day",
+        "body": "Enter food or an activity in ordinary language, close to when it happens. The interaction starts with what is easy to remember: a meal, a gym session, or another daily activity. It avoids making category selection the first task."
+      },
+      {
+        "title": "Let the tool organise the entry",
+        "body": "The system converts the description into nutritional or activity data and logs the result. This is where the automation carries work that a conventional form pushes onto the user, connecting natural input to a record that can be compared over time."
+      },
+      {
+        "title": "Review without starting over",
+        "body": "Look at daily or weekly summaries to understand the accumulated record. Food, gym, and activity sit within a broader view of the day. The purpose of collecting them is to make review easier, rather than simply increasing the amount of stored data."
+      }
+    ],
+    "decisionsTitle": "Making a habit easier to keep",
+    "decisions": [
+      {
+        "title": "Begin with language",
+        "body": "A short description is the primary input. This makes the user’s familiar expression the starting point and puts the translation into structured fields inside the system, where it can happen without repeated navigation."
+      },
+      {
+        "title": "Connect food and movement",
+        "body": "Gym sessions and daily activity belong beside food logging because the personal question concerns an overall routine. Treating those records together gives summaries a more useful purpose than isolated lists of meals or workouts."
+      },
+      {
+        "title": "Judge the interaction over a week",
+        "body": "A tracking flow must work repeatedly, on ordinary days. The design priority is sustained low effort. Repeated meals, understandable output, and easy correction are important considerations when deciding whether automation is actually reducing the burden."
+      }
+    ],
+    "statusTitle": "Personal automation, with room to refine",
+    "statusLimitations": "Food Tracker is a personal tool rather than a published health service. Its automated breakdown depends on the information supplied and how the entry is interpreted. The project describes logging and review; it makes no claim about nutritional precision, health outcomes, or medical recommendations.",
+    "nextTitle": "The useful questions are in the exceptions",
+    "nextExploration": "What should happen when a portion is unclear or a meal contains several ingredients? How could someone correct one assumption without rewriting the whole entry? A next exploration would ask how to make uncertainty and corrections visible while preserving the ease of the original interaction.",
+    "sources": [
+      "src/data/seo.js:food-tracker",
+      "casestudy/productclarity.html:s-04"
+    ]
+  },
+  "outliner": {
+    "positioningHeadline": "A useful response starts before the prompt.",
+    "storyTitle": "The repeated work behind every draft",
+    "problem": "An AI-generated response can be grammatically sound and still require a substantial rewrite. If it overlooks the situation or sounds unlike the person sending it, the difficult work returns to the user. Explaining the same background and preferences repeatedly makes that problem more visible.",
+    "context": "Outlier explores response generation through prompt patterns, interaction history, and communication style. The recurring task is drafting with enough context to fit the situation. It is a focused application of AI to repeated writing effort, with attention to what the system should carry forward between interactions.",
+    "approach": "The system combines contextual information with a prompt pattern library and adjustable response depth and tone. Its aim is to create a more relevant starting point for a response. The value lies in using context deliberately, so the user spends less effort rebuilding the same setup around each request.",
+    "workflowTitle": "Carry the context into the next response",
+    "workflow": [
+      {
+        "title": "Start with the situation",
+        "body": "Frame the current request with the background needed to understand it. Interaction history and established communication preferences provide continuity, while the immediate task supplies the reason for writing. Those inputs give response generation something more specific than an isolated instruction."
+      },
+      {
+        "title": "Choose the shape of the answer",
+        "body": "Use prompt-based logic and available depth and tone settings to guide the draft. A short update and a fuller explanation need different treatment. The response should reflect that distinction before the user begins editing it."
+      },
+      {
+        "title": "Review for fit",
+        "body": "Read the generated response against the real situation and the intended voice. The practical purpose is a draft that is easier to adapt and use. The user’s judgement remains the point where relevance, factual content, and suitability are checked."
+      }
+    ],
+    "decisionsTitle": "Three choices behind contextual drafting",
+    "decisions": [
+      {
+        "title": "Use history as an input",
+        "body": "Previous interactions can explain expectations that a short prompt leaves unstated. Making history part of the response workflow addresses repetition at its source, while raising an important question about which earlier details still apply to the current task."
+      },
+      {
+        "title": "Refine reusable prompt patterns",
+        "body": "A pattern library gives recurring requests a structured starting point. The project describes patterns refined through use, treating prompt design as part of the application rather than a collection of one-off instructions."
+      },
+      {
+        "title": "Expose depth and tone",
+        "body": "Response length and communication style affect whether a draft is usable. Configurable settings make these choices part of the workflow and allow the same contextual foundation to support more than one kind of answer."
+      }
+    ],
+    "statusTitle": "An AI response-generation project",
+    "statusLimitations": "Outlier is documented as an AI system built around contextual response generation. The available project record does not establish a public release, a specific underlying model, or a measured reduction in drafting time. Contextual relevance remains a goal to evaluate against actual responses, not a guarantee of correctness.",
+    "nextTitle": "What should the system remember?",
+    "nextExploration": "When does old context help, and when does it pull a response in the wrong direction? How could someone inspect or change what is carried forward? A useful next study would compare drafts with different context choices and ask where the extra information improves the result.",
+    "sources": [
+      "src/data/seo.js:outliner"
+    ]
+  },
+  "flask-docker-aws": {
+    "positioningHeadline": "Own the journey from a local endpoint to AWS.",
+    "storyTitle": "Finishing the part after the application works",
+    "problem": "A web application running locally leaves an important part of the work unfinished. Its dependencies, runtime, server configuration, and process management still need to make sense elsewhere. This project was built to close the gap between understanding deployment in theory and taking responsibility for the complete path.",
+    "context": "The scope connected a Flask backend, Docker containerisation, and deployment to an AWS environment running Linux. It brought development and delivery into the same project, so choices made in the application could be considered alongside the environment needed to run it.",
+    "approach": "I built a modular Flask application, packaged it with Docker for a reproducible environment, and handled the cloud deployment and Linux setup. The work made deployment part of the application’s construction. It required following the system beyond the source code into the conditions under which it actually runs.",
+    "workflowTitle": "Application, container, running environment",
+    "workflow": [
+      {
+        "title": "Build the backend",
+        "body": "Develop the Flask application and organise its API structure into clear modules. The starting point is a backend that can be understood as application logic, with a structure that remains manageable when the surrounding deployment concerns are introduced."
+      },
+      {
+        "title": "Package the environment",
+        "body": "Containerise the application with Docker so that its runtime and dependencies travel with a defined package. This gives the deployment a repeatable foundation and reduces the distance between the development setup and the environment that runs the application."
+      },
+      {
+        "title": "Run it on AWS",
+        "body": "Deploy to the cloud environment and take responsibility for the Linux configuration and process management around it. The workflow ends with the application running beyond the local machine, connecting backend development to the practical work of operating its runtime."
+      }
+    ],
+    "decisionsTitle": "What complete ownership required",
+    "decisions": [
+      {
+        "title": "Keep the API structure modular",
+        "body": "The Flask backend was organised around a clean, modular API structure. This keeps application responsibilities understandable and avoids treating deployment as a reason for the backend itself to become difficult to navigate."
+      },
+      {
+        "title": "Make the runtime reproducible",
+        "body": "Docker provides the project’s packaging boundary. Defining the environment alongside the application makes reproducibility an explicit part of delivery, rather than depending on a developer remembering the state of a local machine."
+      },
+      {
+        "title": "Include the operating system",
+        "body": "Linux setup and process management were within scope. Owning those details connects an application’s behaviour to the environment supporting it and makes the final result more complete than a repository that only explains how deployment might work."
+      }
+    ],
+    "statusTitle": "A deployment project with a defined scope",
+    "statusLimitations": "The project record describes a Flask application built, containerised, and deployed to AWS. It does not specify a business domain, a currently available public demo, a traffic level, or an uptime result. The supported outcome is practical experience across backend development, packaging, and cloud deployment.",
+    "nextTitle": "Questions for the next delivery cycle",
+    "nextExploration": "How could a fresh environment be brought up with fewer manual steps? What would make a failed release easier to identify and reverse? Further work could examine automated delivery, recovery, and clearer operational checks, with each addition justified by the application’s actual needs.",
+    "sources": [
+      "src/data/seo.js:flask-docker-aws"
+    ]
+  },
+  "cloud-infrastructure": {
+    "positioningHeadline": "Build the network. Watch how the system behaves.",
+    "storyTitle": "A running instance is only part of the picture",
+    "problem": "Cloud infrastructure needs a deliberate network structure and a way to explain its behaviour under load. Provisioning compute alone leaves questions about which resources are exposed, how the environment is organised, and what information becomes available when demand changes.",
+    "context": "This project focused on AWS infrastructure using a VPC, public and private subnets, EC2, and CloudWatch. It combined systems design with monitoring and load testing, bringing the shape of the environment together with the signals needed to examine how it runs.",
+    "approach": "I designed the network with public and private separation, provisioned and configured EC2 compute, and set up CloudWatch monitoring, logging, and alerting. Load testing under production-style traffic conditions provided a practical setting for evaluating performance and reliability. The emphasis was on making behaviour observable as well as making infrastructure available.",
+    "workflowTitle": "Define the boundary, run the system, read the signals",
+    "workflow": [
+      {
+        "title": "Organise the network",
+        "body": "Begin with the VPC and the division between public and private subnets. This gives the environment an explicit structure and separates networking decisions from the assumption that every resource should occupy the same exposed space."
+      },
+      {
+        "title": "Provision and observe compute",
+        "body": "Configure EC2 instances and bring monitoring, logs, and alerts into the environment through CloudWatch. Compute and observability are considered together, so examining the system’s behaviour is part of the setup rather than a separate task after deployment."
+      },
+      {
+        "title": "Exercise the environment",
+        "body": "Run load tests under conditions intended to resemble production traffic and inspect the available signals. The purpose is to evaluate how the configured system behaves under pressure, giving the infrastructure design a practical basis for review."
+      }
+    ],
+    "decisionsTitle": "Reliability begins with visibility",
+    "decisions": [
+      {
+        "title": "Separate public and private resources",
+        "body": "Subnet separation was a central part of the VPC design. It establishes a network boundary that can be reasoned about explicitly, rather than treating the cloud environment as an undifferentiated collection of instances."
+      },
+      {
+        "title": "Build monitoring into the setup",
+        "body": "CloudWatch monitoring, logging, and alerting were included in the implementation. This makes observability a design concern and keeps attention on the signals that explain the system, alongside the resources required to run it."
+      },
+      {
+        "title": "Use load to investigate assumptions",
+        "body": "Load testing creates a way to examine performance and reliability under changing demand. In this project it complemented provisioning and configuration, connecting infrastructure choices to observed behaviour instead of ending the work when deployment succeeded."
+      }
+    ],
+    "statusTitle": "Infrastructure design and practical evaluation",
+    "statusLimitations": "The documented work includes AWS configuration, observability setup, and load testing. No numerical throughput, response-time, availability, or cost benchmark is published in this account. Production-style test conditions describe the evaluation setting; they do not establish a managed production service or a reliability guarantee.",
+    "nextTitle": "What would make the signals more useful?",
+    "nextExploration": "Which alerts would lead to a clear action, and which would create noise? What happens when an instance becomes unavailable during a test? Further exploration could examine failure scenarios, recovery expectations, and the relationship between performance signals and the decisions an operator needs to make.",
+    "sources": [
+      "src/data/seo.js:cloud-infrastructure"
+    ]
+  },
+  "skift": {
+    "positioningHeadline": "Plan the shift with the whole operation in view.",
+    "storyTitle": "A schedule carries more than names and times",
+    "problem": "Working in restaurant operations changed how I understood scheduling. A shift holds expected demand, employee availability, role coverage, experience, handovers, and last-minute changes. When that information is scattered, the manager becomes the person responsible for remembering and connecting it all before service begins.",
+    "context": "Skift grew from that operational experience in Sweden. The visible starting point was a calendar, but the larger need was a connected view of the day. Managers, shift leaders, and team members each face different decisions, even when they are working from the same schedule.",
+    "approach": "The product direction combines a manager-facing web platform with an employee-facing mobile experience. Scheduling, communication, tasks, and sales-aware planning belong to one operational picture. AI assistance is intended to explain suggested changes and surface conflicts while leaving the manager responsible for the final decision.",
+    "workflowTitle": "A proposed shift-planning journey",
+    "workflow": [
+      {
+        "title": "Understand the week ahead",
+        "body": "The proposed manager view brings availability, role coverage, and expected sales pressure into the planning conversation. The aim is to see a staffing need in its context, including the experience required during a busy window, before assigning names to shifts."
+      },
+      {
+        "title": "Review the recommendation",
+        "body": "AI-assisted planning would offer a starting point and explain the reason for a suggestion. A manager could inspect a coverage gap or a conflict, adjust the plan, and retain control over publication. The explanation is part of the proposed interaction."
+      },
+      {
+        "title": "Carry clarity into the shift",
+        "body": "After publication, the employee experience is intended to make schedules, updates, and assigned work easy to find. Shift leaders need a view of today’s team and priorities; team members need to understand their own work and what has changed."
+      }
+    ],
+    "decisionsTitle": "Decisions shaped by the restaurant floor",
+    "decisions": [
+      {
+        "title": "Give each role a useful view",
+        "body": "The concept distinguishes planning from shift execution and individual work. A manager needs control, a shift leader needs readiness, and a team member needs clarity. The same underlying operation should support those different levels of responsibility."
+      },
+      {
+        "title": "Explain the suggested action",
+        "body": "A warning should say why it matters. The AI direction favours suggestions tied to coverage, demand, or workload, so the manager can evaluate the reasoning instead of accepting an unexplained generated schedule."
+      },
+      {
+        "title": "Connect planning with communication",
+        "body": "A schedule change only helps when the relevant people understand it. Bringing messages, updates, and tasks into the product direction recognises that operational coordination continues after the calendar has been published."
+      }
+    ],
+    "statusTitle": "Product concept and active build",
+    "statusLimitations": "Skift is an active product concept shaped by firsthand operational work. The interface studies and presentation use illustrative data. Sales, weather, payroll, and other integrations are directions for exploration; this account does not present them as live connections or claim deployed scheduling outcomes.",
+    "nextTitle": "The next questions belong to real workflows",
+    "nextExploration": "Which information would a manager need before trusting a staffing suggestion? How should an urgent change reach everyone affected without adding noise? Further exploration should test those workflows and establish the data, constraints, and explanations needed before more automated planning becomes useful.",
+    "sources": [
+      "src/data/seo.js:skift",
+      "casestudy/skiftcasestudy.html",
+      "casestudy/productclarity.html:s-06"
+    ]
+  },
+  "endrare": {
+    "positioningHeadline": "A body of work, with room for the thinking behind it.",
+    "storyTitle": "Giving a varied practice a clear direction",
+    "problem": "A portfolio can contain many projects and still leave a visitor unsure what connects them. Software, AI, infrastructure, and product thinking each bring their own language. Presenting them as a list risks asking the reader to assemble the story that the website should make easier to understand.",
+    "context": "Endrare is my personal archive of products, case studies, and field notes. It brings together technical work and experiences that changed how I build, including restaurant operations in Sweden. The challenge is to communicate a direction quickly while keeping enough depth available for someone who wants the evidence.",
+    "approach": "The site gives selected work an accessible entry point and connects it to product pages, essays, and notes. Visitors can follow a project, explore the thinking archive, or take a guided route through the work. Contact remains a direct conversation rather than a complex intake process.",
+    "workflowTitle": "From a first impression to a useful connection",
+    "workflow": [
+      {
+        "title": "Find a point of interest",
+        "body": "Start with selected projects and the central description of the practice. The first view provides orientation: what I build, how I approach problems, and where a visitor can go next. It is an invitation to explore a direction rather than absorb everything at once."
+      },
+      {
+        "title": "Follow the reasoning",
+        "body": "Open a product page, case study, or field note to see the problem and the decisions behind the work. Related material connects practical examples to broader ideas, such as cognitive load, trust, operational pressure, and the role of infrastructure in an experience."
+      },
+      {
+        "title": "Choose a next step",
+        "body": "Continue through the archive or use the conversation page to make contact. The email address is available directly and can be copied. The website’s final job is to make a relevant next action easy after the visitor has found enough context."
+      }
+    ],
+    "decisionsTitle": "Structure is part of the identity",
+    "decisions": [
+      {
+        "title": "Sequence the information",
+        "body": "Selected work establishes the direction; detail pages and the journal provide depth. That sequence reflects the idea that a visitor should not have to inspect every project before understanding the connection between them."
+      },
+      {
+        "title": "Keep evidence beside the presentation",
+        "body": "The archive gives product thinking a substantive place. Case studies and field notes explain experiences and trade-offs that a project image cannot, allowing the site to represent a developing practice through more than visual summaries."
+      },
+      {
+        "title": "Maintain one public content structure",
+        "body": "Shared product and article metadata supports navigation, canonical routes, and search metadata. The architecture keeps the public archive connected as its content grows, with standalone articles retaining the depth and reading interactions they need."
+      }
+    ],
+    "statusTitle": "A live archive that continues to evolve",
+    "statusLimitations": "Endrare is a live personal website and an ongoing body of work. The projects it documents have different statuses, from bachelor and thesis work to personal automation and active concepts. Their presence in the same archive should not imply the same level of release, validation, or availability.",
+    "nextTitle": "How should the archive grow?",
+    "nextExploration": "As more work is added, which paths will help readers find relevant connections without making navigation heavier? What deserves a full case study, and what is better as a short field note? Those editorial questions should guide the next additions as much as the visual design.",
+    "sources": [
+      "src/data/seo.js:endrare",
+      "casestudy/productclarity.html:s-08",
+      "src/data/seo.js",
+      "conversation.html"
+    ]
+  }
+}

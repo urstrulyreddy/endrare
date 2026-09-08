@@ -8,9 +8,9 @@ export const SITE = {
   themeColor: '#fafaf8',
   defaultImage: '/og/endrare-og.svg',
   defaultImageAlt: 'Endrare wordmark on a warm off-white background',
-  defaultTitle: 'Endrare — Deependra\'s Product, Software and AI Archive',
+  defaultTitle: 'Endrare — Thoughtful Software, AI & Digital Experiences',
   defaultDescription:
-    'Endrare is Deependra\'s archive of software products, AI projects, product thinking, case studies, field notes, and systems built from real-world problems.',
+    'Endrare is an software and AI partner led by Deependra. We build thoughtful software, useful AI, and digital experiences. Explore the work, the thinking, and opportunities to build something meaningful together.',
 }
 
 export const AUTHOR = {
@@ -28,6 +28,13 @@ export const AUTHOR = {
 }
 
 export const PAGE_SEO = [
+  {
+    id: 'services', path: '/services', title: 'Services',
+    seoTitle: 'Software Development & AI Services — Endrare Studio',
+    description: 'Explore Endrare’s AI automation, internal assistants, AI security reviews, web and mobile development, software modernization, cloud engineering, and product design services.',
+    type: 'website', changefreq: 'monthly', priority: '0.9', dateModified: '2026-09-08',
+    keywords: ['AI automation', 'internal AI assistant', 'AI security review', 'web development', 'mobile app development', 'software modernization', 'cloud engineering', 'Endrare'],
+  },
   {
     id: 'home',
     path: '/',
@@ -71,6 +78,7 @@ export const PAGE_SEO = [
     changefreq: 'weekly',
     priority: '0.8',
     keywords: ['product thinking', 'UX clarity', 'systems thinking', 'case studies', 'field notes'],
+    redirectTo: '/archive',
   },
   {
     id: 'products',
@@ -99,10 +107,10 @@ export const PAGE_SEO = [
   {
     id: 'about',
     path: '/about',
-    title: 'About Deependra',
-    seoTitle: 'About Deependra — Endrare',
+    title: 'About Endrare',
+    seoTitle: 'About Endrare — Software, AI & the People Behind the Work',
     description:
-      'Learn about Deependra Sai Kumar Reddy, a software builder focused on AI, product thinking, systems, UX clarity, and real-world problem solving.',
+      'Meet Endrare, an software and AI partner led by Deependra Sai Kumar Reddy in Sweden. Thoughtful software, applied AI, product thinking, and reliable systems.',
     type: 'website',
     changefreq: 'monthly',
     priority: '0.7',
@@ -114,7 +122,7 @@ export const PAGE_SEO = [
     title: 'Contact',
     seoTitle: 'Contact — Endrare',
     description:
-      'Contact Deependra for software roles, product collaboration, AI projects, case studies, or professional opportunities.',
+      'Contact Endrare for software projects, product collaboration, AI applications, and thoughtful partnerships. Connect with our founder, Deependra.',
     type: 'website',
     changefreq: 'monthly',
     priority: '0.6',
@@ -290,6 +298,7 @@ export const PRESENTATION_PAGES = [
 export const STANDALONE_PAGES = [
   {
     id: 'conversation',
+    redirectTo: '/contact',
     sourceFile: 'conversation.html',
     path: '/conversation.html',
     type: 'website',
@@ -519,10 +528,10 @@ export function getArchiveEntries() {
 
 export function getAllSitemapPages() {
   return [
-    ...PAGE_SEO,
+    ...PAGE_SEO.filter(page => !page.redirectTo),
     ...CONTENT_ITEMS,
     ...PRESENTATION_PAGES,
-    ...STANDALONE_PAGES,
+    ...STANDALONE_PAGES.filter(page => !page.redirectTo),
     ...PRODUCT_ITEMS.map((product) => ({
       ...product,
       type: 'website',

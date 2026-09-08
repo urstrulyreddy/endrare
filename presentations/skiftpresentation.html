@@ -2347,13 +2347,13 @@ h2 {
 }
 
     </style>
-  </head>
-  <body>
+  <link rel="stylesheet" href="/design.css" /><link rel="stylesheet" href="/editorial.css" /><script type="module" src="/design.js"></script><noscript><style>.sr,.reveal,.moment-inner{opacity:1!important;transform:none!important}</style></noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/experience.css" /></head>
+  <body class="ed-presentation">
     <div class="ambient ambient-one"></div>
     <div class="ambient ambient-two"></div>
     <div class="ambient ambient-three"></div>
 
-    <header class="topbar">
+    <a class="ed-skip" href="#main-content">Skip to content</a><header class="ed-header"><div class="ed-header-inner ed-container"><a href="/" class="ed-wordmark" aria-label="Endrare home"><span class="ed-brand-symbol" aria-hidden="true">✳</span>endrare<span class="ed-logo-period">.</span></a><nav class="ed-nav" aria-label="Primary navigation"><a href="/products/" aria-current="page">Work</a><a href="/services/" >Services</a><a href="/about/" >Studio</a><a href="/archive/" >Journal</a></nav><a class="ed-header-cta" href="/contact/" >Let’s talk <span aria-hidden="true">↗</span></a><button class="ed-menu-button" aria-label="Open navigation" aria-expanded="false" aria-controls="ed-mobile-menu"><span></span><span></span></button></div></header><dialog id="ed-mobile-menu" class="ed-mobile-menu" aria-label="Site navigation"><div class="ed-mobile-top"><a class="ed-wordmark" href="/">✳ endrare.</a><button class="ed-menu-close" aria-label="Close navigation">×</button></div><nav aria-label="Mobile navigation"><a href="/products/" aria-current="page">Work<span>01 ↗</span></a><a href="/services/" >Services<span>02 ↗</span></a><a href="/about/" >Studio<span>03 ↗</span></a><a href="/archive/" >Journal<span>04 ↗</span></a><a href="/contact/" >Let’s talk<span>05 ↗</span></a></nav><a class="ed-mobile-email" href="mailto:hello@endrare.com">hello@endrare.com</a><span class="ed-label">Software & AI partner · Led by Deependra</span></dialog><div class="ed-presentation-nav">
       <div class="brand">Skift</div>
       <nav class="topnav">
         <a href="#hero">Intro</a>
@@ -2362,9 +2362,9 @@ h2 {
         <a href="#ai">AI</a>
         <a href="#finale">Finale</a>
       </nav>
-    </header>
+    </div>
 
-    <main>
+    <main id="main-content">
       <section class="scene hero scene-hero" id="hero" data-scene>
         <div class="hero-stage">
           <div class="hero-glow"></div>
@@ -2372,11 +2372,11 @@ h2 {
           <div class="hero-orbit orbit-two"></div>
         </div>
         <div class="scene-copy reveal hero-copy">
-          <p class="eyebrow">Workforce Super App</p>
+          <p class="eyebrow">A connected team. A clearer day.</p>
           <h1><span class="title-shimmer">Skift</span></h1>
-          <p class="subtitle">One app. Complete control.</p>
+          <p class="subtitle">Better days, built together.</p>
           <p class="body-copy">
-            Messaging, scheduling, feed, and performance intelligence presented as one seamless ecosystem.
+            Scheduling, communication, and AI-assisted planning, shaped by the everyday realities of restaurant work.<br /><small class="ed-concept-note">Product concept & active build · Illustrative data throughout</small>
           </p>
         </div>
       </section>
@@ -2386,7 +2386,7 @@ h2 {
           <p class="eyebrow">Ecosystem</p>
           <h2>Everything employees need, in one flow.</h2>
           <p>
-            Glass surfaces, layered depth, and quiet motion carry each feature with the same design language.
+            A shift connects conversations, schedules, company updates, and business performance. The concept brings that context into a shared place.
           </p>
         </div>
 
@@ -2421,9 +2421,9 @@ h2 {
       <section class="scene scene-messages" id="messages" data-scene>
         <div class="section-header reveal">
           <p class="eyebrow">Messages</p>
-          <h2>iMessage-inspired speed and calm.</h2>
+          <h2>Keep the whole team in the loop.</h2>
           <p>
-            Bubble timing, alignment, and typing feedback are tuned to feel natural instead of mechanical.
+            Quick questions and clear handovers help a team stay aligned as the day changes. Try the conversation below.
           </p>
         </div>
 
@@ -2484,7 +2484,7 @@ h2 {
           <p class="eyebrow">Calendar</p>
           <h2>Month, week, and day views with workforce precision.</h2>
           <p>
-            Scroll-driven transitions preview how Skift moves from broad scheduling context into exact shift detail.
+            Move from a monthly overview to the week ahead, then look at individual shifts. Select a view to explore the scheduling concept.
           </p>
         </div>
 
@@ -2552,7 +2552,7 @@ h2 {
           <p class="eyebrow">Sales Dashboard</p>
           <h2>Performance insight, built into the home experience.</h2>
           <p>
-            Numbers rise in place, trends draw cleanly, and peak performance stands out without visual noise.
+            Understand the shape of the day: busy hours, changing demand, and the periods that deserve a closer look.
           </p>
         </div>
 
@@ -2602,10 +2602,10 @@ h2 {
               <span class="mini-label">Best Window</span>
               <strong>18:00 - 19:00</strong>
             </div>
-            <button class="detail-chip" type="button" data-sales-toggle>Detailed Analytics</button>
+            <button class="detail-chip" type="button" data-sales-toggle aria-expanded="false" aria-controls="sales-drilldown">Detailed Analytics</button>
           </div>
 
-          <div class="sales-drilldown" data-sales-drilldown>
+          <div class="sales-drilldown" id="sales-drilldown" data-sales-drilldown inert>
             <div class="sales-drilldown-header">
               <div>
                 <span class="mini-label">Detailed View</span>
@@ -2639,7 +2639,7 @@ h2 {
               <span class="mini-label">AI Scheduling</span>
               <h3>Scheduling, guided by live business reality.</h3>
               <p>
-                Skift reads sales behavior, predicts demand, and recommends labour action before service pressure appears.
+                The concept connects past sales, expected demand, and staffing decisions so managers can review a recommendation before acting.
               </p>
             </div>
             <div class="ai-hero-dashboard">
@@ -2848,22 +2848,22 @@ h2 {
               <div class="compliance-item">
                 <span class="status-dot"></span>
                 <div>
-                  <strong>Country labour rules</strong>
-                  <p>Local break and coverage logic validated.</p>
+                  <strong>Country and local rules</strong>
+                  <p>Review relevant break and coverage requirements.</p>
                 </div>
               </div>
               <div class="compliance-item">
                 <span class="status-dot"></span>
                 <div>
                   <strong>Contract hours</strong>
-                  <p>Hours stay within agreed weekly allocation.</p>
+                  <p>Compare planned hours with the agreed allocation.</p>
                 </div>
               </div>
               <div class="compliance-item">
                 <span class="status-dot"></span>
                 <div>
                   <strong>Staffing restrictions</strong>
-                  <p>Role mix and operational constraints remain intact.</p>
+                  <p>Check role mix and known operating constraints.</p>
                 </div>
               </div>
             </div>
@@ -2909,7 +2909,7 @@ h2 {
           <p class="eyebrow">Feed</p>
           <h2>Announcements and company updates that feel alive.</h2>
           <p>
-            Posts rise into view naturally, preserving a clean reading rhythm instead of overwhelming the screen.
+            Give announcements and operational updates a place the whole team can find, with room to acknowledge or discuss what changed.
           </p>
         </div>
 
@@ -2970,7 +2970,7 @@ h2 {
           <p class="eyebrow">Roles</p>
           <h2>Permission layers made visible.</h2>
           <p>
-            Spatial depth communicates authority, access, and context without relying on dense explanation.
+            Different responsibilities need different access. Explore how a manager, shift leader, and team member could each see the context they need.
           </p>
         </div>
 
@@ -3179,6 +3179,7 @@ function animateCountup(node, target, duration = 1600) {
 function startSalesPulse() {
   if (prefersReducedMotion || !salesNumber || salesLiveTimer) return;
   salesLiveTimer = window.setInterval(() => {
+    if(document.hidden || !salesSection?.classList.contains("is-active"))return;
     const increment = 120 + Math.round(Math.random() * 320);
     currentSalesValue += increment;
     salesNumber.textContent = formatSEK(currentSalesValue);
@@ -3294,9 +3295,10 @@ function applyAiState(state) {
 }
 
 function startAiCycle() {
-  if (!aiScene || !aiPressure || aiCycleTimer) return;
+  if (prefersReducedMotion || !aiScene || !aiPressure || aiCycleTimer) return;
   applyAiState(aiStates[aiStateIndex]);
   aiCycleTimer = window.setInterval(() => {
+    if(document.hidden)return;
     aiStateIndex = (aiStateIndex + 1) % aiStates.length;
     applyAiState(aiStates[aiStateIndex]);
   }, prefersReducedMotion ? 4800 : 3200);
@@ -3334,10 +3336,15 @@ if (aiScene) {
 
 salesToggle?.addEventListener("click", () => {
   salesDrilldown?.classList.add("is-open");
+  if(salesDrilldown)salesDrilldown.inert=false;
+  salesToggle?.setAttribute("aria-expanded","true");
 });
 
 salesClose?.addEventListener("click", () => {
   salesDrilldown?.classList.remove("is-open");
+  if(salesDrilldown)salesDrilldown.inert=true;
+  salesToggle?.setAttribute("aria-expanded","false");
+  salesToggle?.focus();
 });
 
 const modeButtons = Array.from(document.querySelectorAll(".mode-pill"));
@@ -3350,10 +3357,12 @@ let modeIndex = 0;
 function setCalendarMode(mode) {
   modeButtons.forEach((button) => {
     button.classList.toggle("is-active", button.dataset.mode === mode);
+    button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
   });
 
   panels.forEach((panel) => {
     panel.classList.toggle("is-visible", panel.dataset.panel === mode);
+    panel.setAttribute("aria-hidden", String(panel.dataset.panel !== mode));
   });
 
   if (!calendarScene) return;
@@ -3385,12 +3394,7 @@ modeButtons.forEach((button) => {
   });
 });
 
-if (!prefersReducedMotion) {
-  window.setInterval(() => {
-    modeIndex = (modeIndex + 1) % modeButtons.length;
-    setCalendarMode(modeButtons[modeIndex].dataset.mode);
-  }, 3400);
-}
+
 
 if (modeButtons.length > 0) {
   setCalendarMode(modeButtons[modeIndex].dataset.mode);
@@ -3401,6 +3405,7 @@ const roleCards = Array.from(document.querySelectorAll("[data-role-card]"));
 function selectRole(index) {
   roleCards.forEach((card, cardIndex) => {
     card.classList.toggle("is-front", cardIndex === index);
+    card.setAttribute("aria-pressed",String(cardIndex === index));
     const offset = cardIndex - index;
     const rotation = offset === 0 ? 0 : offset < 0 ? -11 : 11;
     const translate = offset === 0 ? 60 : -24 * Math.abs(offset);
@@ -3418,12 +3423,7 @@ roleCards.forEach((card, index) => {
 let roleIndex = 0;
 selectRole(roleIndex);
 
-if (!prefersReducedMotion) {
-  window.setInterval(() => {
-    roleIndex = (roleIndex + 1) % roleCards.length;
-    selectRole(roleIndex);
-  }, 3000);
-}
+
 
 const feedCards = document.querySelectorAll(".feed-card");
 feedCards.forEach((card) => {
@@ -3555,5 +3555,5 @@ if (messageScene) {
 }
 
     </script>
-  </body>
+  <footer class="ed-footer ed-container "><div class="ed-footer-top"><a class="ed-wordmark" href="/">✳ endrare.</a><p>Software & AI partner.<br />Led by Deependra. Based in Sweden.</p><nav aria-label="Footer navigation"><a href="/products/">Work</a><a href="/services/">Services</a><a href="/about/">Studio</a><a href="/archive/">Journal</a></nav><a class="ed-back-top" href="#" aria-label="Back to top">Back to top ↑</a></div><div class="ed-footer-signature" data-particles="wordmark" aria-hidden="true"><span class="ed-particle-fallback">endrare.</span><canvas></canvas></div><div class="ed-footer-bottom"><span>© 2026 Endrare</span><a href="mailto:hello@endrare.com">hello@endrare.com</a><span class="ed-local-time" aria-label="Current time in Sweden">Sweden · CET</span></div></footer></body>
 </html>

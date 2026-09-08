@@ -1,6 +1,6 @@
 # Endrare
 
-Personal brand website for [endrare.com](https://endrare.com).  
+Software and AI business website, with Deependra’s portfolio and journal, for [endrare.com](https://endrare.com).
 Built with React + Vite. Deployed via Cloudflare Pages.
 
 ---
@@ -27,6 +27,7 @@ npm run build
 
 The build also runs `scripts/build-seo.mjs`, which generates:
 
+- pre-rendered home content that hydrates into the interactive React experience
 - `sitemap.xml`
 - `robots.txt`
 - clean article/product routes
@@ -83,7 +84,7 @@ Current generated index pages:
 
 ```txt
 /archive/
-/archive/thinking/
+/services/
 /products/
 /start/
 /about/
@@ -92,7 +93,7 @@ Current generated index pages:
 
 ### Skift presentation
 
-The Skift item in `src/sections/SelectedSystems.jsx` links to:
+The Skift product story links to the interactive presentation:
 
 ```txt
 /presentations/skiftpresentation.html
@@ -221,3 +222,19 @@ endrare/
 - CSS Modules
 - Google Fonts (DM Sans, Instrument Serif, Fira Code)
 - Cloudflare Pages
+
+## Site structure and interaction design
+
+- `src/App.jsx` composes the home page. The home project stories and service cards use native horizontal scrolling, with drag, keyboard, and button controls.
+- `src/data/design.js` provides the shared navigation, compact footer, and interface illustrations.
+- `src/data/services.json` contains 18 services, engagement steps, and FAQs. `scripts/render-services.mjs` generates the directory and structured data.
+- `src/data/product-stories.json` and `scripts/render-products.mjs` provide eight distinct product stories and local interactive examples.
+- `src/motion.js` renders original particle motion, pauses outside the viewport or hidden tabs, and responds to reduced-motion preferences. The Services lifecycle diagram has its own pause control.
+- `src/interactions.js` handles the carousels, portfolio filters, product examples, and contact draft. Product examples are explanatory local interactions; they do not connect to production services.
+- `scripts/render-contact.mjs` generates the contact page. It prepares a mailto draft in the visitor’s email app; it does not submit or store a message.
+- `public/design.css`, `public/experience.css`, and `public/editorial.css` define the visual system and responsive layouts. Original article content and presentation interactions remain in their standalone sources.
+- `public/images/endrare-ribbon.jpg` is an original generated brand visual. Interface illustrations are identified as studies or concepts.
+
+Use `npm run preview` after building to review all generated pages. The development server serves the React home and standalone article sources; generated Services, Contact, and product routes are available in the production preview.
+
+The `.openai/hosting.json` manifest connects a separate owner-private review Site. Publishing that review Site does not update the public endrare.com Cloudflare Pages deployment.

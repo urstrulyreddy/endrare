@@ -1,0 +1,417 @@
+{
+  "services": [
+    {
+      "id": "ai-automation",
+      "title": "AI automation & connected workflows",
+      "shortTitle": "AI automation",
+      "oneLine": "Turn repetitive, multi-step work into useful workflows with clear controls.",
+      "description": "Connect the tools, decisions, and handoffs behind everyday operations. Endrare designs AI-assisted workflows that can classify information, prepare work, and take narrowly defined actions across your systems. The focus is a manageable process with explicit permissions, human approval where needed, and a clear way to inspect failures. Start with one useful workflow, then expand when the evidence supports it.",
+      "examples": [
+        "Classify incoming enquiries, draft a response, and queue the next step for approval.",
+        "Extract information from documents and prepare records for review before saving.",
+        "Coordinate a recurring operations task across email, a CRM, and internal tools."
+      ],
+      "deliverables": [
+        "Workflow map defining triggers, permitted actions, approval points, and exception paths.",
+        "Working integration with execution logs, retry handling, and an agreed fallback.",
+        "Evaluation cases and a runbook covering ownership, monitoring, and operating costs."
+      ],
+      "fit": "Useful when recurring work follows a recognisable process but still needs judgment. A strong starting point has an owner, accessible systems, and a way to compare results against the current workflow before expanding its scope."
+    },
+    {
+      "id": "knowledge-assistants",
+      "title": "Internal knowledge AI assistants",
+      "shortTitle": "Knowledge assistants",
+      "oneLine": "Make internal knowledge easier to find, with sources people can check.",
+      "description": "Build an assistant around the documents and systems your business already uses. Endrare brings selected knowledge into a searchable experience that answers questions with source references and respects the access boundaries defined for the project. The work includes content preparation, retrieval, evaluation, and upkeep so the assistant can acknowledge missing information instead of presenting an unsupported answer as fact.",
+      "examples": [
+        "Find relevant policies and explain the next step with links to the original documents.",
+        "Help new colleagues navigate onboarding guidance and frequently used resources.",
+        "Retrieve technical notes, past decisions, and product documentation from selected repositories."
+      ],
+      "deliverables": [
+        "Source inventory, access model, and content ingestion and refresh pipeline.",
+        "Assistant interface with source citations and handling for uncertain or missing answers.",
+        "Representative evaluation set and guidance for correcting content and maintaining coverage."
+      ],
+      "fit": "Useful when information is scattered across documents and tools, and people repeatedly ask similar questions. Start with a defined audience and a maintained set of sources rather than trying to index everything at once."
+    },
+    {
+      "id": "ai-customer-service",
+      "title": "AI customer service & support tools",
+      "shortTitle": "Customer support AI",
+      "oneLine": "Help customers find answers and give support staff better context.",
+      "description": "Introduce AI where it can support a better service experience: answering documented questions, gathering useful context, or drafting replies for a person to review. Endrare defines what the system may answer, what it should avoid, and when it should hand over. Customer-facing automation is evaluated against representative enquiries, with particular attention to unsupported answers, account access, and escalation paths.",
+      "examples": [
+        "Answer common product questions using approved help content and visible source links.",
+        "Summarise a support conversation and suggest a draft reply for review.",
+        "Collect troubleshooting details and route a request to the appropriate support queue."
+      ],
+      "deliverables": [
+        "Support scope covering approved topics, escalation rules, and restricted actions.",
+        "Integrated assistant or support copilot with context transfer for human handover.",
+        "Evaluation report and launch guidance covering answer quality, feedback, and monitoring."
+      ],
+      "fit": "Useful when common enquiries are well understood and reliable support content exists. Start with a limited topic set and an available human fallback, especially when conversations involve account changes, payments, or sensitive customer information."
+    },
+    {
+      "id": "ai-readiness-security",
+      "title": "AI readiness, security & data exposure reviews",
+      "shortTitle": "AI readiness & security",
+      "oneLine": "Understand an AI system’s access, data flows, and practical safeguards.",
+      "description": "Review a proposed or existing AI workflow within an agreed technical scope. Endrare maps the information it receives, where that information travels, what tools it can use, and which people can access the results. The review examines relevant configuration and misuse scenarios, then records findings, limitations, and remediation options. It is a scoped technical review, not a certification or security guarantee.",
+      "examples": [
+        "Map what an internal assistant can retrieve across documents, roles, and connected tools.",
+        "Review a proposed automation’s permissions, approval controls, logging, and third-party data paths.",
+        "Assess agreed prompt-injection and unintended disclosure scenarios in a controlled test environment."
+      ],
+      "deliverables": [
+        "Data-flow and permission map, with the review boundaries and evidence recorded.",
+        "Prioritised findings describing exposure scenarios, affected components, and recommended safeguards.",
+        "Remediation plan with accountable owners and agreed checks for any implemented changes."
+      ],
+      "fit": "Useful before connecting AI to internal knowledge, customer data, or tools that can take action. Also useful when an existing prototype needs a documented access review and a practical list of changes before wider use."
+    },
+    {
+      "id": "software-modernization",
+      "title": "Software modernization & technical improvement",
+      "shortTitle": "Modernization",
+      "oneLine": "Improve the software you rely on through manageable, evidence-led changes.",
+      "description": "Make an existing application easier to change, operate, and understand. Endrare investigates the parts causing friction, from fragile integrations and slow screens to difficult releases or ageing dependencies. Work can begin with a focused assessment, followed by incremental improvements and targeted checks. A complete rewrite is considered only when the constraints and expected value make a credible case for it.",
+      "examples": [
+        "Replace a fragile module while preserving the workflows people depend on.",
+        "Investigate a slow application and address measured bottlenecks in agreed user journeys.",
+        "Update dependencies and simplify a release process that is difficult to maintain."
+      ],
+      "deliverables": [
+        "Codebase assessment with risks, dependencies, and an ordered improvement plan.",
+        "Implemented changes with targeted regression checks and documented migration steps.",
+        "Deployment and rollback guidance, plus notes on remaining technical constraints."
+      ],
+      "fit": "Useful when a valuable application is becoming difficult to maintain or extend. Best suited to a defined source of friction, access to the code and deployment setup, and an owner who can confirm expected behaviour."
+    },
+    {
+      "id": "web-saas",
+      "title": "Web applications & SaaS development",
+      "shortTitle": "Web & SaaS",
+      "oneLine": "Build focused web products around the work your users need to complete.",
+      "description": "Develop web applications, customer portals, and SaaS products from a clear product scope through implementation and launch preparation. Endrare connects the interface, application logic, and data model around the journeys that matter first. Authentication, permissions, billing, and administration are included where the product needs them, with attention to maintainability and the practical work of running the application after launch.",
+      "examples": [
+        "Build a customer portal for managing requests, documents, and account information.",
+        "Develop a focused SaaS release with subscriptions, role-based access, and administration.",
+        "Replace a spreadsheet-based process with a purpose-built internal web application."
+      ],
+      "deliverables": [
+        "Defined user journeys, application architecture, and a prioritised release scope.",
+        "Working application with agreed integrations, permissions, and critical-path checks.",
+        "Deployment setup, source code handover, and operating and maintenance documentation."
+      ],
+      "fit": "Useful when a business process or product opportunity needs a dedicated web experience. A focused first release works best when the intended users, essential tasks, and someone responsible for product decisions are clearly identified."
+    },
+    {
+      "id": "mobile-applications",
+      "title": "Mobile application development",
+      "shortTitle": "Mobile apps",
+      "oneLine": "Create mobile experiences that make sense in the places people use them.",
+      "description": "Build mobile applications around the tasks users need to complete on their phones. Endrare helps define the platform approach, designs the core journeys, and connects the app to the services it needs. Device permissions, network interruptions, notifications, and release requirements are considered in the scope so the experience works beyond a polished prototype on a single test device.",
+      "examples": [
+        "Create a field-work app for capturing information and syncing it when a connection returns.",
+        "Build a companion app that gives customers access to an existing web service.",
+        "Prototype and implement a mobile product’s essential onboarding and repeat-use journeys."
+      ],
+      "deliverables": [
+        "Platform recommendation, core app flows, and an agreed device and OS support scope.",
+        "Application builds with backend connections and checks across selected devices and conditions.",
+        "Release preparation and handover notes covering signing, store submission, and maintenance."
+      ],
+      "fit": "Useful when the product benefits from on-the-go access, device capabilities, or a dedicated mobile experience. Start by confirming that a mobile app serves the core task better than a responsive website for its intended users."
+    },
+    {
+      "id": "cloud-devops",
+      "title": "Cloud infrastructure & DevOps",
+      "shortTitle": "Cloud & DevOps",
+      "oneLine": "Make deployments, environments, and day-to-day operations easier to manage.",
+      "description": "Set up or improve the infrastructure behind an application, from reproducible environments and automated releases to monitoring and recovery procedures. Endrare works with the platform and scale your application actually needs, keeping operating complexity visible. The scope can cover a new deployment foundation or specific gaps in an existing setup, with clear documentation for the people responsible for running it.",
+      "examples": [
+        "Create a repeatable deployment pipeline with separate development and production environments.",
+        "Add useful application monitoring and route actionable alerts to the responsible owner.",
+        "Review infrastructure usage, backups, and recovery steps for a growing application."
+      ],
+      "deliverables": [
+        "Environment and deployment configuration, captured as code where appropriate.",
+        "Monitoring, access, and secrets-handling setup within the agreed platform scope.",
+        "Operations runbook covering releases, rollback, recovery checks, and cost visibility."
+      ],
+      "fit": "Useful when releases depend on manual steps, environments drift, or operational ownership is unclear. A focused engagement can establish a manageable foundation or resolve a specific deployment, monitoring, recovery, or infrastructure-cost concern in an existing setup."
+    },
+    {
+      "id": "data-integrations",
+      "title": "Data pipelines, APIs & integrations",
+      "shortTitle": "Data & integrations",
+      "oneLine": "Connect systems and make the movement of business data understandable.",
+      "description": "Bring the right information into the right system without relying on repeated manual transfers. Endrare builds APIs, integrations, and data pipelines with attention to ownership, validation, and failure handling. The work starts by understanding what each field means and which system is authoritative, then defines how changes move, how errors are surfaced, and how people can reconcile the results.",
+      "examples": [
+        "Synchronise selected records between a CRM, an internal application, and a reporting system.",
+        "Build an API that gives a partner or frontend controlled access to application data.",
+        "Consolidate operational data into a reporting pipeline with agreed refresh and validation rules."
+      ],
+      "deliverables": [
+        "Data contracts and field mappings with source ownership and update rules.",
+        "Working APIs or pipelines with validation, failure handling, and relevant access controls.",
+        "Reconciliation checks and documentation covering monitoring, replay, and maintenance."
+      ],
+      "fit": "Useful when information is copied between tools, reporting depends on manual preparation, or systems disagree. Best results start with accessible source systems, named data owners, and agreement on which records and fields should be authoritative."
+    },
+    {
+      "id": "product-ux",
+      "title": "Product strategy & UX design",
+      "shortTitle": "Product & UX",
+      "oneLine": "Clarify what to build and make the essential user journeys easier to follow.",
+      "description": "Turn a broad idea or a frustrating product experience into a clear direction for design and development. Endrare works through user needs, business constraints, and the decisions hidden inside a feature request. Flows and prototypes make assumptions visible early, while a prioritised scope gives implementation a useful starting point. Research and usability checks can be included where access permits.",
+      "examples": [
+        "Define a first product release around the few tasks users need most.",
+        "Redesign a confusing onboarding or checkout flow and test the proposed changes.",
+        "Prototype an internal tool before committing to a larger implementation."
+      ],
+      "deliverables": [
+        "Product brief describing intended users, problems, constraints, and success measures.",
+        "Core user flows and an interactive prototype with assumptions and feedback recorded.",
+        "Prioritised implementation scope and design guidance for the next stage."
+      ],
+      "fit": "Useful before a substantial build or when an existing experience creates repeated friction. Start with access to the product context and, where possible, representative users who can help challenge assumptions and review the proposed direction."
+    },
+    {
+      "id": "agentic-ai",
+      "title": "Agentic AI & tool-connected systems",
+      "shortTitle": "Agentic AI",
+      "oneLine": "Give AI a useful role in a clearly defined process.",
+      "description": "Design assistants that can plan a bounded task, use approved tools, and return a traceable result. We connect reasoning to business systems with explicit permission boundaries, approval points, and a way to stop or recover when a task goes off course.",
+      "examples": [
+        "Prepare an account summary across approved tools",
+        "Research a question and assemble a draft with sources",
+        "Coordinate a multi-step internal request"
+      ],
+      "deliverables": [
+        "Agent and tool architecture",
+        "Permission model and approval checkpoints",
+        "Evaluation scenarios, execution traces, and recovery guidance"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "document-intelligence",
+      "title": "Document intelligence & information extraction",
+      "shortTitle": "Document intelligence",
+      "oneLine": "Turn the documents you receive into information you can use.",
+      "description": "Bring structure to invoices, forms, reports, and other recurring documents. We combine parsing, extraction, and validation with review queues so uncertain fields receive attention before information enters your operating systems.",
+      "examples": [
+        "Prepare invoice fields for finance review",
+        "Classify incoming documents and route them",
+        "Compare a document with a defined checklist"
+      ],
+      "deliverables": [
+        "Document pipeline and validation rules",
+        "Review interface for uncertain results",
+        "Quality evaluation on representative documents"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "ecommerce",
+      "title": "E-commerce & digital commerce",
+      "shortTitle": "E-commerce",
+      "oneLine": "Make discovery, purchase, and the work behind them feel connected.",
+      "description": "Build storefronts and connect the systems behind an online business. We shape browsing, checkout, inventory, and order workflows around your products, customers, and chosen commerce platform.",
+      "examples": [
+        "Launch or refresh a storefront",
+        "Connect product and inventory information",
+        "Improve checkout and post-purchase journeys"
+      ],
+      "deliverables": [
+        "Responsive storefront and commerce integrations",
+        "Configured purchase and order journeys",
+        "Release checks and platform handover"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "business-platforms",
+      "title": "Business platforms & internal tools",
+      "shortTitle": "Business platforms",
+      "oneLine": "Give your team software that fits the way the work actually happens.",
+      "description": "Replace scattered spreadsheets and manual handoffs with a shared working surface. We build role-aware dashboards, approval tools, customer portals, and operational applications around the decisions people need to make.",
+      "examples": [
+        "Create a customer or partner portal",
+        "Coordinate approvals and recurring operations",
+        "Bring reporting and actions into one dashboard"
+      ],
+      "deliverables": [
+        "Workflow and access model",
+        "Working application and system integrations",
+        "Documentation and operating guidance"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "quality-accessibility",
+      "title": "Quality engineering & accessibility",
+      "shortTitle": "Quality & accessibility",
+      "oneLine": "Make important journeys dependable for more people.",
+      "description": "Evaluate how a product behaves across realistic use, different screens, keyboard navigation, and relevant assistive technology. We address agreed accessibility, usability, and reliability issues, and add useful checks where they can prevent regressions.",
+      "examples": [
+        "Review a critical booking or purchase flow",
+        "Improve keyboard access and content structure",
+        "Test integrations and release-sensitive behaviour"
+      ],
+      "deliverables": [
+        "Prioritised findings and agreed fixes",
+        "Relevant automated and manual checks",
+        "Validation report with scope and remaining limitations"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "architecture-strategy",
+      "title": "Software architecture & technical strategy",
+      "shortTitle": "Architecture & strategy",
+      "oneLine": "Make the next technical decision with a clearer view of the whole system.",
+      "description": "Work through product constraints, existing architecture, and future needs before committing to a major change. We make alternatives concrete, explain the tradeoffs, and turn the chosen direction into a practical sequence of decisions.",
+      "examples": [
+        "Assess a build-versus-integrate decision",
+        "Plan an application or platform architecture",
+        "Review a proposed migration or integration"
+      ],
+      "deliverables": [
+        "System map and decision records",
+        "Options with dependencies and tradeoffs",
+        "Prioritised technical roadmap"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "security-hardening",
+      "title": "Application security & access hardening",
+      "shortTitle": "Application security",
+      "oneLine": "Make exposure visible and permissions deliberate.",
+      "description": "Review agreed application surfaces, dependencies, and access paths, then implement targeted improvements. The work can cover authentication, secrets handling, configuration, and data boundaries, with the scope and evidence documented throughout.",
+      "examples": [
+        "Review role and permission boundaries",
+        "Improve secrets and dependency handling",
+        "Harden an agreed application configuration"
+      ],
+      "deliverables": [
+        "Scoped technical findings",
+        "Remediation changes and verification",
+        "Access and configuration guidance"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    },
+    {
+      "id": "maintenance-performance",
+      "title": "Maintenance, performance & product evolution",
+      "shortTitle": "Maintenance & performance",
+      "oneLine": "Keep useful software useful as the business changes.",
+      "description": "Build a sustainable next chapter for an existing product. We investigate bottlenecks, address recurring issues, update agreed dependencies, and develop improvements in reviewable releases. Coverage, priorities, and response expectations are agreed with the engagement.",
+      "examples": [
+        "Investigate slow application journeys",
+        "Improve release and operating routines",
+        "Develop an ongoing product backlog"
+      ],
+      "deliverables": [
+        "Prioritised improvement plan",
+        "Reviewed updates with release notes",
+        "Agreed maintenance scope and handover guidance"
+      ],
+      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+    }
+  ],
+  "faqs": [
+    {
+      "id": "where-to-start",
+      "question": "I know the problem, but not the solution. Where do we start?",
+      "answer": "Bring the workflow, product, or technical issue you want to improve. A short description of who is affected, what happens today, and where the friction appears is enough to begin. Screenshots, sample documents, or an existing system walkthrough can help. The first step is to define a useful outcome and decide whether a scoped discovery, review, prototype, or implementation is the right next move."
+    },
+    {
+      "id": "whether-ai-is-needed",
+      "question": "Does every project need AI?",
+      "answer": "No. A straightforward integration, clearer interface, or deterministic automation may solve the problem more reliably. AI is worth considering when interpreting language or working with variable information adds practical value. The decision should account for error tolerance, available data, privacy requirements, and ongoing costs. Where uncertainty is high, a small evaluation can establish whether AI is useful before a larger build is scoped."
+    },
+    {
+      "id": "existing-systems",
+      "question": "Can you work with our existing software and tools?",
+      "answer": "Yes, an engagement can focus on an existing application, integration, or infrastructure setup. The initial assessment looks at code access, documentation, APIs, platform restrictions, and who owns the relevant systems. It then identifies what can be improved safely within the agreed scope. If an external vendor, missing access, or an unsupported dependency limits the work, that dependency is made explicit before implementation is committed."
+    },
+    {
+      "id": "data-and-access",
+      "question": "How are sensitive data and AI access handled?",
+      "answer": "The scope should identify which data is needed, who may access it, which services receive it, and what actions the system may take. Representative or redacted data can be used for early evaluation where practical. Provider settings, retention, permissions, and approval controls are reviewed for the agreed use case. Security review findings are limited to the systems and scenarios examined; formal certification and legal compliance advice are outside that review."
+    },
+    {
+      "id": "scope-budget-timeline",
+      "question": "How are scope, cost, and timing agreed?",
+      "answer": "After the initial discussion, the proposal sets out the deliverables, assumptions, dependencies, milestones, and acceptance criteria. Fees and timing depend on that scope and are agreed before the work starts. If a material unknown prevents a useful estimate, a smaller discovery or assessment can resolve it first. New requirements are discussed in terms of their effect on scope, cost, and timing before they are added."
+    },
+    {
+      "id": "delivery-and-ownership",
+      "question": "Who will I work with, and what happens after delivery?",
+      "answer": "Endrare is a software and AI partner led by Deependra, who is your direct point of contact for the engagement. The agreement defines source code and design handover, intellectual property terms, third-party accounts, and any ongoing service costs. Delivery includes the documentation and knowledge transfer specified in the scope. Maintenance or further development can be agreed separately, with response times and coverage made explicit rather than assumed."
+    }
+  ],
+  "engagementProcess": [
+    {
+      "id": "understand",
+      "stage": 1,
+      "title": "Understand the problem",
+      "description": "Walk through the current situation, the people affected, and the outcome that would make the work worthwhile. Identify constraints and whether the project is a good fit.",
+      "outputs": [
+        "Concise problem and outcome brief.",
+        "Initial constraints, dependencies, and open questions.",
+        "Recommended next step: review, discovery, prototype, or build."
+      ]
+    },
+    {
+      "id": "define",
+      "stage": 2,
+      "title": "Define a workable scope",
+      "description": "Inspect the relevant systems or journeys, resolve the important unknowns, and agree what will be delivered. Make assumptions and the limits of the engagement visible.",
+      "outputs": [
+        "Scoped proposal with deliverables, exclusions, fees, and milestones.",
+        "Acceptance criteria and a prioritised implementation plan.",
+        "Access, data, and decision-owner requirements."
+      ]
+    },
+    {
+      "id": "build",
+      "stage": 3,
+      "title": "Build and review",
+      "description": "Develop the agreed solution in reviewable increments. Use working demonstrations or concrete findings to gather feedback and resolve decisions while changes are still manageable.",
+      "outputs": [
+        "Working increments, prototypes, or review findings.",
+        "Recorded feedback, decisions, and any proposed scope changes.",
+        "Updated delivery plan as dependencies are resolved."
+      ]
+    },
+    {
+      "id": "validate",
+      "stage": 4,
+      "title": "Validate against real use",
+      "description": "Check the result against the agreed criteria and representative use cases. Examine the relevant failure paths, record limitations, and decide what is ready for release or handover.",
+      "outputs": [
+        "Validation results linked to the acceptance criteria.",
+        "Resolved issues and a documented list of remaining limitations.",
+        "Release or handover checklist with responsible owners."
+      ]
+    },
+    {
+      "id": "handover",
+      "stage": 5,
+      "title": "Launch and hand over",
+      "description": "Complete the agreed deployment or handover and walk through how to use, maintain, and extend the result. Confirm ownership and any separately agreed follow-up work.",
+      "outputs": [
+        "Deployed solution or final review package, according to scope.",
+        "Source files, documentation, and a practical handover walkthrough.",
+        "Operating responsibilities and an optional next-step backlog."
+      ]
+    }
+  ]
+}

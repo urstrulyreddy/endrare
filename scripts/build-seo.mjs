@@ -1,4 +1,13 @@
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { build } from 'vite'
+import { pathToFileURL } from 'node:url'
+import { refreshStandalone } from './site-shell.mjs'
+import { servicesBody, servicesSchema } from './render-services.mjs'
+import { productBody } from './render-products.mjs'
+import { contactBody } from './render-contact.mjs'
+import { headerMarkup, footerMarkup, projectVisual, projectCopy } from '../src/data/design.js'
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import {
   AUTHOR,
@@ -18,7 +27,7 @@ import {
 
 const root = process.cwd()
 const dist = resolve(root, 'dist')
-const today = '2026-05-13'
+const today = '2026-09-08'
 
 function escapeHtml(value = '') {
   return String(value)
@@ -237,114 +246,25 @@ function productJsonLd(product) {
     return {
       ...base,
       applicationCategory: product.applicationCategory || 'ProductivityApplication',
-      operatingSystem: 'Web, iOS, Android',
+
     }
   }
 
   return base
 }
 
-function generatedCss() {
-  return `<style>
-:root {
-  --surface-canvas: #FAFAF8;
-  --surface-base: #F5F4F0;
-  --text-primary: #0F0F0E;
-  --text-secondary: #3D3C38;
-  --text-tertiary: #6B6A65;
-  --border-subtle: #E8E7E2;
-  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, serif;
-  --font-mono: 'Fira Code', ui-monospace, monospace;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-body { margin: 0; background: var(--surface-canvas); color: var(--text-primary); font-family: var(--font-body); }
-a { color: inherit; text-decoration: none; }
-a:focus-visible { outline: 1px solid var(--text-primary); outline-offset: 3px; }
-.skip-link { position: fixed; top: 12px; left: 12px; z-index: 20; transform: translateY(-150%); background: var(--text-primary); color: var(--surface-canvas); padding: 10px 14px; font-size: 13px; }
-.skip-link:focus { transform: translateY(0); }
-.site-header { border-bottom: 1px solid var(--border-subtle); background: rgba(250,250,248,0.92); backdrop-filter: blur(14px); }
-.site-header-inner { max-width: 1160px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.wordmark { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; }
-.site-nav { display: flex; gap: 22px; flex-wrap: wrap; color: var(--text-tertiary); font-size: 13px; }
-.site-nav a:hover { color: var(--text-primary); }
-main { max-width: 1160px; margin: 0 auto; padding: 84px 24px 112px; }
-.eyebrow { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 18px; }
-h1 { max-width: 760px; margin: 0; font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 1.02; letter-spacing: -0.04em; font-weight: 400; }
-h1 em { font-family: var(--font-serif); font-weight: 400; }
-.lede { max-width: 760px; margin: 28px 0 0; font-size: 1.08rem; line-height: 1.75; color: var(--text-secondary); }
-.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--border-subtle); margin-top: 56px; }
-.card { display: block; background: var(--surface-canvas); padding: 28px; min-height: 180px; transition: background 200ms ease, transform 200ms ease; }
-.card:hover { background: var(--surface-base); transform: translateY(-2px); }
-.card-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
-.card-title { font-size: 1.1rem; line-height: 1.45; margin-bottom: 10px; }
-.card-desc { color: var(--text-secondary); line-height: 1.65; margin: 0; }
-.stack { display: grid; gap: 1px; background: var(--border-subtle); margin-top: 56px; }
-.row { background: var(--surface-canvas); padding: 26px 0; display: grid; grid-template-columns: 180px 1fr; gap: 28px; }
-.row p { margin: 0; color: var(--text-secondary); line-height: 1.7; }
-.quiet-link { color: var(--text-primary); border-bottom: 1px solid var(--border-subtle); }
-.highlights { margin-top: 48px; }
-.highlights-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
-.highlights-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--border-subtle); }
-.highlights-list li { background: var(--surface-canvas); padding: 14px 0; font-size: 0.97rem; color: var(--text-secondary); line-height: 1.6; display: flex; align-items: baseline; gap: 14px; }
-.highlights-list li::before { content: '→'; font-size: 12px; color: var(--text-tertiary); flex-shrink: 0; }
-.actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 40px; }
-.button { display: inline-block; border: 1px solid var(--text-primary); padding: 11px 18px; font-size: 13px; }
-.button.primary { background: var(--text-primary); color: var(--surface-canvas); }
-.site-footer { max-width: 1160px; margin: 0 auto; padding: 48px 24px; border-top: 1px solid var(--border-subtle); color: var(--text-tertiary); font-size: 13px; }
-@media (max-width: 760px) {
-  .site-header-inner { align-items: flex-start; flex-direction: column; }
-  .grid { grid-template-columns: 1fr; }
-  .row { grid-template-columns: 1fr; gap: 8px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .card:hover { transform: none; }
-}
-</style>`
-}
-
 function fontLinks() {
-  return `<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet" />`
+  return `<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />`
 }
-
 function generatedLayout(page, body, jsonLd, options = {}) {
-  return `<!DOCTYPE html>
-<html lang="${SITE.language}">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-${seoHead(page, jsonLd, options)}
-${fontLinks()}
-${generatedCss()}
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header">
-  <div class="site-header-inner">
-    <a class="wordmark" href="/">Endrare</a>
-    <nav class="site-nav" aria-label="Primary">
-      <a href="/start/">Start</a>
-      <a href="/archive/">Archive</a>
-      <a href="/archive/thinking/">Thinking</a>
-      <a href="/products/">Products</a>
-      <a href="/about/">About</a>
-    </nav>
-  </div>
-</header>
-<main id="main-content">
-${body}
-</main>
-<footer class="site-footer">Endrare. Building quietly.</footer>
-</body>
-</html>`
+  return `<!DOCTYPE html><html lang="${SITE.language}"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />${seoHead(page,jsonLd,options)}${fontLinks()}<link rel="stylesheet" href="/design.css" /><link rel="stylesheet" href="/experience.css" /><script type="module" src="/design.js"></script></head><body class="ed-generated ed-route-${page.id}">${headerMarkup(page.id)}<main id="main-content" class="ed-page-main ed-container">${body}</main>${footerMarkup()}</body></html>`
 }
-
+function pageHero(eyebrow, title, description) {
+ return `<div class="ed-page-hero ed-reveal"><span class="ed-eyebrow">${eyebrow}</span><h1>${title}</h1>${description ? `<p class="ed-lede">${description}</p>` : ''}</div>`
+}
+function projectCard(product) {
+ return `<a class="ed-project ed-reveal" data-work-kind="${['outliner','pose-estimation','food-tracker'].includes(product.id)?'ai':['flask-docker-aws','cloud-infrastructure'].includes(product.id)?'engineering':'products'}" href="${publicPath(product.path)}"><div class="ed-project-art ed-art-${product.id}">${projectVisual(product.id)}</div><div class="ed-project-info"><div><span class="ed-label">${projectCopy[product.id].category}</span><h3>${escapeHtml(product.title)}</h3><p>${projectCopy[product.id].line}</p></div><span class="ed-round-arrow" aria-hidden="true">↗</span></div></a>`
+}
 function redirectLayout(fromPath, toPath, page) {
   const target = publicPath(toPath)
   const canonical = canonicalUrl(toPath)
@@ -371,145 +291,37 @@ function redirectLayout(fromPath, toPath, page) {
 </html>`
 }
 
-function card(item, metaLabel) {
-  return `<a class="card" href="${escapeAttr(publicPath(item.path))}">
-  <div class="card-meta">${escapeHtml(metaLabel || item.category || item.type || '')}</div>
-  <div class="card-title">${escapeHtml(item.title)}</div>
-  <p class="card-desc">${escapeHtml(item.archiveDescription || item.description)}</p>
-</a>`
-}
-
 function renderArchivePage(page) {
-  const body = `<div class="eyebrow">Archive</div>
-<h1>Case studies, essays and <em>field notes</em></h1>
-<p class="lede">${escapeHtml(page.description)}</p>
-<div class="grid">
-${CONTENT_ITEMS.map((item) => card(item, `${item.type} / ${item.category}`)).join('\n')}
-</div>
-<div class="actions">
-  <a class="button primary" href="/products/">Explore products</a>
-  <a class="button" href="/start/">Start here</a>
-</div>`
-
-  return generatedLayout(page, body, [webPageJsonLd(page)])
+ const body = pageHero('The journal / Ideas in progress', 'Thinking, <em>out loud.</em>', 'Notes from building, working, and paying attention. The decisions behind our products, and field notes by our founder, Deependra.') + `<div class="ed-journal ed-article-list">${CONTENT_ITEMS.map((item,i)=>`<a class="ed-journal-row ed-reveal" href="${publicPath(item.path)}"><span class="ed-journal-number">0${i+1}</span><div><span class="ed-label">${escapeHtml(item.type)} · ${item.readTime} read</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.archiveDescription)}</p></div><span class="ed-round-arrow" aria-hidden="true">↗</span></a>`).join('')}</div>`
+ return generatedLayout(page,body+`<section class="ed-journal-paths"><div><span class="ed-eyebrow">Follow a thread</span><h2>Read for the question<br /><em>you’re carrying.</em></h2><p>The journal connects product decisions to the experience of building and using software. Choose a thread, or follow the links at the end of each article.</p></div><div><a href="/case-studies/why-clarity-is-a-product-decision/"><span>Product & experience</span><h3>What makes software feel clear?</h3><p>Start with clarity as a product decision, then explore how that thinking shaped Skift.</p><b>Read the perspective ↗</b></a><a href="/notes/what-working-in-sweden-taught-me-about-software/"><span>People & operations</span><h3>What does real work teach us?</h3><p>Field notes from restaurant operations in Sweden, where a software problem often begins as a human one.</p><b>Read the field notes ↗</b></a></div></section>`,[webPageJsonLd(page)])
 }
-
 function renderProductsPage(page) {
-  const body = `<div class="eyebrow">Products</div>
-<h1>Software, AI and systems <em>built from real problems</em></h1>
-<p class="lede">${escapeHtml(page.description)}</p>
-<div class="grid">
-${PRODUCT_ITEMS.map((product) => card(product, `${product.category} / ${product.status}`)).join('\n')}
-</div>
-<div class="actions">
-  <a class="button primary" href="/archive/thinking/">Read the thinking archive</a>
-  <a class="button" href="/contact/">Contact Deependra</a>
-</div>`
-
-  return generatedLayout(page, body, [webPageJsonLd(page)])
+ const order = ['skift','outliner','expense-hive','pose-estimation','food-tracker','flask-docker-aws','cloud-infrastructure','endrare']
+ const body = pageHero('Selected & collected / 08 projects', 'Made with purpose.<br /><em>Built with care.</em>', 'Software, AI, and systems shaped by real problems. A collection of active builds, research, and everyday tools.') + `<div class="ed-work-filter"><div role="group" aria-label="Filter the portfolio"><button data-work-filter="all" aria-pressed="true">All work</button><button data-work-filter="products" aria-pressed="false">Digital products</button><button data-work-filter="ai" aria-pressed="false">AI & research</button><button data-work-filter="engineering" aria-pressed="false">Engineering</button></div><span data-work-count aria-live="polite">08 projects</span></div><div class="ed-project-grid">${order.map(id=>projectCard(PRODUCT_ITEMS.find(p=>p.id===id))).join('')}</div><section class="ed-portfolio-context"><div><span class="ed-eyebrow">The work, in context</span><h2>A portfolio of questions.<br /><em>And considered responses.</em></h2></div><div><p>These projects come from different stages of Deependra’s practice: a bachelor project, thesis research, personal automations, deployed systems, and active product concepts. Each story explains where the work stands and what shaped the decisions.</p><p>Some begin with an everyday friction. Others explore a technical question. Together, they reflect the same interest in useful experiences, readable systems, and engineering that makes sense beyond the demo.</p><a class="ed-text-link" href="/services/">See how this thinking becomes a service <span>↗</span></a></div></section>`
+ return generatedLayout(page,body,[webPageJsonLd(page)])
 }
-
 function renderStartPage(page) {
-  const orderedLinks = [
-    CONTENT_ITEMS.find((item) => item.id === 'why-clarity-is-a-product-decision'),
-    CONTENT_ITEMS.find((item) => item.id === 'building-skift-from-real-operations'),
-    PRODUCT_ITEMS.find((item) => item.id === 'expense-hive'),
-    PRODUCT_ITEMS.find((item) => item.id === 'pose-estimation'),
-    PRODUCT_ITEMS.find((item) => item.id === 'food-tracker'),
-    CONTENT_ITEMS.find((item) => item.id === 'what-working-in-sweden-taught-me-about-software'),
-    PRODUCT_ITEMS.find((item) => item.id === 'outliner'),
-  ].filter(Boolean)
-
-  const body = `<div class="eyebrow">Start Here</div>
-<h1>A guided path through <em>Endrare</em></h1>
-<p class="lede">${escapeHtml(page.description)}</p>
-<div class="stack">
-${orderedLinks.map((item, index) => `<a class="row" href="${escapeAttr(publicPath(item.path))}">
-  <div class="card-meta">${String(index + 1).padStart(2, '0')} / ${escapeHtml(item.type || item.category)}</div>
-  <p><strong>${escapeHtml(item.title)}</strong><br>${escapeHtml(item.description)}</p>
-</a>`).join('\n')}
-</div>`
-
-  return generatedLayout(page, body, [webPageJsonLd(page)])
+ const orderedLinks=[CONTENT_ITEMS.find(i=>i.id==='why-clarity-is-a-product-decision'),PRODUCT_ITEMS.find(i=>i.id==='skift'),CONTENT_ITEMS.find(i=>i.id==='building-skift-from-real-operations'),PRODUCT_ITEMS.find(i=>i.id==='expense-hive'),PRODUCT_ITEMS.find(i=>i.id==='pose-estimation'),PRODUCT_ITEMS.find(i=>i.id==='food-tracker'),CONTENT_ITEMS.find(i=>i.id==='what-working-in-sweden-taught-me-about-software'),PRODUCT_ITEMS.find(i=>i.id==='outliner')]
+ const body=`<div class="ed-start-directions"><a href="/services/"><span>Have a business challenge?</span><strong>Find a service that fits ↗</strong><p>Explore AI, product development, and engineering, with practical examples of what an engagement can include.</p></a><a href="/products/"><span>Curious about the work?</span><strong>Browse the whole portfolio ↗</strong><p>Eight projects, each with its own context, decisions, and an honest view of where the work stands.</p></a></div>` + pageHero('A good place to begin','Follow the <em>curiosity.</em>','New here? This is a short path through our work, our approach, and the experiences that connect the two.') + orderedLinks.map((item,i)=>`<a class="ed-start-row ed-reveal" href="${publicPath(item.path)}"><span>0${i+1}</span><div><span class="ed-label">${escapeHtml(item.type||item.category)}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.archiveDescription||projectCopy[item.id]?.line||item.description)}</p></div><span aria-hidden="true">↗</span></a>`).join('')
+ return generatedLayout(page,body,[webPageJsonLd(page)])
 }
-
 function renderAboutPage(page) {
-  const body = `<div class="eyebrow">About</div>
-<h1>Deependra Sai Kumar Reddy builds <em>clear systems</em></h1>
-<p class="lede">${escapeHtml(page.description)}</p>
-<div class="stack">
-  <div class="row"><div class="card-meta">Focus</div><p>Software engineering, AI systems, product thinking, UX clarity, and tools shaped by real-world operational problems.</p></div>
-  <div class="row"><div class="card-meta">Archive</div><p>Endrare collects case studies, field notes, product pages, and build reflections around the systems Deependra creates.</p></div>
-</div>
-<div class="actions">
-  <a class="button primary" href="/products/">Explore products</a>
-  <a class="button" href="/archive/">Read the archive</a>
-</div>`
-
-  return generatedLayout(page, body, [webPageJsonLd(page)])
+ const body=pageHero('Software & AI partner / Led by Deependra','Different perspectives.<br /><em>Shared ambition.</em>','We build thoughtful software, useful AI, and digital experiences that make complexity feel clear. Based in Sweden. Open to what comes next.') + `<div class="ed-about-content"><div class="ed-about-image ed-reveal"><img src="/images/endrare-ribbon.jpg" alt="Endrare’s flowing periwinkle ribbon sculpture" width="1536" height="1024" /></div><div class="ed-reveal"><span class="ed-eyebrow">The studio</span><h2>Small details.<br />A wider perspective.</h2><p>Endrare brings product thinking and software engineering together around one ambition: make things that work beautifully in the real world.</p><p>We get close to a problem before choosing a solution. From the first conversation to the interface and the infrastructure underneath it, we care about making the whole experience feel clear.</p><p>Our work spans product development, AI applications, backend systems, and cloud infrastructure. The portfolio brings those disciplines together through active builds, research, and practical tools.</p></div></div><div class="ed-about-content"><div class="ed-reveal"><span class="ed-eyebrow">The founder / Deependra Sai Kumar Reddy</span><h2>A builder’s mind.<br />A human perspective.</h2><p>Endrare is led by Deependra, a software builder based in Sweden with a background in backend development, cloud infrastructure, and product thinking.</p><p>Working in fast-paced restaurant operations shaped his approach to software. Unclear schedules, scattered updates, and decisions made without context became the starting point for Skift, and a lasting interest in systems that reduce everyday friction.</p><p>The projects here reflect that journey. The journal keeps the personal perspective behind the work, through case studies and field notes written by Deependra.</p><a class="ed-button" href="/contact/">Meet your next collaboration <span aria-hidden="true">↗</span></a></div><div class="ed-about-capabilities ed-reveal"><span class="ed-eyebrow">What we bring to the table</span><ul class="ed-highlights"><li>Product thinking and practical workflow design</li><li>Backend development and API architecture</li><li>Cloud infrastructure, deployment, and observability</li><li>AI applications and useful automation</li><li>Interfaces that help people make clear decisions</li></ul><p>We’re open to product collaborations, software projects, and thoughtful partnerships. Deependra is also open to engineering opportunities.</p></div></div>`
+ return generatedLayout(page,body+`<section class="ed-studio-practice"><div><span class="ed-eyebrow">A few things we care about</span><h2>The experience is<br /><em>the whole thing.</em></h2><p>Good work is more than a screen, a model, or a deployment. It is the connection between a useful idea and the people who will rely on it.</p></div><div><article><span>01</span><h3>Make the problem visible.</h3><p>Understand the people, the existing workflow, and the constraints. A shared view of the problem gives design and engineering a useful starting point.</p></article><article><span>02</span><h3>Let evidence guide the next step.</h3><p>Use prototypes, representative examples, and clear evaluation criteria to learn where an idea works and where it still needs attention.</p></article><article><span>03</span><h3>Care for what happens afterwards.</h3><p>Documentation, ownership, observability, and maintenance belong in the conversation from the beginning. A handover should leave the next person with a system they can understand.</p></article></div></section>`,[webPageJsonLd(page)])
 }
-
 function renderContactPage(page) {
-  const body = `<div class="eyebrow">Contact</div>
-<h1>Contact <em>Deependra</em></h1>
-<p class="lede">${escapeHtml(page.description)}</p>
-<div class="actions">
-  <a class="button primary" href="mailto:hello@endrare.com">Email Deependra</a>
-  <a class="button" href="/start/">Start with the archive</a>
-</div>`
-
-  return generatedLayout(page, body, [webPageJsonLd(page)])
+ return generatedLayout(page,contactBody(),[webPageJsonLd(page)])
 }
-
 function renderProductPage(product) {
-  const jsonLd = [webPageJsonLd(product), productJsonLd(product)]
-  const related = product.relatedPages || []
-  const lede = product.longDescription || product.description
-  const highlightsHtml = product.highlights
-    ? `<div class="highlights">
-  <div class="highlights-label">What it does</div>
-  <ul class="highlights-list">
-    ${product.highlights.map((h) => `<li>${escapeHtml(h)}</li>`).join('\n    ')}
-  </ul>
-</div>`
-    : ''
-
-  const body = `<div class="eyebrow">${escapeHtml(product.category)}</div>
-<h1>${escapeHtml(product.title)}</h1>
-<p class="lede">${escapeHtml(lede)}</p>
-${highlightsHtml}
-<div class="stack">
-  <div class="row"><div class="card-meta">Status</div><p>${escapeHtml(product.status)}</p></div>
-  <div class="row"><div class="card-meta">Related</div><p>${related.map((path) => `<a class="quiet-link" href="${escapeAttr(publicPath(path))}">${escapeHtml(labelForPath(path))}</a>`).join('<br>')}</p></div>
-</div>
-<div class="actions">
-  <a class="button primary" href="/conversation.html">Start a conversation</a>
-  <a class="button" href="/products/">All products</a>
-</div>`
-
-  return generatedLayout(product, body, jsonLd)
+ return generatedLayout(product,productBody(product,labelForPath),[webPageJsonLd(product),productJsonLd(product)])
 }
-
+function renderServicesPage(page) {
+ return generatedLayout(page,servicesBody(),[webPageJsonLd(page),servicesSchema(SITE)])
+}
 function render404Page() {
-  const page = {
-    path: '/404',
-    title: 'The page is not here',
-    seoTitle: 'The Page Is Not Here — Endrare',
-    description: 'This Endrare page could not be found.',
-    type: 'website',
-  }
-  const body = `<div class="eyebrow">404</div>
-<h1>The page <em>isn’t here</em></h1>
-<p class="lede">The link may have moved. The archive, product index, and homepage are still here.</p>
-<div class="actions">
-  <a class="button primary" href="/">Go home</a>
-  <a class="button" href="/archive/">Open archive</a>
-  <a class="button" href="/products/">Open products</a>
-</div>`
-
-  return generatedLayout(page, body, [webPageJsonLd(page)], { noindex: true })
+ const page={path:'/404',title:'A little off the beaten path',seoTitle:'Page Not Found — Endrare',description:'This Endrare page could not be found.',type:'website'}
+ return generatedLayout(page,`<div class="ed-not-found"><span class="ed-eyebrow">404 / A small detour</span><h1>A little off the<br /><em>beaten path.</em></h1><p>The page you’re looking for may have moved. There’s still plenty to explore.</p><div class="ed-actions"><a class="ed-button" href="/">Take me home ↗</a><a class="ed-button ed-button-light" href="/products/">Explore the work</a></div></div>`,[webPageJsonLd(page)],{noindex:true})
 }
-
 function labelForPath(path) {
   const all = [...CONTENT_ITEMS, ...PRODUCT_ITEMS, ...PRESENTATION_PAGES, ...STANDALONE_PAGES, ...PAGE_SEO]
   const match = all.find((item) => normalizePath(item.path) === normalizePath(path))
@@ -517,12 +329,13 @@ function labelForPath(path) {
 }
 
 function copyStandalonePage(page) {
+  if (page.redirectTo) { writeRoute(page, redirectLayout(page.path, page.redirectTo, getPageById('contact'))); return }
   const source = resolve(root, page.sourceFile)
   if (!existsSync(source)) {
     throw new Error(`${page.title} file not found: ${source}`)
   }
 
-  const raw = readFileSync(source, 'utf8')
+  const raw = refreshStandalone(readFileSync(source, 'utf8'), page)
   const jsonLd = page.articleType ? [articleJsonLd(page)] : [webPageJsonLd(page)]
   const html = injectSeo(raw, page, jsonLd)
   const targets = [page.path].map(targetForPath)
@@ -545,11 +358,16 @@ function writeRoute(page, html) {
   writeFileSync(target, html)
 }
 
-function patchHomePage() {
+async function patchHomePage() {
   const home = getPageById('home')
   const target = targetForPath('/')
-  const html = readFileSync(target, 'utf8')
-  writeFileSync(target, injectSeo(html, home, [homeJsonLd()]))
+  const stage = mkdtempSync(resolve(root, 'node_modules/.endrare-prerender-'))
+  try {
+    await build({ configFile:false, logLevel:'error', build:{ ssr:resolve(root,'src/App.jsx'), outDir:stage, emptyOutDir:true, minify:false, rollupOptions:{output:{entryFileNames:'app.mjs'}} } })
+    const { default: App } = await import(pathToFileURL(resolve(stage,'app.mjs')).href)
+    const html = readFileSync(target, 'utf8').replace('<div id="root"></div>', () => `<div id="root">${renderToString(React.createElement(App))}</div>`)
+    writeFileSync(target, injectSeo(html, home, [homeJsonLd()]))
+  } finally { rmSync(stage, {recursive:true,force:true}) }
 }
 
 function writeSitemap() {
@@ -584,11 +402,12 @@ Sitemap: ${SITE.url}/sitemap.xml
 
 function writeGeneratedPages() {
   writeRoute(getPageById('archive'), renderArchivePage(getPageById('archive')))
-  writeRoute(getPageById('thinking'), renderArchivePage(getPageById('thinking')))
+  writeRoute(getPageById('thinking'), redirectLayout('/archive/thinking', '/archive', getPageById('archive')))
   writeRoute(getPageById('products'), renderProductsPage(getPageById('products')))
   writeRoute(getPageById('start'), renderStartPage(getPageById('start')))
   writeRoute(getPageById('about'), renderAboutPage(getPageById('about')))
   writeRoute(getPageById('contact'), renderContactPage(getPageById('contact')))
+  writeRoute(getPageById('services'), renderServicesPage(getPageById('services')))
 
   for (const product of PRODUCT_ITEMS) {
     writeRoute(product, renderProductPage(product))
@@ -599,12 +418,15 @@ function writeGeneratedPages() {
   writeFileSync(notFound, render404Page())
 }
 
-function main() {
+async function main() {
   if (!existsSync(dist)) {
     throw new Error('dist directory not found. Run vite build before scripts/build-seo.mjs.')
   }
 
-  patchHomePage()
+  writeFileSync(resolve(dist, 'design.js'), readFileSync(resolve(root, 'src/design.js'), 'utf8') + '\ninitDesign();\n')
+  copyFileSync(resolve(root, 'src/motion.js'), resolve(dist, 'motion.js'))
+  copyFileSync(resolve(root, 'src/interactions.js'), resolve(dist, 'interactions.js'))
+  await patchHomePage()
   for (const page of [...CONTENT_ITEMS, ...PRESENTATION_PAGES, ...STANDALONE_PAGES]) {
     copyStandalonePage(page)
   }
@@ -615,4 +437,4 @@ function main() {
   console.log('Generated SEO metadata, standalone pages, sitemap.xml, robots.txt, and clean routes')
 }
 
-main()
+await main()

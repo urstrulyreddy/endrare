@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Endrare">
-  <rect width="64" height="64" rx="10" fill="#FAFAF8"/>
-  <path d="M19 17h28v5H25v8h18v5H25v7h22v5H19V17Z" fill="#0F0F0E"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#f5f8f6"/><g stroke="#496b76" stroke-width="2" stroke-linecap="round"><path d="M32 11v42M11 32h42M17 17l30 30M17 47l30-30"/><circle cx="32" cy="32" r="10" fill="#f5f8f6"/></g></svg>
