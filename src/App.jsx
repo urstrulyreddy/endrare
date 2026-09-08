@@ -4,8 +4,14 @@ import { headerMarkup, footerMarkup } from './data/design'
 import { initDesign } from './design'
 import ServicesRail from './components/ServicesRail'
 import WorkStories from './components/WorkStories'
+import Playground from './sections/Playground'
 const Arrow = () => <span aria-hidden="true">↗</span>
-export default function App() {
+export default function App({ pathname = typeof window !== 'undefined' ? window.location.pathname : '/' } = {}) {
+  if (pathname.startsWith('/playground')) return <Playground />
+  return <HomePage />
+}
+
+function HomePage() {
   useEffect(() => initDesign(), [])
   return <><div className="ed-shell" dangerouslySetInnerHTML={{ __html: headerMarkup('home') }} /><main id="main-content" className="ed-home">
     <section className="ed-landing" data-particles="landing" aria-labelledby="landing-title">

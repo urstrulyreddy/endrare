@@ -29,6 +29,18 @@ export const AUTHOR = {
 
 export const PAGE_SEO = [
   {
+    id: 'playground',
+    path: '/playground',
+    title: 'Playground',
+    seoTitle: 'Endrare Playground — Build Interactive Website Ideas',
+    description: 'Create, edit, and animate responsive website directions in the Endrare Playground.',
+    type: 'website',
+    changefreq: 'monthly',
+    priority: '0.8',
+    dateModified: '2026-09-08',
+    keywords: ['Endrare Playground', 'website builder', 'interactive design', 'motion design'],
+  },
+  {
     id: 'services', path: '/services', title: 'Services',
     seoTitle: 'Software Development & AI Services — Endrare Studio',
     description: 'Explore Endrare’s AI automation, internal assistants, AI security reviews, web and mobile development, software modernization, cloud engineering, and product design services.',

@@ -360,13 +360,21 @@ function writeRoute(page, html) {
 
 async function patchHomePage() {
   const home = getPageById('home')
+  const playground = getPageById('playground')
   const target = targetForPath('/')
   const stage = mkdtempSync(resolve(root, 'node_modules/.endrare-prerender-'))
   try {
     await build({ configFile:false, logLevel:'error', build:{ ssr:resolve(root,'src/App.jsx'), outDir:stage, emptyOutDir:true, minify:false, rollupOptions:{output:{entryFileNames:'app.mjs'}} } })
     const { default: App } = await import(pathToFileURL(resolve(stage,'app.mjs')).href)
-    const html = readFileSync(target, 'utf8').replace('<div id="root"></div>', () => `<div id="root">${renderToString(React.createElement(App))}</div>`)
-    writeFileSync(target, injectSeo(html, home, [homeJsonLd()]))
+    const template = readFileSync(target, 'utf8')
+    const renderRoute = (page, pathname, jsonLd) => {
+      const html = template.replace('<div id="root"></div>', `<div id="root">${renderToString(React.createElement(App, { pathname }))}</div>`)
+      const routeTarget = targetForPath(page.path)
+      ensureDir(routeTarget)
+      writeFileSync(routeTarget, injectSeo(html, page, jsonLd))
+    }
+    renderRoute(home, '/', [homeJsonLd()])
+    if (playground) renderRoute(playground, playground.path, [webPageJsonLd(playground)])
   } finally { rmSync(stage, {recursive:true,force:true}) }
 }
 
