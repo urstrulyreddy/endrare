@@ -196,7 +196,7 @@
         "Permission model and approval checkpoints",
         "Evaluation scenarios, execution traces, and recovery guidance"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when a task spans several tools and the steps are clear enough to delegate, but someone still needs to approve the important actions. Start with one bounded task, explicit permissions, and a log you can review."
     },
     {
       "id": "document-intelligence",
@@ -214,7 +214,7 @@
         "Review interface for uncertain results",
         "Quality evaluation on representative documents"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when people spend hours reading, copying, or checking information from invoices, forms, contracts, or reports. Start with one document type, a sample set, and a clear rule for what needs human review."
     },
     {
       "id": "ecommerce",
@@ -232,7 +232,7 @@
         "Configured purchase and order journeys",
         "Release checks and platform handover"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when you are launching a shop, or when an existing one loses customers at checkout, inventory, or delivery updates. Start with the purchase flow that matters most and the systems it already depends on."
     },
     {
       "id": "business-platforms",
@@ -250,7 +250,7 @@
         "Working application and system integrations",
         "Documentation and operating guidance"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when the business runs on spreadsheets, email threads, and manual updates that no longer keep up. Start with one workflow, the people who own it, and the information they need to see in one place."
     },
     {
       "id": "quality-accessibility",
@@ -268,7 +268,7 @@
         "Relevant automated and manual checks",
         "Validation report with scope and remaining limitations"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when releases feel risky, bugs reach customers, or parts of the product are hard to use with a keyboard or screen reader. Start with the most important user flows and agree what good enough means for each."
     },
     {
       "id": "architecture-strategy",
@@ -286,7 +286,7 @@
         "Options with dependencies and tradeoffs",
         "Prioritised technical roadmap"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful before a rebuild, a new product, or a decision that is expensive to reverse. Start with the goals, the current system, and the constraints, and leave with a plan the team can follow."
     },
     {
       "id": "security-hardening",
@@ -304,7 +304,7 @@
         "Remediation changes and verification",
         "Access and configuration guidance"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when you are unsure who can access what, or before connecting new tools, AI, or partners to sensitive data. Start with the critical systems and accounts, then close the gaps that matter most first."
     },
     {
       "id": "maintenance-performance",
@@ -322,7 +322,7 @@
         "Reviewed updates with release notes",
         "Agreed maintenance scope and handover guidance"
       ],
-      "fit": "Start with a defined outcome, access to the relevant systems, and an owner for the work. We agree the boundaries, deliverables, and validation criteria before implementation."
+      "fit": "Useful when software is live and needs someone to keep it fast, secure, and up to date. Start with a review of the current state, then agree a regular rhythm for fixes, updates, and improvements."
     }
   ],
   "faqs": [

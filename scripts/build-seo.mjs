@@ -6,7 +6,7 @@ import { refreshStandalone } from './site-shell.mjs'
 import { servicesBody, servicesSchema } from './render-services.mjs'
 import { productBody } from './render-products.mjs'
 import { contactBody } from './render-contact.mjs'
-import { headerMarkup, footerMarkup, projectVisual, projectCopy } from '../src/data/design.js'
+import { headerMarkup, footerMarkup, projectVisual, projectCopy, clientWorkMarkup } from '../src/data/design.js'
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import {
@@ -27,7 +27,7 @@ import {
 
 const root = process.cwd()
 const dist = resolve(root, 'dist')
-const today = '2026-09-08'
+const today = new Date().toISOString().slice(0, 10)
 
 function escapeHtml(value = '') {
   return String(value)
@@ -94,14 +94,16 @@ ${keywords ? `<meta name="keywords" content="${escapeAttr(keywords)}" />` : ''}
 <meta name="theme-color" content="${escapeAttr(SITE.themeColor)}" />
 <link rel="canonical" href="${escapeAttr(canonical)}" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="apple-touch-icon" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta property="og:title" content="${escapeAttr(title)}" />
 <meta property="og:description" content="${escapeAttr(description)}" />
 <meta property="og:type" content="${escapeAttr(ogType)}" />
 <meta property="og:url" content="${escapeAttr(canonical)}" />
 <meta property="og:site_name" content="${escapeAttr(SITE.name)}" />
+<meta property="og:locale" content="en_GB" />
 <meta property="og:image" content="${escapeAttr(image)}" />
+${image.endsWith('.png') ? '<meta property="og:image:type" content="image/png" />\n<meta property="og:image:width" content="1200" />\n<meta property="og:image:height" content="630" />' : ''}
 <meta property="og:image:alt" content="${escapeAttr(imageAlt)}" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${escapeAttr(title)}" />
@@ -159,7 +161,26 @@ function personJsonLd() {
     name: AUTHOR.name,
     url: SITE.url,
     jobTitle: AUTHOR.jobTitle,
+    worksFor: { '@id': `${SITE.url}/#organization` },
     knowsAbout: AUTHOR.knowsAbout,
+  }
+}
+
+function organizationJsonLd() {
+  return {
+    '@type': ['Organization', 'ProfessionalService'],
+    '@id': `${SITE.url}/#organization`,
+    name: SITE.name,
+    url: `${SITE.url}/`,
+    logo: absoluteUrl('/icon-512.png'),
+    image: absoluteUrl(SITE.defaultImage),
+    email: SITE.email,
+    description: SITE.defaultDescription,
+    founder: { '@id': `${SITE.url}/#person` },
+    address: { '@type': 'PostalAddress', addressCountry: 'SE' },
+    areaServed: [{ '@type': 'Country', name: 'Sweden' }, 'Europe'],
+    knowsAbout: SITE.services,
+    contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: SITE.email, availableLanguage: ['English'] },
   }
 }
 
@@ -170,8 +191,7 @@ function websiteJsonLd() {
     name: SITE.name,
     url: SITE.url,
     description: SITE.defaultDescription,
-    author: { '@id': `${SITE.url}/#person` },
-    publisher: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': `${SITE.url}/#organization` },
     inLanguage: SITE.language,
   }
 }
@@ -185,8 +205,7 @@ function webPageJsonLd(page) {
     name: titleFor(page),
     description: page.description || SITE.defaultDescription,
     isPartOf: { '@id': `${SITE.url}/#website` },
-    author: { '@id': `${SITE.url}/#person` },
-    publisher: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': `${SITE.url}/#organization` },
     inLanguage: SITE.language,
   }
 }
@@ -194,7 +213,7 @@ function webPageJsonLd(page) {
 function homeJsonLd() {
   return {
     '@context': 'https://schema.org',
-    '@graph': [websiteJsonLd(), personJsonLd()],
+    '@graph': [organizationJsonLd(), websiteJsonLd(), personJsonLd()],
   }
 }
 
@@ -211,9 +230,10 @@ function articleJsonLd(item) {
       url: SITE.url,
     },
     publisher: {
-      '@type': 'Person',
-      name: SITE.author,
-      url: SITE.url,
+      '@type': 'Organization',
+      name: SITE.name,
+      url: `${SITE.url}/`,
+      logo: { '@type': 'ImageObject', url: absoluteUrl('/icon-512.png') },
     },
     datePublished: item.datePublished,
     dateModified: item.dateModified || item.datePublished,
@@ -297,7 +317,8 @@ function renderArchivePage(page) {
 }
 function renderProductsPage(page) {
  const order = ['skift','outliner','expense-hive','pose-estimation','food-tracker','flask-docker-aws','cloud-infrastructure','endrare']
- const body = pageHero('Selected & collected / 08 projects', 'Made with purpose.<br /><em>Built with care.</em>', 'Software, AI, and systems shaped by real problems. A collection of active builds, research, and everyday tools.') + `<div class="ed-work-filter"><div role="group" aria-label="Filter the portfolio"><button data-work-filter="all" aria-pressed="true">All work</button><button data-work-filter="products" aria-pressed="false">Digital products</button><button data-work-filter="ai" aria-pressed="false">AI & research</button><button data-work-filter="engineering" aria-pressed="false">Engineering</button></div><span data-work-count aria-live="polite">08 projects</span></div><div class="ed-project-grid">${order.map(id=>projectCard(PRODUCT_ITEMS.find(p=>p.id===id))).join('')}</div><section class="ed-portfolio-context"><div><span class="ed-eyebrow">The work, in context</span><h2>A portfolio of questions.<br /><em>And considered responses.</em></h2></div><div><p>These projects come from different stages of Deependra’s practice: a bachelor project, thesis research, personal automations, deployed systems, and active product concepts. Each story explains where the work stands and what shaped the decisions.</p><p>Some begin with an everyday friction. Others explore a technical question. Together, they reflect the same interest in useful experiences, readable systems, and engineering that makes sense beyond the demo.</p><a class="ed-text-link" href="/services/">See how this thinking becomes a service <span>↗</span></a></div></section>`
+ const count = String(order.length).padStart(2, '0')
+ const body = pageHero(`Client work & products / ${count} projects`, 'Made with purpose.<br /><em>Built with care.</em>', 'Software, AI, and systems shaped by real problems. Client work, active builds, research, and everyday tools.') + clientWorkMarkup() + `<div class="ed-work-filter"><div role="group" aria-label="Filter the portfolio"><button data-work-filter="all" aria-pressed="true">All work</button><button data-work-filter="products" aria-pressed="false">Digital products</button><button data-work-filter="ai" aria-pressed="false">AI & research</button><button data-work-filter="engineering" aria-pressed="false">Engineering</button></div><span data-work-count aria-live="polite">${count} projects</span></div><div class="ed-project-grid">${order.map(id=>projectCard(PRODUCT_ITEMS.find(p=>p.id===id))).join('')}</div><section class="ed-portfolio-context"><div><span class="ed-eyebrow">The work, in context</span><h2>A portfolio of questions.<br /><em>And considered responses.</em></h2></div><div><p>Alongside client work, these projects come from different stages of Deependra’s practice: a bachelor project, thesis research, personal automations, deployed systems, and active product concepts. Each story explains where the work stands and what shaped the decisions.</p><p>Some begin with an everyday friction. Others explore a technical question. Together, they reflect the same interest in useful experiences, readable systems, and engineering that makes sense beyond the demo.</p><a class="ed-text-link" href="/services/">See how this thinking becomes a service <span>↗</span></a></div></section>`
  return generatedLayout(page,body,[webPageJsonLd(page)])
 }
 function renderStartPage(page) {
@@ -306,7 +327,7 @@ function renderStartPage(page) {
  return generatedLayout(page,body,[webPageJsonLd(page)])
 }
 function renderAboutPage(page) {
- const body=pageHero('Software & AI partner / Led by Deependra','Different perspectives.<br /><em>Shared ambition.</em>','We build thoughtful software, useful AI, and digital experiences that make complexity feel clear. Based in Sweden. Open to what comes next.') + `<div class="ed-about-content"><div class="ed-about-image ed-reveal"><img src="/images/endrare-ribbon.jpg" alt="Endrare’s flowing periwinkle ribbon sculpture" width="1536" height="1024" /></div><div class="ed-reveal"><span class="ed-eyebrow">The studio</span><h2>Small details.<br />A wider perspective.</h2><p>Endrare brings product thinking and software engineering together around one ambition: make things that work beautifully in the real world.</p><p>We get close to a problem before choosing a solution. From the first conversation to the interface and the infrastructure underneath it, we care about making the whole experience feel clear.</p><p>Our work spans product development, AI applications, backend systems, and cloud infrastructure. The portfolio brings those disciplines together through active builds, research, and practical tools.</p></div></div><div class="ed-about-content"><div class="ed-reveal"><span class="ed-eyebrow">The founder / Deependra Sai Kumar Reddy</span><h2>A builder’s mind.<br />A human perspective.</h2><p>Endrare is led by Deependra, a software builder based in Sweden with a background in backend development, cloud infrastructure, and product thinking.</p><p>Working in fast-paced restaurant operations shaped his approach to software. Unclear schedules, scattered updates, and decisions made without context became the starting point for Skift, and a lasting interest in systems that reduce everyday friction.</p><p>The projects here reflect that journey. The journal keeps the personal perspective behind the work, through case studies and field notes written by Deependra.</p><a class="ed-button" href="/contact/">Meet your next collaboration <span aria-hidden="true">↗</span></a></div><div class="ed-about-capabilities ed-reveal"><span class="ed-eyebrow">What we bring to the table</span><ul class="ed-highlights"><li>Product thinking and practical workflow design</li><li>Backend development and API architecture</li><li>Cloud infrastructure, deployment, and observability</li><li>AI applications and useful automation</li><li>Interfaces that help people make clear decisions</li></ul><p>We’re open to product collaborations, software projects, and thoughtful partnerships. Deependra is also open to engineering opportunities.</p></div></div>`
+ const body=pageHero('Software & AI partner / Led by Deependra','Different perspectives.<br /><em>Shared ambition.</em>','We build thoughtful software, useful AI, and digital experiences that make complexity feel clear. Based in Sweden, working with businesses that want software done properly.') + `<div class="ed-about-content"><div class="ed-about-image ed-reveal"><img src="/images/endrare-ribbon.jpg" alt="Endrare’s flowing periwinkle ribbon sculpture" width="1536" height="1024" /></div><div class="ed-reveal"><span class="ed-eyebrow">The studio</span><h2>Small details.<br />A wider perspective.</h2><p>Endrare brings product thinking and software engineering together around one ambition: make things that work beautifully in the real world.</p><p>We get close to a problem before choosing a solution. From the first conversation to the interface and the infrastructure underneath it, we care about making the whole experience feel clear.</p><p>Our work spans product development, AI applications, backend systems, and cloud infrastructure. The portfolio brings those disciplines together through active builds, research, and practical tools.</p></div></div><div class="ed-about-content"><div class="ed-reveal"><span class="ed-eyebrow">The founder / Deependra Sai Kumar Reddy</span><h2>A builder’s mind.<br />A human perspective.</h2><p>Endrare is led by Deependra, a software builder based in Sweden with a background in backend development, cloud infrastructure, and product thinking.</p><p>Working in fast-paced restaurant operations shaped his approach to software. Unclear schedules, scattered updates, and decisions made without context became the starting point for Skift, and a lasting interest in systems that reduce everyday friction.</p><p>The projects here reflect that path. The journal keeps the personal perspective behind the work, through case studies and field notes written by Deependra.</p><a class="ed-button" href="/contact/">Talk about your project <span aria-hidden="true">↗</span></a></div><div class="ed-about-capabilities ed-reveal"><span class="ed-eyebrow">What we bring to the table</span><ul class="ed-highlights"><li>Product thinking and practical workflow design</li><li>Backend development and API architecture</li><li>Cloud infrastructure, deployment, and observability</li><li>AI applications and useful automation</li><li>Interfaces that help people make clear decisions</li></ul><p>We take on websites, apps, AI automation, and software projects for businesses, from a first prototype to ongoing support.</p><a class="ed-text-link" href="/contact/">Start a project <span aria-hidden="true">↗</span></a></div></div>`
  return generatedLayout(page,body+`<section class="ed-studio-practice"><div><span class="ed-eyebrow">A few things we care about</span><h2>The experience is<br /><em>the whole thing.</em></h2><p>Good work is more than a screen, a model, or a deployment. It is the connection between a useful idea and the people who will rely on it.</p></div><div><article><span>01</span><h3>Make the problem visible.</h3><p>Understand the people, the existing workflow, and the constraints. A shared view of the problem gives design and engineering a useful starting point.</p></article><article><span>02</span><h3>Let evidence guide the next step.</h3><p>Use prototypes, representative examples, and clear evaluation criteria to learn where an idea works and where it still needs attention.</p></article><article><span>03</span><h3>Care for what happens afterwards.</h3><p>Documentation, ownership, observability, and maintenance belong in the conversation from the beginning. A handover should leave the next person with a system they can understand.</p></article></div></section>`,[webPageJsonLd(page)])
 }
 function renderContactPage(page) {

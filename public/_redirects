@@ -13,7 +13,9 @@
 /products/expense-hive /products/expense-hive/ 301
 /products/pose-estimation /products/pose-estimation/ 301
 /products/food-tracker /products/food-tracker/ 301
-/products/outliner /products/outliner/ 301
+/products/outlier /products/outlier/ 301
+/products/outliner /products/outlier/ 301
+/products/outliner/ /products/outlier/ 301
 /products/flask-docker-aws /products/flask-docker-aws/ 301
 /products/cloud-infrastructure /products/cloud-infrastructure/ 301
 /products/skift /products/skift/ 301
@@ -44,4 +46,5 @@
 /backend-invisible/ /notes/backend-systems-should-feel-invisible/ 301
 
 /services /services/ 301
+/playground /playground/ 301
 /conversation.html /contact/ 301

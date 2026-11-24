@@ -131,7 +131,7 @@ export default function Playground() {
   }, [])
   const filtered = useMemo(() => modules.filter((entry) => (category === 'All modules' || category === entry.category) && `${entry.name} ${entry.category} ${entry.description}`.toLowerCase().includes(query.toLowerCase())), [query, category])
 
-  return <main id="main-content" className={`${s.app} ${preview ? s.presenting : ''}`}>
+  return <main id="main-content" className={`${s.app} ${preview ? s.presenting : ''}`}><h1 className="ed-sr-only">Endrare Playground: design and animate website ideas</h1>
     <header className={s.topbar}>
       <a href="/" className={s.brand} aria-label="Back to Endrare"><span aria-hidden="true">✳</span><b>endrare.</b></a><span className={s.topDivider} />
       <div className={s.projectIdentity}><span>PLAYGROUND <span className={s.beta}>BETA</span></span><input aria-label="Project name" value={doc.name} maxLength={120} onChange={(event) => dispatch({ type: 'document', patch: { name: event.target.value }, group: 'project-name' })} onBlur={endEdit} /></div>

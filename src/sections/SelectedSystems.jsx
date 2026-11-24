@@ -13,7 +13,7 @@ const SYSTEMS = [
   {
     tag: 'NLP · Automation',
     title: 'Outlier',
-    href: '/products/outliner/',
+    href: '/products/outlier/',
     desc: 'AI-driven system for generating context-aware responses using prompt-based logic and interaction history. Focused on improving relevance, reducing repetitive manual input, and creating a more adaptive response workflow.',
     tech: ['Python', 'NLP', 'Prompt Eng.'],
   },

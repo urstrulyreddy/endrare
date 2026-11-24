@@ -5,12 +5,14 @@ export const SITE = {
   author: 'Deependra Sai Kumar Reddy',
   authorShort: 'Deependra',
   authorUrl: 'https://endrare.com',
+  email: 'hello@endrare.com',
+  services: ['Web development', 'Mobile app development', 'AI automation', 'AI assistants', 'AI security reviews', 'Software modernization', 'Cloud engineering', 'Product design'],
   themeColor: '#fafaf8',
-  defaultImage: '/og/endrare-og.svg',
-  defaultImageAlt: 'Endrare wordmark on a warm off-white background',
-  defaultTitle: 'Endrare — Thoughtful Software, AI & Digital Experiences',
+  defaultImage: '/og/endrare-og.png',
+  defaultImageAlt: 'Endrare: Good ideas. Extraordinarily built. Software, AI and digital products, Sweden.',
+  defaultTitle: 'Endrare — Software & AI Studio in Sweden',
   defaultDescription:
-    'Endrare is an software and AI partner led by Deependra. We build thoughtful software, useful AI, and digital experiences. Explore the work, the thinking, and opportunities to build something meaningful together.',
+    'Endrare is a software and AI studio in Sweden. We build websites, apps, AI automation, and reliable systems for businesses. Led by Deependra.',
 }
 
 export const AUTHOR = {
@@ -43,7 +45,7 @@ export const PAGE_SEO = [
   {
     id: 'services', path: '/services', title: 'Services',
     seoTitle: 'Software Development & AI Services — Endrare Studio',
-    description: 'Explore Endrare’s AI automation, internal assistants, AI security reviews, web and mobile development, software modernization, cloud engineering, and product design services.',
+    description: 'Software and AI services from Endrare: AI automation, internal assistants, AI security reviews, websites, mobile apps, modernization, and cloud engineering.',
     type: 'website', changefreq: 'monthly', priority: '0.9', dateModified: '2026-09-08',
     keywords: ['AI automation', 'internal AI assistant', 'AI security review', 'web development', 'mobile app development', 'software modernization', 'cloud engineering', 'Endrare'],
   },
@@ -58,26 +60,26 @@ export const PAGE_SEO = [
     priority: '1.0',
     keywords: [
       'Endrare',
+      'software studio Sweden',
+      'AI automation',
+      'web development',
+      'app development',
+      'software development Sweden',
+      'AI consultant',
       'Deependra',
-      'software builder',
-      'product thinking',
-      'AI projects',
-      'software engineering',
-      'systems design',
-      'field notes',
     ],
   },
   {
     id: 'archive',
     path: '/archive',
-    title: 'Archive',
-    seoTitle: 'Archive — Endrare',
+    title: 'Journal',
+    seoTitle: 'Journal — Case Studies, Essays and Field Notes | Endrare',
     description:
-      'Explore Endrare\'s archive of case studies, essays, field notes, product ideas, AI projects, software systems, and build reflections.',
+      'Case studies, essays, and field notes from Endrare on building software, applied AI, product clarity, and reliable systems.',
     type: 'website',
     changefreq: 'weekly',
     priority: '0.8',
-    keywords: ['Endrare archive', 'case studies', 'essays', 'field notes', 'software systems'],
+    keywords: ['Endrare journal', 'case studies', 'essays', 'field notes', 'software systems'],
   },
   {
     id: 'thinking',
@@ -95,14 +97,14 @@ export const PAGE_SEO = [
   {
     id: 'products',
     path: '/products',
-    title: 'Products',
-    seoTitle: 'Products — Software, AI and Systems Built by Deependra',
+    title: 'Work',
+    seoTitle: 'Work — Client Projects, Products and AI Systems | Endrare',
     description:
-      'Explore software products, AI systems, personal tools, and research projects built by Deependra, including Expense Hive, Pose Estimation, Food Tracker, Outlier, Skift, and Endrare.',
+      'Client work and products from Endrare: websites, AI systems, mobile apps, and cloud engineering, including Dina Hantverkare, Skift, Outlier, and Expense Hive.',
     type: 'website',
     changefreq: 'weekly',
     priority: '0.85',
-    keywords: ['software products', 'AI systems', 'Expense Hive', 'Pose Estimation', 'Food Tracker', 'Outlier', 'Skift'],
+    keywords: ['client work', 'software products', 'AI systems', 'Dina Hantverkare', 'Expense Hive', 'Pose Estimation', 'Food Tracker', 'Outlier', 'Skift'],
   },
   {
     id: 'start',
@@ -122,23 +124,23 @@ export const PAGE_SEO = [
     title: 'About Endrare',
     seoTitle: 'About Endrare — Software, AI & the People Behind the Work',
     description:
-      'Meet Endrare, an software and AI partner led by Deependra Sai Kumar Reddy in Sweden. Thoughtful software, applied AI, product thinking, and reliable systems.',
+      'Meet Endrare, a software and AI studio in Sweden led by Deependra Sai Kumar Reddy. Thoughtful software, applied AI, product thinking, and reliable systems.',
     type: 'website',
     changefreq: 'monthly',
     priority: '0.7',
-    keywords: ['Deependra Sai Kumar Reddy', 'software builder', 'AI', 'product thinking', 'systems'],
+    keywords: ['Endrare', 'Deependra Sai Kumar Reddy', 'software studio Sweden', 'AI', 'product thinking', 'systems'],
   },
   {
     id: 'contact',
     path: '/contact',
     title: 'Contact',
-    seoTitle: 'Contact — Endrare',
+    seoTitle: 'Contact Endrare — Start a Software or AI Project',
     description:
-      'Contact Endrare for software projects, product collaboration, AI applications, and thoughtful partnerships. Connect with our founder, Deependra.',
+      'Contact Endrare about a website, app, AI automation, or software project. Email hello@endrare.com and hear back from founder Deependra.',
     type: 'website',
     changefreq: 'monthly',
     priority: '0.6',
-    keywords: ['contact Deependra', 'software roles', 'AI projects', 'product collaboration'],
+    keywords: ['contact Endrare', 'hire software developer', 'AI projects', 'website project'],
   },
 ]
 
@@ -158,7 +160,7 @@ export const CONTENT_ITEMS = [
     title: 'Building Skift from real operations',
     seoTitle: 'Building Skift from Real Operations — Endrare Case Study',
     description:
-      'A case study on building Skift from real operations: scheduling, communication, sales-aware planning, AI-assisted decisions, and workforce systems shaped by restaurant work.',
+      'How Skift was built from real restaurant operations: scheduling, team communication, sales-aware planning, and AI-assisted decisions.',
     category: 'Product / Operations / AI',
     datePublished: '2026-05-13',
     dateModified: '2026-05-13',
@@ -192,7 +194,7 @@ export const CONTENT_ITEMS = [
     title: 'What working in Sweden taught me about software',
     seoTitle: 'What Working in Sweden Taught Me About Software — Endrare',
     description:
-      'A field note on how working in Sweden shaped Deependra\'s thinking about software, trust, timing, documentation, boundaries, social friction, and systems that reduce human effort.',
+      'A field note on what working in Sweden taught Deependra about software: trust, timing, documentation, and systems that reduce effort.',
     category: 'Work / Culture / Systems / Product Thinking',
     datePublished: '2026-05-13',
     dateModified: '2026-05-13',
@@ -225,7 +227,7 @@ export const CONTENT_ITEMS = [
     title: 'Why clarity is a product decision',
     seoTitle: 'Why Clarity Is a Product Decision — Endrare',
     description:
-      'An essay on why reducing cognitive load is not only a design problem but an engineering problem, connecting Expense Hive, Food Tracker, Pose Estimation, Skift, and Endrare.',
+      'Why reducing cognitive load is an engineering problem as much as a design one, with lessons from Expense Hive, Food Tracker, Skift, and Endrare.',
     category: 'Product Thinking / UX / Engineering',
     datePublished: '2026-05-13',
     dateModified: '2026-05-13',
@@ -260,7 +262,7 @@ export const CONTENT_ITEMS = [
     title: 'Backend systems should feel invisible',
     seoTitle: 'Backend Systems Should Feel Invisible — Endrare',
     description:
-      'A field note on backend systems that feel invisible: infrastructure, APIs, reliability, naming, error handling, and product experiences that work without adding burden.',
+      'A note on backend systems that feel invisible: infrastructure, APIs, reliability, naming, and error handling that work without adding burden.',
     category: 'Backend / Infrastructure / Engineering',
     datePublished: '2026-05-22',
     dateModified: '2026-05-22',
@@ -317,7 +319,7 @@ export const STANDALONE_PAGES = [
     title: 'Conversation',
     seoTitle: 'Conversation — Endrare',
     description:
-      'Start a thoughtful conversation with Deependra about software, AI projects, product collaboration, case studies, or serious professional opportunities.',
+      'Start a conversation with Endrare about a software, website, or AI project.',
     category: 'Contact / Collaboration',
     datePublished: '2026-05-13',
     dateModified: '2026-05-13',
@@ -337,7 +339,7 @@ export const PRODUCT_ITEMS = [
     title: 'Expense Hive',
     seoTitle: 'Expense Hive — Group Expense Splitting App by Deependra',
     description:
-      'Expense Hive is a mobile app built during bachelor\'s to instantly log expenses, split bills between groups, add reminders, use group chat, and track weekly or monthly spending.',
+      'Expense Hive is a mobile app for shared expenses: log costs, split bills in groups, send reminders, chat, and track weekly or monthly spending.',
     longDescription:
       'A mobile app built during the bachelor\'s to solve the real friction of shared group expenses. Instead of informal IOUs or shared spreadsheets, Expense Hive gives groups a single place to log costs, split bills automatically, chase reminders, and keep the conversation attached to the money.',
     highlights: [
@@ -361,7 +363,7 @@ export const PRODUCT_ITEMS = [
     title: 'Pose Estimation',
     seoTitle: 'Pose Estimation for Sports Movement Analysis — Endrare',
     description:
-      'A thesis project using pose-estimation machine learning to analyze athlete movement and provide coaches with real-time body, leg, ankle, and movement attributes for injury-risk awareness.',
+      'Thesis research using pose-estimation machine learning to analyse athlete movement from video and give coaches readable data on injury risk.',
     longDescription:
       'A thesis project applying computer vision and machine learning to analyse athlete movement from standard video input. The system extracts joint positions frame-by-frame using pose estimation, producing interpretable movement data for coaches and analysts — surfacing patterns the human eye misses under pressure or speed.',
     highlights: [
@@ -384,7 +386,7 @@ export const PRODUCT_ITEMS = [
     title: 'Food Tracker',
     seoTitle: 'Automated Food, Gym and Daily Activity Tracker — Endrare',
     description:
-      'A personal automation tool for logging food, gym, and daily activity using natural language input, then breaking food entries into nutritional values automatically.',
+      'A personal automation tool that logs food, gym, and daily activity from plain language and breaks meals into nutritional values automatically.',
     longDescription:
       'A personal automation tool designed to remove the interface friction that kills most tracking habits. Users log food, gym sessions, and daily activity in plain language — the system parses the input, breaks it into structured nutritional and activity data, and maintains the running record automatically.',
     highlights: [
@@ -404,11 +406,12 @@ export const PRODUCT_ITEMS = [
   },
   {
     id: 'outliner',
-    path: '/products/outliner',
+    path: '/products/outlier',
+    legacyPaths: ['/products/outliner'],
     title: 'Outlier',
     seoTitle: 'Outlier — AI Response Generation System by Deependra',
     description:
-      'Outlier is an AI system built around context — it learns prompt patterns and interaction history to generate responses that actually fit, cutting the repetitive effort of writing from scratch.',
+      'Outlier is a context-aware AI writing system. It learns prompt patterns and interaction history to draft responses that fit, cutting repetitive writing.',
     longDescription:
       'An AI system built on the observation that generic outputs fail because they ignore context. Outlier builds a structured understanding of prompt patterns, interaction history, and communication style — then uses that context to generate responses that fit the situation, reducing the manual effort of drafting from nothing each time.',
     highlights: [
@@ -456,7 +459,7 @@ export const PRODUCT_ITEMS = [
     title: 'Cloud Infrastructure & Monitoring',
     seoTitle: 'AWS Cloud Infrastructure and Monitoring — Endrare',
     description:
-      'AWS infrastructure designed with VPC network isolation, EC2 compute, and CloudWatch observability — built and load tested under realistic production conditions.',
+      'AWS infrastructure with VPC network isolation, EC2 compute, and CloudWatch observability, load tested under realistic production conditions.',
     longDescription:
       'AWS infrastructure designed from the ground up with reliability and observability as primary constraints. The system uses a VPC with public and private subnet separation, EC2 compute instances, and CloudWatch for monitoring and alerting. Load testing was run under realistic traffic conditions — not just a deployed system, but infrastructure that holds up under pressure and surfaces the right signals when it doesn\'t.',
     highlights: [
@@ -492,9 +495,9 @@ export const PRODUCT_ITEMS = [
     id: 'endrare',
     path: '/products/endrare',
     title: 'Endrare',
-    seoTitle: 'Endrare — Personal Archive for Software and Product Thinking',
+    seoTitle: 'Endrare — The Studio Website and Identity',
     description:
-      'Endrare is a personal archive for software products, AI projects, case studies, field notes, and product thinking.',
+      'How the Endrare website and identity were designed and built: typography, color, motion, and a fast, readable site for the studio.',
     category: 'Identity / Portfolio / Product Thinking',
     status: 'Live archive',
     schemaType: 'WebSite',

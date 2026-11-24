@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { CONTENT_ITEMS } from './data/seo'
-import { headerMarkup, footerMarkup } from './data/design'
+import { headerMarkup, footerMarkup, clientWorkMarkup } from './data/design'
 import { initDesign } from './design'
 import ServicesRail from './components/ServicesRail'
 import WorkStories from './components/WorkStories'
@@ -24,6 +24,7 @@ function HomePage() {
     </section>
     <div className="ed-disciplines ed-container" aria-label="Areas of practice"><span>Product thinking</span><i aria-hidden="true">✳</i><span>Software engineering</span><i aria-hidden="true">✳</i><span>Applied AI</span><i aria-hidden="true">✳</i><span>Cloud & systems</span></div>
     <WorkStories />
+    <div dangerouslySetInnerHTML={{ __html: clientWorkMarkup({ home: true }) }} />
     <section className="ed-possibility ed-container"><div className="ed-possibility-copy ed-reveal"><span className="ed-eyebrow">From a spark to something real</span><h2>Ideas don’t stand still.<br /><em>Neither do we.</em></h2><p>A question becomes a prototype. A prototype reveals a better question. We bring design, engineering, and AI together to move an idea forward—with purpose at every step.</p><a className="ed-text-link" href="/about/">The people and thinking behind Endrare <Arrow /></a></div><div className="ed-particle-hero ed-possibility-art" data-particles="hero"><span className="ed-particle-fallback" aria-hidden="true">e</span><canvas aria-hidden="true" /><span className="ed-art-index">IDEAS, ALWAYS BECOMING</span><button className="ed-particle-control" data-pause-particles aria-pressed="false" aria-label="Pause ambient animation">Pause motion Ⅱ</button></div></section>
     <ServicesRail />
     <section className="ed-cinema" aria-label="The Endrare approach" data-cinema>
