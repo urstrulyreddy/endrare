@@ -4,14 +4,13 @@
   "description": "Endrare is a software and AI studio in Sweden. Websites, apps, AI automation, and reliable systems.",
   "start_url": "/",
   "display": "minimal-ui",
-  "background_color": "#FAFAF8",
-  "theme_color": "#FAFAF8",
+  "background_color": "#0C0E10",
+  "theme_color": "#0C0E10",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
     },
     {
       "src": "/apple-touch-icon.png",

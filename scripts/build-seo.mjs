@@ -93,7 +93,7 @@ function seoHead(page, jsonLd = [], options = {}) {
 ${keywords ? `<meta name="keywords" content="${escapeAttr(keywords)}" />` : ''}
 <meta name="theme-color" content="${escapeAttr(SITE.themeColor)}" />
 <link rel="canonical" href="${escapeAttr(canonical)}" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta property="og:title" content="${escapeAttr(title)}" />
